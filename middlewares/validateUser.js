@@ -1,5 +1,5 @@
 const rescue = require('express-rescue');
-const { findEmail } = require('../models/users');
+const { findEmail } = require('../models');
 
 const invalidErr = { message: 'Invalid entries. Try again.' };
 const alreadyExistsErr = { message: 'Email already registered' };

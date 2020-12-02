@@ -1,5 +1,5 @@
 const rescue = require('express-rescue');
-const { findEmail } = require('../models/users');
+const { findEmail } = require('../models');
 
 const fillErr = { message: 'All fields must be filled' };
 const incErr = { message: 'Incorrect username or password' };

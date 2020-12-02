@@ -1,6 +1,6 @@
 const connection = require('./connection');
 
-const add = async ({ name, email, password }) => {
+const addUser = async ({ name, email, password }) => {
   const db = await connection('users');
   const result = await db.insertOne({ name, email, password, role: 'user' });
 
@@ -15,6 +15,6 @@ const findEmail = async (email) => {
 };
 
 module.exports = {
-  add,
+  addUser,
   findEmail,
 };
