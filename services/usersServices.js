@@ -8,7 +8,7 @@ class CodeError extends Error {
   }
 }
 
-const isValid = async (name, email, password) => {
+const isUserValid = async (name, email, password) => {
   const regexEmail = /^[^@]+@[^@]+\.[^@]+$/;
   const validEmail = regexEmail.test(String(email).toLowerCase());
   if (!name || !email || !validEmail || !password) {
@@ -23,7 +23,27 @@ const isValid = async (name, email, password) => {
 };
 
 const create = async (name, email, password) => {
-  const validUser = await isValid(name, email, password);
+  const validUser = await isUserValid(name, email, password);
+  if (!validUser) return false;
+  const newUser = await usersModel.create(name, email, password);
+  return {
+    user: newUser,
+  };
+};
+
+const isLoginValid = async (email, password) => {
+  if (!email || !password) {
+    throw new CodeError('All fields must be filled', 'invalid_data');
+  }
+  const registeredUser = await usersModel.getByEmail(email);
+  if (!registeredUser || registeredUser.password !== password) {
+    throw new CodeError('Incorrect username or password', 'unauthorized');
+  }
+  return true;
+};
+
+const login = async (name, email, password) => {
+  const validUser = await isLoginValid(name, email, password);
   if (!validUser) return false;
   const newUser = await usersModel.create(name, email, password);
   return {
@@ -82,4 +102,4 @@ const create = async (name, email, password) => {
 //   return deletedProd;
 // };
 
-module.exports = { create };
+module.exports = { create, login };

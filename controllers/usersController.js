@@ -6,8 +6,6 @@ const usersRouter = Router();
 const usersServices = require('../services/usersServices');
 // const usersModel = require('../models/usersModel');
 
-// Controller pode chamar diretamente model tb, pulando service.
-
 // 1 - Crie um endpoint para o cadastro de usuários
 usersRouter.post('/', async (req, res) => {
   const { name, email, password } = req.body;

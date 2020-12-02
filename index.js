@@ -10,6 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 
 const usersController = require('./controllers/usersController');
+const loginController = require('./controllers/loginController');
 // const recipesController = require('./controllers/recipesController');
 
 // ENDPOINTS
@@ -20,6 +21,9 @@ app.get('/', (request, response) => {
 });
 
 app.use('/users', usersController);
+app.use('/login', loginController);
+
+// 2 - 
 
 // Usar middleware static para permitir acesso a imagens via a API
 // const path = require('path');
