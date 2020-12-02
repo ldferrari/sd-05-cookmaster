@@ -1,5 +1,6 @@
 // const { ObjectId } = require('mongodb');
 const { addUserModel, findEmailModel } = require('../models/userModel');
+const validateEmail = require('./validateEmail');
 
 class CodeError extends Error {
   constructor(message, code) {
@@ -9,10 +10,8 @@ class CodeError extends Error {
 }
 
 const addUserServ = async (name, email, password, role) => {
-  const regexEmail = /^[^@]+@[^@]+\.[^@]+$/;
-  if (
-    !name || !email || !password || !regexEmail.test(String(email).toLowerCase())
-  ) {
+  // const regexEmail = /^[^@]+@[^@]+\.[^@]+$/;
+  if (!name || !email || !password || !validateEmail(email)) {
     throw new CodeError('Invalid entries. Try again.', 'invalid_entries');
   }
   // email já está cadastrado?
