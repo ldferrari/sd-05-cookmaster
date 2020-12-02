@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const { usersController } = require('./controllers/index');
+const { usersController, loginController } = require('./controllers/index');
 
 const app = express();
 const port = 3000;
@@ -13,6 +13,8 @@ app.use('/images', express.static(path.join(__dirname, 'uploads')));
 app.get('/', (_, res) => { res.send(); });
 
 app.use('/users', usersController);
+
+app.use('/login', loginController);
 
 // app.use('/recipes', recipesController);
 

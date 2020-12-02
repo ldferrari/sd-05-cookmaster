@@ -7,9 +7,9 @@ const usersController = express.Router();
 
 usersController.post('/', validateUser, rescue(async (req, res) => {
   const { name, email, password } = req.body;
-  const createdUser = await users.add({ name, email, password });
+  const user = await users.add({ name, email, password });
 
-  res.status(201).json(createdUser);
+  res.status(201).json({ user });
 }));
 
 module.exports = usersController;
