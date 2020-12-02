@@ -4,6 +4,7 @@ const userRouter = require('./controllers/userController');
 const loginRouter = require('./controllers/loginController');
 
 const errorHandling = require('./middlewares/errorHandling');
+const validation = require('./controllers/validation');
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.get('/', (request, response) => {
 app.use('/users', userRouter);
 
 app.use('/login', loginRouter);
+
+app.use('/recipes', validation);
 
 const PORT = 3000;
 

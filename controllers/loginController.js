@@ -37,10 +37,9 @@ loginRouter.post(
     }
 
     const { password: _, ...userWithoutPassword } = user;
-    const { _id: id } = userWithoutPassword;
+    // const { _id: id } = userWithoutPassword;
     const payload = {
-      sub: id,
-      userData: userWithoutPassword,
+      userWithoutPassword,
     };
 
     const token = jwt.sign(payload, secret, jwtConfig);
