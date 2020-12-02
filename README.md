@@ -13,7 +13,7 @@ Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu
 1. Clone o repositório
   * `git clone https://github.com/tryber/sd-05-cookmaster.git`.
   * Entre na pasta do repositório que você acabou de clonar:
-    * `cd sd-0x-cookmaster`
+    * `cd sd-05-cookmaster`
 
 2. Instale as dependências [**Caso existam**]
   * `npm install`
