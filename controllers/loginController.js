@@ -18,7 +18,7 @@ loginRouter.post('/', async (req, res) => {
     const secret = 'secret-stuff-here-what?';
     // 2/ Header
     const jwtConfig = {
-      expiresIn: 60,
+      expiresIn: '1d',
       algorithm: 'HS256',
     };
     // 3/ Payload
@@ -31,7 +31,7 @@ loginRouter.post('/', async (req, res) => {
     };
     // 4/ Assinatura
     const token = jwt.sign(payload, secret, jwtConfig);
-    // 4/ Devolver token ao usuário
+    // 5/ Devolver token ao usuário
     return res.status(200).json({ token });
   } catch (err) {
     if (err.code === 'invalid_data') {

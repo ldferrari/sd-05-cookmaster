@@ -1,7 +1,6 @@
 // DEPENDENCIES
 const express = require('express');
 const bodyParser = require('body-parser');
-// const rescue = require('express-rescue');
 require('dotenv').config();
 
 // IMPORTATIONS
@@ -11,7 +10,7 @@ app.use(bodyParser.json());
 
 const usersController = require('./controllers/usersController');
 const loginController = require('./controllers/loginController');
-// const recipesController = require('./controllers/recipesController');
+const recipesController = require('./controllers/recipesController');
 
 // ENDPOINTS
 
@@ -22,6 +21,7 @@ app.get('/', (request, response) => {
 
 app.use('/users', usersController);
 app.use('/login', loginController);
+app.use('/recipes', recipesController);
 
 // Usar middleware static para permitir acesso a imagens via a API
 // const path = require('path');
