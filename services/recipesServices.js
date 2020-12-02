@@ -18,7 +18,8 @@ const isRecipeValid = async (name, ingredients, preparation) => {
 const create = async (name, ingredients, preparation) => {
   // const userId = get it how?
   // Neste endpoint temos apenas a info do token - permite achar user?
-  const validRecipe = await isRecipeValid(name, ingredients, preparation); // passar param userId para que model possa retorna-lo tb
+  const validRecipe = await isRecipeValid(name, ingredients, preparation);
+  // passar param userId para que model possa retorna-lo tb
   if (!validRecipe) return false;
   const newRecipe = await recipesModel.create(name, ingredients, preparation);
   return {
