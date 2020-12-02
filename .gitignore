@@ -184,6 +184,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+bl27-rest
 
 # TypeScript v1 declaration files
 typings/
