@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongodb');
+// const { ObjectId } = require('mongodb');
 const getCollection = require('./getCollection');
 
 const addUserModel = async (name, email, password, role) =>
