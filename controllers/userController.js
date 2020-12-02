@@ -32,10 +32,10 @@ const service = require('../services/userServices');
 
 const create = async (req, res) => {
   try {
-    user = req.body;
-    const createdUser = await service.create(user);
+    const body = req.body;
+    const createdUser = await service.create(body);
     // console.log(createdProduct);
-    res.status(201).json({user : createdUser});
+    res.status(201).json({ user: createdUser });
   } catch (err) {
     // console.log(err);
     if (err.code === 'Bad Request') {
@@ -80,9 +80,9 @@ const create = async (req, res) => {
 // };
 
 module.exports = {
-  //getAll,
-  //getById,
+  // getAll,
+  // getById,
   create,
-  //update,
-  //remove,
+  // update,
+  // remove,
 };

@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongodb');
+// const { ObjectId } = require('mongodb');
 const model = require('../models/userModel');
 // const productModel = require('../models/productsModel');
 
@@ -28,30 +28,32 @@ const model = require('../models/userModel');
 //   return sales;
 // };
 
-
 const create = async (user) => {
   if (!user) {
     throw {
+      error: true,
       code: 'Bad Request',
       message: 'Invalid entries. Try again.',
     };
   }
-  const {name, email, password} = user;
-  const role = "user";
+  const { name, email, password } = user;
+  const role = 'user';
 
   if (!email || !password || !name) {
     throw {
+      error: true,
       code: 'Bad Request',
       message: 'Invalid entries. Try again.',
     };
   }
-  
+
   const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/i;
-  
+
   const emailIsValid = emailRegex.test(email);
 
   if (!emailIsValid) {
     throw {
+      error: true,
       code: 'Bad Request',
       message: 'Invalid entries. Try again.',
     };
@@ -61,6 +63,7 @@ const create = async (user) => {
 
   if (emailExists) {
     throw {
+      error: true,
       code: 'Conflict',
       message: 'Email already registered',
     };
@@ -144,13 +147,13 @@ const create = async (user) => {
 //     };
 //   }
 
-  // const { _id, itensSold } = await model.getSalesById(id);
+// const { _id, itensSold } = await model.getSalesById(id);
 
-  // if (!_id || !itensSold) {
-  //   throw {
-  //     code: 'invalid_data', message: 'Wrong sale ID format',
-  //   };
-  // }
+// if (!_id || !itensSold) {
+//   throw {
+//     code: 'invalid_data', message: 'Wrong sale ID format',
+//   };
+// }
 
 //   const excludedSale = await model.excludeSales(id);
 //   console.log(excludedSale);
@@ -164,9 +167,9 @@ const create = async (user) => {
 // };
 
 module.exports = {
-  //getAll,
-  //getById,
+  // getAll,
+  // getById,
   create,
-  //update,
-  //exclude,
+  // update,
+  // exclude,
 };

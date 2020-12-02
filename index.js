@@ -1,8 +1,8 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
 const userController = require('./controllers/userController');
-//const salesController = require('./controllers/salesController');
+// const salesController = require('./controllers/salesController');
 
 const app = express();
 
@@ -12,6 +12,8 @@ app.get('/', (request, response) => {
 });
 
 app.post('/users', userController.create);
+
+//app.post('/login', userController.create);
 
 // app.get('/products', productController.getAll);
 
@@ -39,4 +41,3 @@ const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`o pai tá ON na: ${PORT}`);
 });
-

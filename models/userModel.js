@@ -5,14 +5,13 @@ const getCollection = require('./connection');
 // const getAllSales = async () =>
 //   getCollection('sales').then((sales) => sales.find().toArray());
 
-
 const create = async (email, password, name, role) => {
-  const user = await getCollection('users').then((db) => db.insertOne({ email, password, name, role }));
-  return { _id: sale.insertedId, name, email, password, role };
+  const newUser = await getCollection('users').then((db) => db.insertOne({ email, password, name, role }));
+  return { newUser }; // _id: users.insertedId, name, email, password, role
 };
 
 const getUserByEmail = async (email) => getCollection('users')
-   .then((db) => db.findOne(email));
+  .then((db) => db.findOne(email));
 
 // const updateSales = async (id, productId, quantity) => {
 //   const sale = await getCollection('sales')
@@ -32,9 +31,9 @@ const getUserByEmail = async (email) => getCollection('users')
 // };
 
 module.exports = {
-  //getAllSales,
+  // getAllSales,
   getUserByEmail,
   create,
-  //updateSales,
-  //excludeSales,
+  // updateSales,
+  // excludeSales,
 };
