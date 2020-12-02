@@ -2,18 +2,18 @@ const express = require('express');
 const rescue = require('express-rescue');
 const jwt = require('jsonwebtoken');
 const { findEmailModel } = require('../models/userModel');
-const validateEmail = require('../services/validateEmail');
+// const validateEmail = require('../services/validateEmail');
 
 const loginRouter = express.Router();
 
 const secret = 'segredinho...bonitinho';
 
-class CodeError extends Error {
-  constructor(message, code) {
-    super(message);
-    this.code = code;
-  }
-}
+// class CodeError extends Error {
+//   constructor(message, code) {
+//     super(message);
+//     this.code = code;
+//   }
+// }
 
 const jwtConfig = {
   expiresIn: '15m',

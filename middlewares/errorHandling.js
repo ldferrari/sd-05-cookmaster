@@ -5,9 +5,6 @@ module.exports = (err, _req, res, _next) => {
   if (err.code === 'duplicate_email') {
     return res.status(409).json({ message: err.message });
   }
-  if( err.code === 'empty_fields') {
-    return res.status(401).json({message: err.message})
-  }
 
   console.error(err);
   res.status(500).json({ message: err.message });
