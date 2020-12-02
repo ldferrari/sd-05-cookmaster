@@ -12,8 +12,8 @@ loginRouter.post('/', async (req, res) => {
   const { email, password } = req.body;
   try {
     // Validar os dados do login no service
-    const validLogin = await usersServices.login(email, password);
-    if (!validLogin) return res.status(400).json({ message: 'Login was not possible' });
+    const validUser = await usersServices.login(email, password);
+    if (!validUser) return res.status(400).json({ message: 'Login was not possible' });
     // Configurar e retornar o JWT
     // 1/ Header
     const jwtConfig = {
@@ -22,7 +22,7 @@ loginRouter.post('/', async (req, res) => {
     };
     // 2/ Payload
     const payload = {
-      data: user,
+      data: validUser,
       // other data here?
     };
     // 3/ Assinatura
