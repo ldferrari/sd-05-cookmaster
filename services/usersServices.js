@@ -31,7 +31,7 @@ const create = async (name, email, password) => {
   };
 };
 
-const isLoginValid = async (email, password) => {
+const login = async (email, password) => {
   if (!email || !password) {
     throw new CodeError('All fields must be filled', 'invalid_data');
   }
@@ -39,16 +39,7 @@ const isLoginValid = async (email, password) => {
   if (!registeredUser || registeredUser.password !== password) {
     throw new CodeError('Incorrect username or password', 'unauthorized');
   }
-  return true;
-};
-
-const login = async (name, email, password) => {
-  const validUser = await isLoginValid(name, email, password);
-  if (!validUser) return false;
-  const newUser = await usersModel.create(name, email, password);
-  return {
-    user: newUser,
-  };
+  return registeredUser;
 };
 
 // const getById = async (id) => {
