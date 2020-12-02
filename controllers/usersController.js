@@ -17,10 +17,10 @@ usersRouter.post('/', async (req, res) => {
     return res.status(201).json(userCreated);
   } catch (err) {
     if (err.code === 'invalid_data') {
-      return res.status(400).json({ err });
+      return res.status(400).json({ message: err.message });
     }
     if (err.code === 'conflict') {
-      return res.status(409).json({ err });
+      return res.status(409).json({ message: err.message });
     }
     console.error(err);
     res.status(500).json({ message: 'Aaah internal error' });

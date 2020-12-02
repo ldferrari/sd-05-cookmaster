@@ -1,22 +1,23 @@
 // const { ObjectId } = require('mongodb');
 const usersModel = require('../models/usersModel');
 
+class CodeError extends Error {
+  constructor(message, code) {
+    super(message);
+    this.code = code;
+  }
+}
+
 const isValid = async (name, email, password) => {
   const regexEmail = /^[^@]+@[^@]+\.[^@]+$/;
   const validEmail = regexEmail.test(String(email).toLowerCase());
   if (!name || !email || !validEmail || !password) {
-    throw {
-      code: 'invalid_data',
-      message: 'Invalid entries. Try again',
-    };
+    throw new CodeError('Invalid entries. Try again.', 'invalid_data');
   }
   const existingEmail = await usersModel.getByEmail(email);
   console.log('mail existence checked');
   if (existingEmail) {
-    throw {
-      code: 'conflict',
-      message: 'Email already registered',
-    };
+    throw new CodeError('Email already registered', 'conflict');
   }
   return true;
 };
