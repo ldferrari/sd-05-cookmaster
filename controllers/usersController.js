@@ -18,6 +18,9 @@ usersRouter.post('/', async (req, res) => {
     if (err.code === 'invalid_data') {
       return res.status(400).json({ err });
     }
+    if (err.code === 'conflict') {
+      return res.status(409).json({ err });
+    }
     console.error(err);
     res.status(500).json({ message: 'Aaah internal error' });
   }

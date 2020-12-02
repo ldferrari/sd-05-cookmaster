@@ -14,7 +14,7 @@ const isValid = async (name, email, password) => {
   console.log('mail existence checked');
   if (existingEmail) {
     throw {
-      code: 'invalid_data',
+      code: 'conflict',
       message: 'Email already registered',
     };
   }
