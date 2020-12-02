@@ -20,7 +20,9 @@ const create = async (name, email, password) => {
   const retorno = await model.create(name, email, password);
   return retorno;
 };
-
+// const login = async (email, password) => {
+//   if
+// }
 module.exports = {
   create,
 };
