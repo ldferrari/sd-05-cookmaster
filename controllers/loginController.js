@@ -30,18 +30,22 @@ loginRouter.post(
       res.status(401).json({ message: 'All fields must be filled' });
     }
 
-    const user = findEmailModel(email);
+    const user = await findEmailModel(email);
 
     if (!user || user.password !== password) {
       res.status(401).json({ message: 'Incorrect username or password' });
     }
 
-    // if (!validateEmail(email)) {
-    //   res.status(401).json({ message: 'Incorrect username or password' });
-    // }
-    // } catch (err) {
-    //   return res.status(500).json({ message: 'Erro interno', error: err });
-    // }
+    const { password: _, ...userWithoutPassword } = user;
+    const { _id: id } = userWithoutPassword;
+    const payload = {
+      sub: id,
+      userData: userWithoutPassword,
+    };
+
+    const token = jwt.sign(payload, secret, jwtConfig);
+
+    return res.status(200).json({ token });
   }),
 );
 
