@@ -1,4 +1,4 @@
-// const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const jwt = require('jsonwebtoken');
 const recipesModel = require('../models/recipesModel');
 
@@ -46,4 +46,15 @@ const create = async (name, ingredients, preparation, token) => {
   // now returns with correct userId yeepeee
 };
 
-module.exports = { isRecipeValid, create };
+const getById = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    throw new CodeError('recipe not found', 'not_found');
+  }
+  const recipeById = await recipesModel.getById(id);
+  if (!recipeById) {
+    throw new CodeError('recipe not found', 'not_found');
+  }
+  return recipeById;
+};
+
+module.exports = { isRecipeValid, create, getById };

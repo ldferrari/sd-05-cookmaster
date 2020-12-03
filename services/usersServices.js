@@ -15,7 +15,7 @@ const isUserValid = async (name, email, password) => {
     throw new CodeError('Invalid entries. Try again.', 'invalid_data');
   }
   const existingEmail = await usersModel.getByEmail(email);
-  console.log('mail existence checked');
+  // console.log('mail existence checked');
   if (existingEmail) {
     throw new CodeError('Email already registered', 'conflict');
   }

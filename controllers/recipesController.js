@@ -28,12 +28,27 @@ recipesRouter.post('/', async (req, res) => {
 
 // 4 - Crie um endpoint para a listagem de receitas
 // Sem discriminar se a pessoa está identificada ou não
-recipesRouter.get('/', async (req, res) => {
+recipesRouter.get('/', async (_req, res) => {
   try {
     const recipes = await recipesModel.getAll();
     res.status(200).json(recipes);
   } catch (err) {
     res.status(500).json({ message: 'Aaah internal error' });
+  }
+});
+
+// 5 - Crie um endpoint para visualizar uma receita específica
+recipesRouter.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const recipeById = await recipesServices.getById(id);
+    res.status(200).json(recipeById);
+  } catch (err) {
+    if (err.code === 'not_found') {
+      return res.status(404).json({ message: err.message });
+    }
+    console.error(err);
+    res.status(500).json({ message: 'Erro interno aiaiai' });
   }
 });
 
