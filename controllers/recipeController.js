@@ -3,7 +3,7 @@ const service = require('../services/recipeServices');
 const create = async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;
-    const userId = req.userId;
+    const { userId } = req.userId;
     // const token = req.headers.authorization;
 
     console.log(userId);
@@ -21,7 +21,7 @@ const create = async (req, res) => {
     res.status(201).json({ recipe: createdRecipe });
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ message: 'Algo deu bem ruim no create recipe' });  
+    res.status(500).json({ message: 'Algo deu bem ruim no create recipe' });
   }
 };
 

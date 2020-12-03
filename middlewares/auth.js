@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 // const userModel = require('../models/userModel');
 
-module.exports = async (req, res, next) => {  
+module.exports = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     if (!token) {
@@ -10,8 +10,8 @@ module.exports = async (req, res, next) => {
     const secret = 'senhaUltraSigilosa!';
 
     const payload = jwt.verify(token, secret, { audience: 'identity', issuer: 'post-api' });
-    //console.log(payload);
-    if (!payload || typeof payload === 'string' ) {
+    // console.log(payload);
+    if (!payload || typeof payload === 'string') {
       return res.status(401).json({ message: 'jwt malformed' });
     }
 
@@ -22,11 +22,9 @@ module.exports = async (req, res, next) => {
     // console.log(user._id);
     req.userId = payload.userData._id;
 
-    return next() ;
+    return next();
   } catch (err) {
     console.log(err.message);
     return res.status(401).json({ message: 'jwt malformed' });
   }
-}
-
-// module.exports = { auth };
+};
