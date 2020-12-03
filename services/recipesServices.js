@@ -1,6 +1,6 @@
 // const { ObjectId } = require('mongodb');
-const recipesModel = require('../models/recipesModel');
 const jwt = require('jsonwebtoken');
+const recipesModel = require('../models/recipesModel');
 
 class CodeError extends Error {
   constructor(message, code) {
@@ -41,7 +41,7 @@ const create = async (name, ingredients, preparation, token) => {
   if (!validToken) return false;
   const secret = 'secret-stuff-here-what?';
   const payload = await jwt.verify(token, secret);
-  const userId = payload.userData._id;
+  const userId = payload.userData.id;
   const newRecipe = await recipesModel.create(name, ingredients, preparation, userId);
   return {
     recipe: newRecipe,
