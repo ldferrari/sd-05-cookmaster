@@ -53,10 +53,22 @@ const deleteRecipe = async (id) => {
   return true;
 };
 
+const addImage = async (id) => {
+  const db = await connection('recipes');
+  const imagePath = `localhost:3000/images/${id}.jpeg`;
+
+  await db.updateOne({ _id: ObjectId(id) }, { $set: { image: imagePath } });
+
+  const updatedImg = await db.findOne({ _id: ObjectId(id) });
+
+  return updatedImg;
+};
+
 module.exports = {
+  addImage,
   addRecipe,
+  deleteRecipe,
   getAllRecipes,
   getRecipe,
   updateRecipe,
-  deleteRecipe,
 };

@@ -1,7 +1,26 @@
+const path = require('path');
+const multer = require('multer');
 const express = require('express');
 const rescue = require('express-rescue');
 const { validateRecipe, validateToken } = require('../middlewares/index');
-const { addRecipe, getAllRecipes, getRecipe, updateRecipe, deleteRecipe } = require('../models');
+const {
+  addRecipe,
+  getAllRecipes,
+  getRecipe,
+  updateRecipe,
+  deleteRecipe,
+  addImage,
+} = require('../models');
+
+const storage = multer.diskStorage({
+  destination: 'uploads',
+  filename: (req, _file, callBack) => {
+    const { id } = req.params;
+    callBack(null, `${id}.jpeg`);
+  },
+});
+
+const upload = multer({ storage });
 
 const recipesController = express.Router();
 
@@ -27,6 +46,14 @@ recipesController.get('/:id', rescue(async (req, res) => {
   if (!recipe) res.status(404).json(recipeNotFoundErr);
 
   res.status(200).json(recipe);
+}));
+
+recipesController.put('/:id/image/', validateToken, upload.single('image'), rescue(async (req, res) => {
+  const { id } = req.params;
+
+  const result = await addImage(id);
+
+  res.status(200).json(result);
 }));
 
 recipesController.put('/:id', validateToken, rescue(async (req, res) => {
