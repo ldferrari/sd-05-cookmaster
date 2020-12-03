@@ -19,7 +19,7 @@ recipesRouter.post(
     const recipeCreated = await recipesServices.create(name, ingredients, preparation, userId);
     if (!recipeCreated) return res.status(400).json({ message: 'Recipe was not created' });
     return res.status(201).json(recipeCreated);
-  })
+  }),
 );
 
 // 4 - Crie um endpoint para a listagem de receitas
@@ -29,7 +29,7 @@ recipesRouter.get(
   rescue(async (_req, res) => {
     const recipes = await recipesModel.getAll();
     res.status(200).json(recipes);
-  })
+  }),
 );
 
 // 5 - Crie um endpoint para visualizar uma receita específica
@@ -39,7 +39,7 @@ recipesRouter.get(
     const { id } = req.params;
     const recipeById = await recipesServices.getById(id);
     res.status(200).json(recipeById);
-  })
+  }),
 );
 
 // 7 - Crie um endpoint para a edição de uma receita
@@ -55,11 +55,11 @@ recipesRouter.put(
       name,
       ingredients,
       preparation,
-      userId
+      userId,
     );
     // if (!updatedRecipe) return res.status(400).json({ message: 'Recipe was not updated' });
     return res.status(200).json(updatedRecipe);
-  })
+  }),
 );
 
 // 8 - Crie um endpoint para a exclusão de uma receita
@@ -68,10 +68,11 @@ recipesRouter.delete(
   validateToken,
   rescue(async (req, res) => {
     const { id } = req.params;
-    const deletedRecipe = await recipesServices.deleteById(id);
+    await recipesServices.deleteById(id);
+    // const deletedRecipe = await recipesServices.deleteById(id);
     // if (!deletedRecipe) return res.status(400).json({ message: 'Recipe was not deleted' });
     return res.status(204).json(null);
-  })
+  }),
 );
 
 // Refactoring with rescue: do not need try and catch anymore
