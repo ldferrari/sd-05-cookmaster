@@ -27,9 +27,8 @@ const updateById = async (id, name, ingredients, preparation, userId) =>
     .then((products) =>
       products.updateOne(
         { _id: ObjectId(id) },
-        { $set: { name, ingredients, preparation, userId } }
-      )
-    )
+        { $set: { name, ingredients, preparation, userId } },
+      ))
     .then((result) => ({ _id: result.insertedId, name, ingredients, preparation, userId }));
 
 // const deleteById = async (id) =>
