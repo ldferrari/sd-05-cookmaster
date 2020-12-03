@@ -12,11 +12,28 @@ class CodeError extends Error {
   }
 }
 
+const validateLogin = async (email, password) => {
+  if (!email || !password) {
+    throw new CodeError(401, 'All fields must be filled');
+  }
+
+  if (!validateEmail(email)) {
+    throw new CodeError(401, 'Incorrect username or password');
+  }
+
+  const userInDatabase = await usersModel.getByEmail(email);
+
+  if (!userInDatabase || userInDatabase.password !== password) {
+    throw new CodeError(401, 'Incorrect username or password');
+  }
+  return userInDatabase;
+};
+
 const validateUsers = async (name, email, password) => {
   if (!name || !email || !validateEmail(email) || !password) {
     throw new CodeError(400, 'Invalid entries. Try again.');
   }
-  const check = await usersModel.checkEmail(email);
+  const check = await usersModel.getByEmail(email);
   if (check !== null) {
     throw new CodeError(409, 'Email already registered');
   }
@@ -28,6 +45,7 @@ const create = async (name, email, password) => usersModel.create(name, email, p
 module.exports = {
   validateUsers,
   create,
+  validateLogin,
 };
 
 //  https://stackoverflow.com/questions/53080948/generic-throw-giving-expected-an-object-to-be-thrown-lint-error

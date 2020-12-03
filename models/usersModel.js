@@ -3,7 +3,7 @@ const connection = require('./connection');
 
 const theCollection = 'users';
 
-const checkEmail = async (email) => connection()
+const getByEmail = async (email) => connection()
   .then((db) => db.collection(theCollection).findOne({ email: { $in: [email] } }));
 
 const create = async (name, email, password) => {
@@ -13,5 +13,5 @@ const create = async (name, email, password) => {
 
 module.exports = {
   create,
-  checkEmail,
+  getByEmail,
 };

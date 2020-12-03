@@ -1,4 +1,5 @@
 const usersServices = require('../services/usersServices');
+const createToken = require('../auth/createToken');
 
 const create = async (req, res) => {
   try {
@@ -11,6 +12,19 @@ const create = async (req, res) => {
   }
 };
 
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const userDataBaseInfo = await usersServices.validateLogin(email, password);
+    const { _id, role } = userDataBaseInfo;
+    const token = createToken({ id: _id, email, role });
+    res.status(200).json({ token });
+  } catch (err) {
+    res.status(err.code).json({ message: err.message });
+  }
+};
+
 module.exports = {
   create,
+  login,
 };

@@ -13,6 +13,8 @@ app.get('/', (request, response) => {
 
 app.post('/users', usersController.create);
 
+app.post('/login', usersController.login);
+
 app.listen(PORT, () => {
   console.log(`Estou monitorando a porta ${PORT}`);
 });
