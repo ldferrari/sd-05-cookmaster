@@ -1,7 +1,7 @@
 // const { ObjectId } = require('mongodb');
+const jwt = require('jsonwebtoken');
 const model = require('../models/userModel');
 
-const jwt = require('jsonwebtoken');
 const secret = 'senhaUltraSigilosa!';
 
 const jwtConfig = {
@@ -19,8 +19,8 @@ const login = async (body) => {
   }
   const { email, password } = body;
   // console.log(email);
-  
-  if (!email || !password ) {
+
+  if (!email || !password) {
     return {
       error: true,
       code: 'Unauthorized',
@@ -49,7 +49,7 @@ const login = async (body) => {
   };
 
   const token = jwt.sign(payload, secret, jwtConfig);
-  
+
   // console.log(token);
   return token;
 };

@@ -6,15 +6,15 @@ const login = async (req, res) => {
   try {
     const dadosBody = req.body;
     // console.log(dadosBody);
-    const login = await service.login(dadosBody);
+    const getlogin = await service.login(dadosBody);
     // console.log(login);
-    if(login.error){
-      if (login.code === 'Unauthorized') {
-        return res.status(401).json({ message: login.message });
+    if (getlogin.error) {
+      if (getlogin.code === 'Unauthorized') {
+        return res.status(401).json({ message: getlogin.message });
       }
-      return res.status(500).json({ message: 'Algo deu ruim no login' })
+      return res.status(500).json({ message: 'Algo deu ruim no login' });
     }
-    res.status(200).json({ token: login });
+    res.status(200).json({ token: getlogin });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ message: 'Algo deu ruim no LOGIN' });
