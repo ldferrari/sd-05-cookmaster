@@ -1,8 +1,8 @@
 const connection = require('./connection');
 
-const addUser = async ({ name, email, password }) => {
+const addUser = async ({ name, email, password }, role) => {
   const db = await connection('users');
-  const result = await db.insertOne({ name, email, password, role: 'user' });
+  const result = await db.insertOne({ name, email, password, role });
 
   return result.ops[0];
 };
