@@ -5,7 +5,7 @@ const getAll = async () =>
 
 const create = async ({ name, ingredients, preparation, userId }) => {
   const recipe = await getCollection('recipes').then((collection) => collection.insertOne({ name, ingredients, preparation, userId }));
-  return { recipe: { name, ingredients, preparation, userId, _id: recipe.insertedId } };
+  return { name, ingredients, preparation, userId, _id: recipe.insertedId };
 };
 
 module.exports = {
