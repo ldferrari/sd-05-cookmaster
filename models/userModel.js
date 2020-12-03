@@ -14,8 +14,8 @@ const create = async (email, password, name, role) => {
 const getUserByEmail = async (email) => getCollection('users')
   .then((users) => users.findOne({ email }));
 
-// const getUserByName = async (username) =>
-//   getCollection('users').then((db) => db.collection('users').findOne({ username }));
+const getUserByName = async (username) =>
+  getCollection('users').then((db) => db.findOne({ username }));
 
 // const updateSales = async (id, productId, quantity) => {
 //   const sale = await getCollection('sales')
@@ -37,6 +37,7 @@ const getUserByEmail = async (email) => getCollection('users')
 module.exports = {
   // getAllSales,
   getUserByEmail,
+  getUserByName,
   create,
   // updateSales,
   // excludeSales,

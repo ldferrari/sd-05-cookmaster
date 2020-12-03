@@ -42,8 +42,8 @@ const login = async (body) => {
   // console.log(userWithoutPassword);
 
   const payload = {
-    // iss: 'post-api', // Issuer -> Quem emitiu o token
-    // aud: 'identity', // Audience -> Quem deve aceitar este token
+    iss: 'post-api', // Issuer -> Quem emitiu o token
+    aud: 'identity', // Audience -> Quem deve aceitar este token
     // sub: user._id, // Subject -> A quem se refere esse token
     userData: userWithoutPassword,
   };
