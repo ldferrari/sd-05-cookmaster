@@ -18,9 +18,6 @@ const isRecipeValid = async (name, ingredients, preparation) => {
 
 const isTokenValid = async (token) => {
   try {
-    if (!token) {
-      throw new CodeError('jwt malformed', 'unauthorized');
-    }
     const secret = 'secret-stuff-here-what?';
     const payload = await jwt.verify(token, secret);
     if (!token || !payload.exp * 1000 > Date.now()) {

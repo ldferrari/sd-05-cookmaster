@@ -3,9 +3,6 @@
 // const validateToken = async (req, res, next) => {
 //   try {
 //     const token = req.headers.authorization;
-//     if (!token) {
-//       return res.status(401).json({ message: 'jwt malformed' });
-//     }
 //     const secret = 'secret-stuff-here-what?';
 //     const payload = await jwt.verify(token, secret);
 //     console.log(payload.exp);

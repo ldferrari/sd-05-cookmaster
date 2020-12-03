@@ -4,6 +4,7 @@ const recipesRouter = Router();
 // const rescue = require('express-rescue');
 
 const recipesServices = require('../services/recipesServices');
+const recipesModel = require('../models/recipesModel');
 
 // 3 - Crie um endpoint para o cadastro de receitas
 recipesRouter.post('/', async (req, res) => {
@@ -21,6 +22,17 @@ recipesRouter.post('/', async (req, res) => {
       return res.status(401).json({ message: err.message });
     }
     console.error(err);
+    res.status(500).json({ message: 'Aaah internal error' });
+  }
+});
+
+// 4 - Crie um endpoint para a listagem de receitas
+// Sem discriminar se a pessoa está identificada ou não
+recipesRouter.get('/', async (req, res) => {
+  try {
+    const recipes = await recipesModel.getAll();
+    res.status(200).json(recipes);
+  } catch (err) {
     res.status(500).json({ message: 'Aaah internal error' });
   }
 });
