@@ -8,10 +8,10 @@ const getCollection = require('./connection');
 const create = async (email, password, name, role) => {
   const newUser = await getCollection('users').then((users) => users.insertOne({ email, password, name, role }));
   // console.log(newUser);
-  return { name, email, role, _id: newUser.insertedId }; // _id: newUser.insertedId, name, email, password, role
+  return { name, email, role, _id: newUser.insertedId };
 };
 
-const getUserByEmail = async (email) => await getCollection('users')
+const getUserByEmail = async (email) => getCollection('users')
   .then((users) => users.findOne({ email }));
 
 // const getUserByName = async (username) =>

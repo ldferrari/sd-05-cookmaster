@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongodb');
+// const { ObjectId } = require('mongodb');
 const model = require('../models/userModel');
 
 const jwt = require('jsonwebtoken');
@@ -18,6 +18,7 @@ const login = async (body) => {
     };
   }
   const { email, password } = body;
+  // console.log(email);
   
   if (!email || !password ) {
     return {
@@ -28,7 +29,7 @@ const login = async (body) => {
   }
 
   const user = await model.getUserByEmail(email);
-  console.log(user);
+  // console.log(user);
   if (!user || user.password !== password) {
     return {
       error: true,
@@ -38,7 +39,7 @@ const login = async (body) => {
   }
 
   const { password: _, ...userWithoutPassword } = user;
-  console.log(userWithoutPassword);
+  // console.log(userWithoutPassword);
 
   const payload = {
     // iss: 'post-api', // Issuer -> Quem emitiu o token
@@ -49,8 +50,8 @@ const login = async (body) => {
 
   const token = jwt.sign(payload, secret, jwtConfig);
   
-// console.log(newUser);
-  return token ;
+  // console.log(token);
+  return token;
 };
 
 // const productModel = require('../models/productsModel');
@@ -113,7 +114,7 @@ const create = async (body) => {
   }
   // console.log(email);
   const emailExists = await model.getUserByEmail(email);
-  console.log(emailExists);
+  // console.log(emailExists);
   if (emailExists) {
     return {
       error: true,
@@ -122,8 +123,8 @@ const create = async (body) => {
     };
   }
   const newUser = await model.create(email, password, name, role);
-// console.log(newUser);
-  return newUser ;
+  // console.log(newUser);
+  return newUser;
 };
 
 // const update = async (id, productId, quantity) => {
