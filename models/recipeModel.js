@@ -1,3 +1,4 @@
+const { ObjectID } = require('mongodb');
 const getCollection = require('./getCollection');
 
 const addRecipe = async (name, ingredients, preparation) => {
@@ -15,4 +16,7 @@ const addRecipe = async (name, ingredients, preparation) => {
 const getAllRecipes = async () =>
   getCollection('recipes').then((recipes) => recipes.find().toArray());
 
-module.exports = { addRecipe, getAllRecipes };
+const getRecipeById = async (id) =>
+  getCollection('recipes').then((recipes) => recipes.findOne(ObjectID(id)));
+
+module.exports = { addRecipe, getAllRecipes, getRecipeById };
