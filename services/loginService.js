@@ -7,7 +7,6 @@ const isEmailValid = (email) => {
 
 const create = async (user) => {
   const { email, password } = user;
-  const emailExists = await model.getByEmail(email);
   if (!email || !password) {
     return {
       error: true,
@@ -19,14 +18,7 @@ const create = async (user) => {
     return {
       error: true,
       code: 'invalid_user',
-      message: 'Invalid entries. Try again.',
-    };
-  }
-  if (emailExists) {
-    return {
-      error: true,
-      code: 'conflict',
-      message: 'Email already registered',
+      message: 'Incorrect username or password',
     };
   }
   return model.create(user);

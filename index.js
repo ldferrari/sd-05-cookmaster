@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const errorMiddleware = require('./middlewares/error');
 const usersController = require('./controllers/usersController');
 const loginController = require('./controllers/loginController');
+const recipesController = require('./controllers/recipesController');
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(bodyParser.json());
 
 app.use('/users', usersController);
 app.use('/login', loginController);
+app.use('/recipes', recipesController);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
