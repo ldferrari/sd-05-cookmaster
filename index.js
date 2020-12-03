@@ -4,7 +4,7 @@ const userRouter = require('./controllers/userController');
 const loginRouter = require('./controllers/loginController');
 
 const errorHandling = require('./middlewares/errorHandling');
-const validation = require('./controllers/validation');
+// const validation = require('./controllers/validation');
 const recipeRouter = require('./controllers/recipeController');
 
 const app = express();
