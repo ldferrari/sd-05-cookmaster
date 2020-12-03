@@ -1,4 +1,3 @@
-const { ObjectId } = require('mongodb');
 const recipesModel = require('../models/recipesModel');
 
 class CodeError extends Error {
@@ -22,13 +21,9 @@ const create = async (name, ingredients, preparation, userId) => {
   return {
     recipe: newRecipe,
   };
-  // now returns with correct userId yeepeee
 };
 
 const getById = async (id) => {
-  if (!ObjectId.isValid(id)) {
-    throw new CodeError('recipe not found', 'not_found');
-  }
   const recipeById = await recipesModel.getById(id);
   if (!recipeById) {
     throw new CodeError('recipe not found', 'not_found');
@@ -39,9 +34,10 @@ const getById = async (id) => {
 const updateById = async (id, name, ingredients, preparation, userId) => {
   const validRecipe = await isRecipeValid(id, name, ingredients, preparation);
   if (!validRecipe) return false;
-  if (!ObjectId.isValid(id)) {
-    throw new CodeError('invalid_id', 'Wrong id format');
-  }
+  // if (!ObjectId.isValid(id)) {
+  //   throw new CodeError('invalid_id', 'Wrong id format');
+  // }
+  // now is within model, better practice
   // const validToken = await isTokenValid(token);
   // if (!validToken) return false;
   // now is a middleware instead of a service function
@@ -50,9 +46,6 @@ const updateById = async (id, name, ingredients, preparation, userId) => {
 };
 
 const deleteById = async (id) => {
-  if (!ObjectId.isValid(id)) {
-    throw new CodeError('invalid_id', 'Wrong id format');
-  }
   await recipesModel.deleteById(id);
   return true;
 };

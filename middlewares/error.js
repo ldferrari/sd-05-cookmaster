@@ -18,9 +18,11 @@ const errorMiddleware = (err, _req, res, _next) => {
   if (err.code === 'wrong_auth') {
     return res.status(401).json({ message: err.message });
   }
-  if (err.code === 'invalid_id') {
-    return res.status(401).json({ message: err.message });
-  }
+  // if (err.code === 'invalid_id') {
+  //   return res.status(401).json({ message: err.message });
+  // }
+  // this error was returned by invalid ObjectId in services
+  // now directly treated within models
 };
 
 module.exports = errorMiddleware;

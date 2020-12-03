@@ -1,4 +1,3 @@
-// const { ObjectId } = require('mongodb');
 const usersModel = require('../models/usersModel');
 
 class CodeError extends Error {

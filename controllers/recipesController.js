@@ -75,21 +75,7 @@ recipesRouter.delete(
   }),
 );
 
-// Refactoring with rescue: do not need try and catch anymore
-// Rafactoring with error middleware: to manage all res with status
-
-// router.delete('/:id', async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const deletedProduct = await prodService.deleteById(id);
-//     return res.status(200).json(deletedProduct);
-//   } catch (err) {
-//     if (err.code === 'invalid_data') {
-//       return res.status(422).json({ err });
-//     }
-//     console.error(err);
-//     res.status(500).json({ message: 'Erro interno aiaiai' });
-//   }
-// });
+// Refactoring with rescue: do not need try and catch (err 500) anymore
+// Rafactoring with error middleware: to manage all res w/ other status
 
 module.exports = recipesRouter;

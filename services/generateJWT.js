@@ -16,7 +16,7 @@ const generateJWT = async (user) => {
     sub: id,
     userData: userWithoutPassword,
   };
-  // 4/ Assinatura
+  // 4/ Signature
   const token = jwt.sign(payload, secret, jwtConfig);
   return token;
 };

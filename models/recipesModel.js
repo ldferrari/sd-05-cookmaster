@@ -16,13 +16,16 @@ const getAll = async () =>
     .then((db) => db.collection('recipes'))
     .then((recipes) => recipes.find().toArray());
 
-const getById = async (id) =>
-  connection()
+const getById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  return connection()
     .then((db) => db.collection('recipes'))
     .then((recipes) => recipes.findOne(ObjectId(id)));
+}
 
-const updateById = async (id, name, ingredients, preparation, userId) =>
-  connection()
+const updateById = async (id, name, ingredients, preparation, userId) => {
+  if (!ObjectId.isValid(id)) return null;
+  return connection()
     .then((db) => db.collection('recipes'))
     .then((recipes) =>
       recipes.updateOne(
@@ -30,10 +33,13 @@ const updateById = async (id, name, ingredients, preparation, userId) =>
         { $set: { name, ingredients, preparation, userId } },
       ))
     .then((_result) => ({ _id: ObjectId(id), name, ingredients, preparation, userId }));
+}
 
-const deleteById = async (id) =>
-  connection()
+const deleteById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  return connection()
     .then((db) => db.collection('recipes'))
     .then((recipes) => recipes.deleteOne({ _id: ObjectId(id) }));
+}
 
 module.exports = { create, getAll, getById, updateById, deleteById };
