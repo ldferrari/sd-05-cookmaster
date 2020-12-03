@@ -2,6 +2,28 @@ const service = require('../services/userServices');
 // const model = require('../models/salesModel');
 // const model = require('../models/productsModel');
 
+
+const login = async (req, res) => {
+  try {
+    const dadosBody = req.body;
+    // console.log(dadosBody);
+    const login = await service.login(dadosBody);
+    // console.log(createdUser);
+    if(login.error){
+      if (login.code === 'Unauthorized') {
+        return res.status(401).json({ message: login.message });
+      }
+      return res.status(500).json({ message: 'Algo deu ruim no login' })
+    }
+    res.status(201).json({ token: login });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: 'Algo deu ruim no LOGIN' });
+  }
+};
+
+
+
 // const getAll = async (req, res) => { // rescue(
 //   try {
 //     // const sales = await service.getAll();
@@ -47,13 +69,6 @@ const create = async (req, res) => {
     }
     res.status(201).json({ user: createdUser });
   } catch (err) {
-    // console.log(err);
-    // if (err.code === 'Bad Request') {
-    //   return res.status(400).json({ message: err.message });
-    // }
-    // if (err.code === 'Conflict') {
-    //   return res.status(409).json({ message: err.message });
-    // }
     console.error(err.message);
     res.status(500).json({ message: 'Algo deu ruim no create user' });
   }
@@ -90,6 +105,7 @@ const create = async (req, res) => {
 // };
 
 module.exports = {
+  login,
   // getAll,
   // getById,
   create,

@@ -1,5 +1,58 @@
 const { ObjectId } = require('mongodb');
 const model = require('../models/userModel');
+
+const jwt = require('jsonwebtoken');
+const secret = 'senhaUltraSigilosa!';
+
+const jwtConfig = {
+  expiresIn: '30m',
+  algorithm: 'HS256',
+};
+
+const login = async (body) => {
+  if (!body) {
+    return {
+      error: true,
+      code: 'Unauthorized',
+      message: 'All fields must be filled',
+    };
+  }
+  const { email, password } = body;
+  
+  if (!email || !password ) {
+    return {
+      error: true,
+      code: 'Unauthorized',
+      message: 'All fields must be filled',
+    };
+  }
+
+  const user = await model.getUserByEmail(email);
+  console.log(user);
+  if (!user || user.password !== password) {
+    return {
+      error: true,
+      code: 'Unauthorized',
+      message: 'Incorrect username or password',
+    };
+  }
+
+  const { password: _, ...userWithoutPassword } = user;
+  console.log(userWithoutPassword);
+
+  const payload = {
+    // iss: 'post-api', // Issuer -> Quem emitiu o token
+    // aud: 'identity', // Audience -> Quem deve aceitar este token
+    // sub: user._id, // Subject -> A quem se refere esse token
+    userData: userWithoutPassword,
+  };
+
+  const token = jwt.sign(payload, secret, jwtConfig);
+  
+// console.log(newUser);
+  return token ;
+};
+
 // const productModel = require('../models/productsModel');
 
 // const getAll = async () => model.getAllSales();
@@ -167,6 +220,7 @@ const create = async (body) => {
 // };
 
 module.exports = {
+  login,
   // getAll,
   // getById,
   create,
