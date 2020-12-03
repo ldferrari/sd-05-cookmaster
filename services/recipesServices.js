@@ -40,7 +40,7 @@ const updateById = async (id, name, ingredients, preparation, userId) => {
   const validRecipe = await isRecipeValid(id, name, ingredients, preparation);
   if (!validRecipe) return false;
   if (!ObjectId.isValid(id)) {
-    throw new CodeError('invalid_data', 'Wrong id format');
+    throw new CodeError('invalid_id', 'Wrong id format');
   }
   // const validToken = await isTokenValid(token);
   // if (!validToken) return false;
@@ -51,12 +51,9 @@ const updateById = async (id, name, ingredients, preparation, userId) => {
 
 const deleteById = async (id) => {
   if (!ObjectId.isValid(id)) {
-    throw new CodeError('invalid_data', 'Wrong id format');
+    throw new CodeError('invalid_id', 'Wrong id format');
   }
-  const deletedProd = await recipesModel.deleteById(id);
-  if (!deletedProd) {
-    throw new CodeError('invalid_data', 'Wrong id format');
-  }
+  await recipesModel.deleteById(id);
   return true;
 };
 

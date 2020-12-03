@@ -35,7 +35,7 @@ loginRouter.post('/', async (req, res) => {
     // 5/ Devolver token ao usuário
     return res.status(200).json({ token });
   } catch (err) {
-    if (err.code === 'invalid_data') {
+    if (err.code === 'invalid_user') {
       return res.status(401).json({ message: err.message });
     }
     if (err.code === 'unauthorized') {

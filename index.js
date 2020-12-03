@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 const usersController = require('./controllers/usersController');
 const loginController = require('./controllers/loginController');
 const recipesController = require('./controllers/recipesController');
+const { errorMiddleware } = require('./middlewares');
 
 // ENDPOINTS
 
@@ -22,6 +23,7 @@ app.get('/', (request, response) => {
 app.use('/users', usersController);
 app.use('/login', loginController);
 app.use('/recipes', recipesController);
+app.use(errorMiddleware);
 
 // Usar middleware static para permitir acesso a imagens via a API
 // const path = require('path');

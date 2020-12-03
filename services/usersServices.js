@@ -33,7 +33,7 @@ const create = async (name, email, password) => {
 
 const login = async (email, password) => {
   if (!email || !password) {
-    throw new CodeError('All fields must be filled', 'invalid_data');
+    throw new CodeError('All fields must be filled', 'invalid_user');
   }
   const registeredUser = await usersModel.getByEmail(email);
   if (!registeredUser || registeredUser.password !== password) {
