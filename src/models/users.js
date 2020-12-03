@@ -3,9 +3,7 @@ const getCollection = require('./getCollection');
 const getAll = async () => getCollection('users').then((collection) => collection.find().toArray());
 
 const create = async ({ name, email, password }) => {
-  const user = await getCollection('users').then((collection) =>
-    collection.insertOne({ name, email, password, role: 'user' })
-  );
+  const user = await getCollection('users').then((collection) => collection.insertOne({ name, email, password, role: 'user' }));
   return { _id: user.insertedId, name, email, password, role: 'user' };
 };
 
