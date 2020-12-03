@@ -22,9 +22,15 @@ const update = async (id, { name, ingredients, preparation }, userId) => {
   return { _id: id, name, ingredients, preparation, userId };
 };
 
+const exclude = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  return getCollection('recipes').then((collection) => collection.deleteOne({ _id: ObjectId(id) }));
+};
+
 module.exports = {
   getAll,
   create,
   getById,
   update,
+  exclude,
 };

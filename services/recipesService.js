@@ -28,9 +28,18 @@ const create = async (recipe, user) => {
 
 const update = async (id, recipe, userId) => model.update(id, recipe, userId);
 
+const exclude = async (id, role) => {
+  if (role === 'admin') {
+    model.exclude(id);
+  } else {
+    return { error: true, code: 'invalid_user', message: 'missing auth token' };
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  exclude,
 };
