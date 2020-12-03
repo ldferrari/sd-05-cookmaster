@@ -1,7 +1,11 @@
 const express = require('express');
 const rescue = require('express-rescue');
 const { ObjectId } = require('mongodb');
-const { getAllRecipes, getRecipeById } = require('../models/recipeModel');
+const {
+  getAllRecipes,
+  getRecipeById,
+  update,
+} = require('../models/recipeModel');
 const { addRecipeServ } = require('../services/recipeService');
 const validation = require('./validation');
 
@@ -21,6 +25,26 @@ recipeRouter.post(
     // console.log({ recipe });
 
     return res.status(201).json({ recipe });
+  }),
+);
+
+recipeRouter.put(
+  '/:id',
+  validation,
+  rescue(async (req, res) => {
+    const { name, ingredients, preparation } = req.body;
+    const { id: recipeid } = req.params;
+    const { _id: id } = req.user;
+
+    await update(recipeid, name, ingredients, preparation);
+
+    return res.status(200).json({
+      _id: recipeid,
+      name,
+      ingredients,
+      preparation,
+      userId: id,
+    });
   }),
 );
 

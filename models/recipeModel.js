@@ -19,4 +19,11 @@ const getAllRecipes = async () =>
 const getRecipeById = async (id) =>
   getCollection('recipes').then((recipes) => recipes.findOne(ObjectID(id)));
 
-module.exports = { addRecipe, getAllRecipes, getRecipeById };
+const update = async (id, name, ingredients, preparation) =>
+  getCollection('recipes').then((recipes) =>
+    recipes.updateOne(
+      { _id: ObjectID(id) },
+      { $set: { name, ingredients, preparation } },
+    ));
+
+module.exports = { addRecipe, getAllRecipes, getRecipeById, update };
