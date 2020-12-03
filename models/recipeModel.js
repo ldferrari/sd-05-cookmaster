@@ -12,4 +12,7 @@ const addRecipe = async (name, ingredients, preparation) => {
     }));
 };
 
-module.exports = { addRecipe };
+const getAllRecipes = async () =>
+  getCollection('recipes').then((recipes) => recipes.find().toArray());
+
+module.exports = { addRecipe, getAllRecipes };

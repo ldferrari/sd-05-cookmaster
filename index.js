@@ -20,7 +20,7 @@ app.use('/users', userRouter);
 
 app.use('/login', loginRouter);
 
-app.use('/recipes', validation, recipeRouter);
+app.use('/recipes', recipeRouter);
 
 const PORT = 3000;
 
