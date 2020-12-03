@@ -1,7 +1,7 @@
 const express = require('express');
 const rescue = require('express-rescue');
 const { validateRecipe, validateToken } = require('../middlewares/index');
-const { addRecipe, getAllRecipes, getRecipe, updateRecipe } = require('../models');
+const { addRecipe, getAllRecipes, getRecipe, updateRecipe, deleteRecipe } = require('../models');
 
 const recipesController = express.Router();
 
@@ -41,6 +41,14 @@ recipesController.put('/:id', validateToken, rescue(async (req, res) => {
   }
 
   res.status(404).json(recipeNotFoundErr);
+}));
+
+recipesController.delete('/:id', validateToken, rescue(async (req, res) => {
+  const { id } = req.params;
+
+  await deleteRecipe(id);
+
+  res.status(204).json(null);
 }));
 
 module.exports = recipesController;
