@@ -30,7 +30,7 @@ recipesController.post('/', validateRecipe, validateToken, rescue(async (req, re
   const { _id: userId } = req.user;
 
   const recipe = await addRecipe({ name, ingredients, preparation, userId });
-  res.status(201).json({ recipe });
+  return res.status(201).json({ recipe });
 }));
 
 recipesController.get('/', rescue(async (_, res) => {
@@ -42,7 +42,7 @@ recipesController.get('/', rescue(async (_, res) => {
 recipesController.get('/:id', rescue(async (req, res) => {
   const { id } = req.params;
   const recipe = await getRecipe(id);
-  if (!recipe) res.status(404).json(recipeNotFoundErr);
+  if (!recipe) return res.status(404).json(recipeNotFoundErr);
 
   res.status(200).json(recipe);
 }));
@@ -63,7 +63,7 @@ recipesController.put('/:id', validateToken, rescue(async (req, res) => {
   if (result) {
     const updatedRecipe = await getRecipe(id);
 
-    res.status(200).json(updatedRecipe);
+    return res.status(200).json(updatedRecipe);
   }
 
   res.status(404).json(recipeNotFoundErr);

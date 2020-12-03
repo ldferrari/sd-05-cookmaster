@@ -9,11 +9,11 @@ const regex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 const validateUser = rescue(async (req, res, next) => {
   const { name, email, password } = req.body;
 
-  if (!name || !email || !regex.test(email) || !password) res.status(400).json(invalidErr);
+  if (!name || !email || !regex.test(email) || !password) return res.status(400).json(invalidErr);
 
   const emailAlreadyExists = await findEmail(email);
 
-  if (emailAlreadyExists) res.status(409).json(alreadyExistsErr);
+  if (emailAlreadyExists) return res.status(409).json(alreadyExistsErr);
 
   next();
 });

@@ -11,7 +11,7 @@ const validateToken = rescue(async (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    res.status(401).json(authErr);
+    return res.status(401).json(authErr);
   }
 
   try {
@@ -24,7 +24,7 @@ const validateToken = rescue(async (req, res, next) => {
 
     return next();
   } catch (_) {
-    res.status(401).json(jwtErr);
+    return res.status(401).json(jwtErr);
   }
 });
 
