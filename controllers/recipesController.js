@@ -84,6 +84,28 @@ recipesRouter.put('/:id', validateToken, async (req, res) => {
   }
 });
 
+// 8 - Crie um endpoint para a exclusão de uma receita
+recipesRouter.delete('/:id', validateToken, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedRecipe = await recipesServices.deleteById(id);
+    if (!deletedRecipe) return res.status(400).json({ message: 'Recipe was not deleted' });
+    return res.status(204).json(null);
+  } catch (err) {
+    if (err.code === 'unauthorized') {
+      return res.status(401).json({ message: err.message });
+    }
+    if (err.code === 'wrong_auth') {
+      return res.status(401).json({ message: err.message });
+    }
+    if (err.code === 'invalid_data') {
+      return res.status(401).json({ message: err.message });
+    }
+    console.error(err);
+    res.status(500).json({ message: 'Aaah internal error' });
+  }
+});
+
 // router.delete('/:id', async (req, res) => {
 //   const { id } = req.params;
 //   try {

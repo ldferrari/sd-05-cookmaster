@@ -4,7 +4,7 @@ const connection = require('./connection');
 const getByEmail = async (email) =>
   connection()
     .then((db) => db.collection('users'))
-    .then((products) => products.findOne({ email }));
+    .then((users) => users.findOne({ email }));
 
 const create = async (name, email, password) =>
   connection()

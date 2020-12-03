@@ -14,27 +14,26 @@ const create = async (name, ingredients, preparation, userId) =>
 const getAll = async () =>
   connection()
     .then((db) => db.collection('recipes'))
-    .then((products) => products.find().toArray());
+    .then((recipes) => recipes.find().toArray());
 
 const getById = async (id) =>
   connection()
     .then((db) => db.collection('recipes'))
-    .then((products) => products.findOne(ObjectId(id)));
+    .then((recipes) => recipes.findOne(ObjectId(id)));
 
 const updateById = async (id, name, ingredients, preparation, userId) =>
   connection()
     .then((db) => db.collection('recipes'))
-    .then((products) =>
-      products.updateOne(
+    .then((recipes) =>
+      recipes.updateOne(
         { _id: ObjectId(id) },
         { $set: { name, ingredients, preparation, userId } },
       ))
     .then((result) => ({ _id: result.insertedId, name, ingredients, preparation, userId }));
 
-// const deleteById = async (id) =>
-//   connection()
-//     .then((db) => db.collection('products'))
-//     .then((product) => product.findOneAndDelete({ _id: ObjectId(id) }))
-//     .then((excludedProd) => excludedProd.value);
+const deleteById = async (id) =>
+  connection()
+    .then((db) => db.collection('recipes'))
+    .then((recipes) => recipes.deleteOne({ _id: ObjectId(id) }));
 
-module.exports = { create, getAll, getById, updateById };
+module.exports = { create, getAll, getById, updateById, deleteById };
