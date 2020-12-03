@@ -5,12 +5,6 @@ const { addUserServ } = require('../services/userService');
 
 const userRouter = express.Router();
 
-// post /
-
-// 1 - Crie um endpoint para o cadastro de usuários
-
-// userRouter
-
 userRouter.post(
   '/',
   rescue(async (req, res) => {

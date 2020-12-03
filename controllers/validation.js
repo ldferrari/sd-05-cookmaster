@@ -18,13 +18,12 @@ const validation = rescue(async (req, res, next) => {
   try {
     const { userWithoutPassword } = jwt.verify(token, secret);
 
-    // const user = await findEmailModel(userWithoutPassword.email);
-
     req.user = userWithoutPassword;
 
     next();
   } catch (err) {
     res.status(401).json({ message: 'jwt malformed' });
+    next();
   }
 });
 

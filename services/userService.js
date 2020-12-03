@@ -17,7 +17,7 @@ const addUserServ = async (name, email, password, role) => {
   // email já está cadastrado?
   const isThereEmail = await findEmailModel(email);
 
-  console.log('isthereemail', isThereEmail);
+  // console.log('isthereemail', isThereEmail);
 
   if (isThereEmail) {
     throw new CodeError('Email already registered', 'duplicate_email');
