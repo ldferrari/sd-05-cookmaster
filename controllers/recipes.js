@@ -1,9 +1,11 @@
 const express = require('express');
 const rescue = require('express-rescue');
 const { validateRecipe, validateToken } = require('../middlewares/index');
-const { addRecipe, getAllRecipes, getRecipe } = require('../models');
+const { addRecipe, getAllRecipes, getRecipe, updateRecipe } = require('../models');
 
 const recipesController = express.Router();
+
+const recipeNotFoundErr = { message: 'recipe not found' };
 
 recipesController.post('/', validateRecipe, validateToken, rescue(async (req, res) => {
   const { name, ingredients, preparation } = req.body;
@@ -22,10 +24,23 @@ recipesController.get('/', rescue(async (_, res) => {
 recipesController.get('/:id', rescue(async (req, res) => {
   const { id } = req.params;
   const recipe = await getRecipe(id);
-  console.log(recipe);
-  if (!recipe) res.status(404).json({ message: 'recipe not found' });
+  if (!recipe) res.status(404).json(recipeNotFoundErr);
 
   res.status(200).json(recipe);
+}));
+
+recipesController.put('/:id', validateToken, rescue(async (req, res) => {
+  const { id } = req.params;
+
+  const result = await updateRecipe(id, req.body);
+
+  if (result) {
+    const updatedRecipe = await getRecipe(id);
+
+    res.status(200).json(updatedRecipe);
+  }
+
+  res.status(404).json(recipeNotFoundErr);
 }));
 
 module.exports = recipesController;

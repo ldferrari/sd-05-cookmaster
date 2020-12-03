@@ -21,11 +21,31 @@ const getRecipe = async (id) => {
     const result = await db.findOne({ _id: ObjectId(id) });
     return result;
   }
+
   return null;
+};
+
+const updateRecipe = async (id, query) => {
+  const { name, ingredients, preparation } = query;
+
+  const db = await connection('recipes');
+
+  if (!ObjectId.isValid(id)) return null;
+
+  const recipe = await db.findOne({ _id: ObjectId(id) });
+
+  if (!recipe) return null;
+
+  const updatedRecipe = await db.updateOne(
+    { _id: ObjectId(id) }, { $set: { name, ingredients, preparation } },
+  );
+
+  return updatedRecipe;
 };
 
 module.exports = {
   addRecipe,
   getAllRecipes,
   getRecipe,
+  updateRecipe,
 };

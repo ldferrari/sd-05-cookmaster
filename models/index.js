@@ -1,7 +1,7 @@
 const connection = require('./connection');
 const { findEmail, addUser } = require('./users');
 const createToken = require('./token');
-const { addRecipe, getAllRecipes, getRecipe } = require('./recipes');
+const { addRecipe, getAllRecipes, getRecipe, updateRecipe } = require('./recipes');
 
 module.exports = {
   connection,
@@ -11,4 +11,5 @@ module.exports = {
   addRecipe,
   getAllRecipes,
   getRecipe,
+  updateRecipe,
 };
