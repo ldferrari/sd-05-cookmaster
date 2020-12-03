@@ -32,18 +32,28 @@ const service = require('../services/userServices');
 
 const create = async (req, res) => {
   try {
-    const body = req.body;
-    const createdUser = await service.create(body);
-    // console.log(createdProduct);
+    const dadosBody = req.body;
+    // console.log(dadosBody);
+    const createdUser = await service.create(dadosBody);
+    // console.log(createdUser);
+    if(createdUser.error){
+      if (createdUser.code === 'Bad Request') {
+        return res.status(400).json({ message: createdUser.message });
+      }
+      if (createdUser.code === 'Conflict') {
+        return res.status(409).json({ message: createdUser.message });
+      }
+      return res.status(500).json({ message: 'Algo deu ruim no create user' })
+    }
     res.status(201).json({ user: createdUser });
   } catch (err) {
     // console.log(err);
-    if (err.code === 'Bad Request') {
-      return res.status(400).json({ message: err.message });
-    }
-    if (err.code === 'Conflict') {
-      return res.status(409).json({ message: err.message });
-    }
+    // if (err.code === 'Bad Request') {
+    //   return res.status(400).json({ message: err.message });
+    // }
+    // if (err.code === 'Conflict') {
+    //   return res.status(409).json({ message: err.message });
+    // }
     console.error(err.message);
     res.status(500).json({ message: 'Algo deu ruim no create user' });
   }

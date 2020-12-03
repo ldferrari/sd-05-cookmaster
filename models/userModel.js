@@ -6,12 +6,16 @@ const getCollection = require('./connection');
 //   getCollection('sales').then((sales) => sales.find().toArray());
 
 const create = async (email, password, name, role) => {
-  const newUser = await getCollection('users').then((db) => db.insertOne({ email, password, name, role }));
-  return { newUser }; // _id: users.insertedId, name, email, password, role
+  const newUser = await getCollection('users').then((users) => users.insertOne({ email, password, name, role }));
+  // console.log(newUser);
+  return { name, email, role, _id: newUser.insertedId }; // _id: newUser.insertedId, name, email, password, role
 };
 
-const getUserByEmail = async (email) => getCollection('users')
-  .then((db) => db.findOne(email));
+const getUserByEmail = async (email) => await getCollection('users')
+  .then((users) => users.findOne({ email }));
+
+// const getUserByName = async (username) =>
+//   getCollection('users').then((db) => db.collection('users').findOne({ username }));
 
 // const updateSales = async (id, productId, quantity) => {
 //   const sale = await getCollection('sales')

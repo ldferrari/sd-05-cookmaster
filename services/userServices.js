@@ -1,4 +1,4 @@
-// const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const model = require('../models/userModel');
 // const productModel = require('../models/productsModel');
 
@@ -28,19 +28,19 @@ const model = require('../models/userModel');
 //   return sales;
 // };
 
-const create = async (user) => {
-  if (!user) {
-    throw {
+const create = async (body) => {
+  if (!body) {
+    return {
       error: true,
       code: 'Bad Request',
       message: 'Invalid entries. Try again.',
     };
   }
-  const { name, email, password } = user;
+  const { name, email, password } = body;
   const role = 'user';
 
   if (!email || !password || !name) {
-    throw {
+    return {
       error: true,
       code: 'Bad Request',
       message: 'Invalid entries. Try again.',
@@ -52,25 +52,25 @@ const create = async (user) => {
   const emailIsValid = emailRegex.test(email);
 
   if (!emailIsValid) {
-    throw {
+    return {
       error: true,
       code: 'Bad Request',
       message: 'Invalid entries. Try again.',
     };
   }
-
-  const emailExists = await model.getUsersByEmail(email);
-
+  // console.log(email);
+  const emailExists = await model.getUserByEmail(email);
+  console.log(emailExists);
   if (emailExists) {
-    throw {
+    return {
       error: true,
       code: 'Conflict',
       message: 'Email already registered',
     };
   }
-  const newUser = await model.createSales(email, password, name, role);
-
-  return newUser;
+  const newUser = await model.create(email, password, name, role);
+// console.log(newUser);
+  return newUser ;
 };
 
 // const update = async (id, productId, quantity) => {
