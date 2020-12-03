@@ -1,5 +1,5 @@
-// const validateToken = require('./validateToken');
+const validateToken = require('./validateToken');
 
-// module.exports = {
-//   validateToken,
-// };
+module.exports = {
+  validateToken,
+};

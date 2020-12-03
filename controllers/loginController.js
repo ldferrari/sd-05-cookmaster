@@ -13,6 +13,7 @@ loginRouter.post('/', async (req, res) => {
     const user = await usersServices.login(email, password);
     if (!user) return res.status(400).json({ message: 'Login was not possible' });
     console.log(user);
+    // Refatorar: melhorar fazer uma fction que gera o token com params
     // II - Configurar e retornar o JWT
     // 1/ Secret
     const secret = 'secret-stuff-here-what?';
