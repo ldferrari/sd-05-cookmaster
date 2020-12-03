@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
+
 const { usersController, loginController, recipesController } = require('./controllers/index');
 
 const app = express();
@@ -8,7 +8,7 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
-app.use('/images', express.static(path.join(__dirname, 'uploads')));
+app.use('/images', express.static('uploads'));
 
 app.get('/', (_, res) => { res.send(); });
 
