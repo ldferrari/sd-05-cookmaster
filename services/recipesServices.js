@@ -15,16 +15,25 @@ const isRecipeValid = async (name, ingredients, preparation) => {
   return true;
 };
 
-const create = async (name, ingredients, preparation) => {
-  // const userId = get it how?
-  // Neste endpoint temos apenas a info do token - permite achar user?
+// const isTokenValid = async (token, payload) => {
+//   const smth = payload.exp;
+//   if (!token || !smth) {
+//     throw new CodeError('jwt malformed', 'unauthorized');
+//   }
+//   return true;
+// };
+
+const create = async (name, ingredients, preparation, token, payload) => {
   const validRecipe = await isRecipeValid(name, ingredients, preparation);
-  // passar param userId para que model possa retorna-lo tb
   if (!validRecipe) return false;
-  const newRecipe = await recipesModel.create(name, ingredients, preparation);
+  // const validToken = await isTokenValid(token, payload);
+  // if (!validToken) return false;
+  const userId = payload.userData._id;
+  const newRecipe = await recipesModel.create(name, ingredients, preparation, userId);
   return {
     recipe: newRecipe,
   };
+  // now returns with correct userId yeepeee
 };
 
 module.exports = { isRecipeValid, create };
