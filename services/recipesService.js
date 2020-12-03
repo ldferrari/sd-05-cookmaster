@@ -14,7 +14,7 @@ const getById = async (id) => {
 
 const getAll = async () => model.getAll();
 
-const create = async (recipe) => {
+const create = async (recipe, user) => {
   const { name, ingredients, preparation } = recipe;
   if (!name || !ingredients || !preparation) {
     return {
@@ -23,7 +23,7 @@ const create = async (recipe) => {
       message: 'Invalid entries. Try again.',
     };
   }
-  return model.create(recipe);
+  return model.create(recipe, user);
 };
 
 module.exports = {

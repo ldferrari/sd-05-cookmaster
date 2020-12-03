@@ -7,7 +7,7 @@ const auth = require('../middlewares/auth');
 const recipes = Router();
 
 recipes.post('/', auth, rescue(async (req, res, next) => {
-  const recipe = await service.create(req.body);
+  const recipe = await service.create(req.body, req.user);
   if (recipe.error) {
     return next(recipe);
   }
