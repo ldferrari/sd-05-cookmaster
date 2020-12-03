@@ -15,6 +15,17 @@ const create = async (req, res) => {
   }
 };
 
+const getAllRecipes = async (req, res) => {
+  try {
+    const saida = await recipesServices.getAllRecipes();
+    res.status(200).json(saida);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Something wrong happenned' });
+  }
+};
+
 module.exports = {
   create,
+  getAllRecipes,
 };

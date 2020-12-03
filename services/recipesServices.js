@@ -12,7 +12,10 @@ const validateRecipe = (name, ingredients, preparation) => {
 const create = async (name, ingredients, preparation, userId) => recipesModel
   .create(name, ingredients, preparation, userId);
 
+const getAllRecipes = async () => recipesModel.getAllRecipes();
+
 module.exports = {
   create,
   validateRecipe,
+  getAllRecipes,
 };
