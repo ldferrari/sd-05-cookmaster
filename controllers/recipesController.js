@@ -10,8 +10,9 @@ const { validateToken } = require('../middlewares');
 // 3 - Crie um endpoint para o cadastro de receitas
 recipesRouter.post('/', validateToken, async (req, res) => {
   const { name, ingredients, preparation } = req.body;
-  // const token = req.headers.authorization;
-  const userId = req.payload;
+  const { _id: userId } = req.userPayload;
+  // So as not to write payload.userData._id in validateToken
+  // because eslint does not let it pass
   try {
     const recipeCreated = await recipesServices.create(name, ingredients, preparation, userId);
     if (!recipeCreated) return res.status(400).json({ message: 'Recipe was not created' });
@@ -58,7 +59,7 @@ recipesRouter.get('/:id', async (req, res) => {
 recipesRouter.put('/:id', validateToken, async (req, res) => {
   const { id } = req.params;
   const { name, ingredients, preparation } = req.body;
-  const userId = req.payload;
+  const { _id: userId } = req.userPayload;
   try {
     const updatedRecipe = await recipesServices.updateById(
       id,

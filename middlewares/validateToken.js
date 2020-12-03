@@ -8,8 +8,9 @@ const validateToken = async (req, res, next) => {
     }
     const secret = 'secret-stuff-here-what?';
     const payload = jwt.verify(token, secret);
-    req.payload = payload.userData.id;
-    console.log(payload.exp);
+    req.userPayload = payload.userData;
+    // console.log(payload);
+    // console.log(req.payload);
     // if (!payload.exp * 1000 > Date.now()) {
     //   return res.status(401).json({ message: 'jwt malformed' });
     // }
