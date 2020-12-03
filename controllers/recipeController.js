@@ -3,7 +3,7 @@ const service = require('../services/recipeServices');
 const create = async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;
-    const { userId } = req.userId;
+    const { _id: userId } = req.userData;
     // const token = req.headers.authorization;
 
     console.log(userId);

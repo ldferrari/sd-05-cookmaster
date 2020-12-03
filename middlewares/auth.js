@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
     //   return res.status(401).json({ message: 'jwt malformed' });
     // }
     // console.log(user._id);
-    req.userId = payload.userData._id;
+    req.userData = payload.userData;
 
     return next();
   } catch (err) {
