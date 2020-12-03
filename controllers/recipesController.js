@@ -65,7 +65,7 @@ recipesRouter.put('/:id', validateToken, async (req, res) => {
       name,
       ingredients,
       preparation,
-      userId
+      userId,
     );
     if (!updatedRecipe) return res.status(400).json({ message: 'Recipe was not updated' });
     return res.status(200).json(updatedRecipe);

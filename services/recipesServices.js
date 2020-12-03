@@ -1,7 +1,5 @@
 const { ObjectId } = require('mongodb');
-const jwt = require('jsonwebtoken');
 const recipesModel = require('../models/recipesModel');
-const usersModel = require('../models/usersModel');
 
 class CodeError extends Error {
   constructor(message, code) {
