@@ -5,7 +5,7 @@ const { findEmail } = require('../models');
 const admErr = { message: 'Only admins can register new admins' };
 const authErr = { message: 'missing auth token' };
 
-const secret = 'abcd';
+const secret = 'seraQueAgoraVai';
 
 const validateAdmin = rescue(async (req, res, next) => {
   const token = req.headers.authorization;

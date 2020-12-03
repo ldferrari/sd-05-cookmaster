@@ -5,7 +5,7 @@ const { findEmail } = require('../models');
 const jwtErr = { message: 'jwt malformed' };
 const authErr = { message: 'missing auth token' };
 
-const secret = 'abcd';
+const secret = 'seraQueAgoraVai';
 
 const validateToken = rescue(async (req, res, next) => {
   const token = req.headers.authorization;
