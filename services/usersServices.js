@@ -20,7 +20,7 @@ const create = async (name, email, password, role) => {
   if (
     !name
     || name === ''
-    || !email 
+    || !email
     || email === ''
     || !password
     || password === ''

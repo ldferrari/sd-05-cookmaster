@@ -11,9 +11,9 @@ let connection = null;
 // prettier-ignore
 const getCollection = async (collectionName) => {
   connection = connection || (await MongoClient.connect(URI, {
-      userNewUrlParser: true,
-      useUnifiedTopology: true,
-    }));
+    userNewUrlParser: true,
+    useUnifiedTopology: true,
+  }));
   return connection.db(DB_NAME).collection(collectionName);
 };
 

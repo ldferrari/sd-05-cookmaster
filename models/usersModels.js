@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongodb');
+// const { ObjectId } = require('mongodb');
 const getCollection = require('./get-collection');
 
 const create = (name, email, role = 'user') =>
