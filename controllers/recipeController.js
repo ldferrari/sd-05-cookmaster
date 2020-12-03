@@ -7,13 +7,16 @@ const validation = require('./validation');
 const recipeRouter = express.Router();
 
 recipeRouter.post(
-  '/',  validation,
+  '/',
+  validation,
   rescue(async (req, res) => {
     const { name, ingredients, preparation } = req.body;
     // console.log('recipe controler', name);
     const recipe = await addRecipeServ(name, ingredients, preparation);
 
-    recipe.userId = req.user._id;
+    const { _id: id } = req.user;
+
+    recipe.userId = id;
     console.log({ recipe });
 
     return res.status(201).json({ recipe });
