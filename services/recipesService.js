@@ -26,8 +26,11 @@ const create = async (recipe, user) => {
   return model.create(recipe, user);
 };
 
+const update = async (id, recipe, userId) => model.update(id, recipe, userId);
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };

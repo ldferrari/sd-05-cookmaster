@@ -14,6 +14,16 @@ recipes.post('/', auth, rescue(async (req, res, next) => {
   res.status(201).json({ recipe });
 }));
 
+recipes.put('/:id', auth, rescue(async (req, res, next) => {
+  const { id } = req.params;
+  const { _id: userId } = req.user;
+  const recipe = await service.update(id, req.body, userId);
+  if (recipe.error) {
+    return next(recipe);
+  }
+  res.status(200).json(recipe);
+}));
+
 recipes.get('/:id', rescue(async (req, res, next) => {
   const { id } = req.params;
   const recipe = await service.getById(id);
