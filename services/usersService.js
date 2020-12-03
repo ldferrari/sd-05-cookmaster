@@ -10,7 +10,9 @@ const create = async (body) => {
 
   const findEmail = await model.getByEmail(email);
 
-  console.log(findEmail);
+  if (findEmail) {
+    throw ({ message: 'Email already registered' });
+  }
 
   if (!name || !email || !password || !validateEmail(email)) {
     throw ({ message: 'Invalid entries. Try again.' });

@@ -7,7 +7,7 @@ const users = Router();
 users.post('/', rescue(async (req, res) => {
   const newUser = await service.create(req.body);
 
-  return res.status(200).json({ user: newUser });
+  return res.status(201).json({ user: newUser });
 }));
 
 module.exports = users;
