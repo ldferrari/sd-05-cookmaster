@@ -16,15 +16,15 @@ const getById = async (id) => getCollection('recipes')
 const update = async (name, ingredients, preparation, id) => { // userID
   const recipe = await getCollection('recipes')
     .then((recipes) => recipes.updateOne(
-      { _id: ObjectId(id)}, // , 'recipes._id': Id
-      { $set: { 
+      { _id: ObjectId(id) }, // , 'recipes._id': Id
+      { $set: {
         'recipes[0].name': name,
         'recipes[0].ingredients': ingredients,
         'recipes[0].preparation': preparation,
-        } },
+      } },
     ));
   // console.log(recipe);
-  return (name, ingredients, preparation, id);
+  return (recipe);
 };
 
 // const excludeSales = async (id) => {

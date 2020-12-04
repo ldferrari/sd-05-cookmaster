@@ -61,7 +61,7 @@ const update = async (req, res) => {
   const { name, ingredients, preparation } = req.body;
   const { _id: tokenId, role } = req.userData;
 
-   console.log(name, ingredients, preparation, id, role, tokenId);
+  // console.log(name, ingredients, preparation, id, role, tokenId);
   try {
     const updatedRecipe = await service.update(name, ingredients, preparation, id, role, tokenId);
     res.status(200).json(updatedRecipe); // não seria 204?

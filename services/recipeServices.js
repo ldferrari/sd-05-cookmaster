@@ -55,16 +55,16 @@ const update = async (name, ingredients, preparation, id, role, tokenId) => {
       message: 'Invalid entries. Try again.',
     };
   }
-  
+
   if (!ObjectId.isValid(id)) {
-  return {
-    error: true,
-    code: 'Not Found',
-    message: 'recipe not found1',
-  };
+    return {
+      error: true,
+      code: 'Not Found',
+      message: 'recipe not found1',
+    };
   }
   const recipe = await model.getById(id);
-  
+
   if (!recipe) {
     return {
       error: true,
@@ -73,7 +73,7 @@ const update = async (name, ingredients, preparation, id, role, tokenId) => {
     };
   }
   console.log(recipe.userId);
-  
+
   if ((tokenId !== recipe.userId) && (role !== 'admin')) {
     return {
       error: true,
