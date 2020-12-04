@@ -13,15 +13,19 @@ const getAll = async () =>
 const getById = async (id) => getCollection('recipes')
   .then((recipes) => recipes.findOne(ObjectId(id)));
 
-// const updateSales = async (id, productId, quantity) => {
-//   const sale = await getCollection('sales')
-//     .then((sales) => sales.updateOne(
-//       { _id: ObjectId(id), 'itensSold.productId': productId },
-//       { $set: { 'intensSold[0].quantity': quantity } },
-//     ));
-
-//   return sale;
-// };
+const update = async (name, ingredients, preparation, id) => { // userID
+  const recipe = await getCollection('recipes')
+    .then((recipes) => recipes.updateOne(
+      { _id: ObjectId(id)}, // , 'recipes._id': Id
+      { $set: { 
+        'recipes[0].name': name,
+        'recipes[0].ingredients': ingredients,
+        'recipes[0].preparation': preparation,
+        } },
+    ));
+  // console.log(recipe);
+  return (name, ingredients, preparation, id);
+};
 
 // const excludeSales = async (id) => {
 //   const deleted = await getCollection('sales')
@@ -35,6 +39,6 @@ module.exports = {
   getById,
   // getUserByEmail,
   create,
-  // updateSales,
+  update,
   // excludeSales,
 };

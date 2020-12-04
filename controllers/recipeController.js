@@ -56,21 +56,26 @@ const getById = async (req, res) => {
   }
 };
 
-// const update = async (req, res) => { // rescue(
-//   const { id } = req.params;
-//   const { productId, quantity } = req.body[0]; // ?[0]
-//   // console.log(id, productId, quantity);
-//   try {
-//     const updatedSale = await service.update(id, productId, quantity);
-//     res.status(200).json(updatedSale); // não seria 204?
-//   } catch (err) {
-//     if (err.code === 'invalid_data') {
-//       return res.status(422).json({ err: { code: err.code, message: err.message } });
-//     }
-//     // console.error(err.message);
-//     res.status(500).json({ message: 'Algo deu errado no update' });
-//   }
-// }; // )
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const { _id: tokenId, role } = req.userData;
+
+   console.log(name, ingredients, preparation, id, role, tokenId);
+  try {
+    const updatedRecipe = await service.update(name, ingredients, preparation, id, role, tokenId);
+    res.status(200).json(updatedRecipe); // não seria 204?
+  } catch (err) {
+    if (err.code === 'Not Found') {
+      return res.status(440).json({ err: { code: err.code, message: err.message } });
+    }
+    if (err.code === 'Bad Request') {
+      return res.status(400).json({ err: { code: err.code, message: err.message } });
+    }
+    // console.error(err.message);
+    res.status(500).json({ message: 'Algo deu bem errado no update' });
+  }
+};
 
 // const remove = async (req, res) => { // rescue(
 //   const { id } = req.params;
@@ -91,6 +96,6 @@ module.exports = {
   getAll,
   getById,
   create,
-  // update,
+  update,
   // remove,
 };

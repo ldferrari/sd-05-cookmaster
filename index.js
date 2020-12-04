@@ -25,7 +25,7 @@ app.get('/recipes', recipeController.getAll);
 
 app.get('/recipes/:id', recipeController.getById);
 
-// app.put('/products/:id', productController.update);
+app.put('/recipes/:id', authMiddleware, recipeController.update);
 
 // app.delete('/products/:id', productController.remove);
 

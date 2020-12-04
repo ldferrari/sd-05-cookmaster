@@ -47,67 +47,46 @@ const getById = async (id) => {
   return recipe;
 };
 
-// const update = async (id, productId, quantity) => {
-//   if (!id) {
-//     throw {
-//       code: 'invalid_data',
-//       message: 'Wrong product ID or invalid quantity',
-//     };
-//   }
-//   if (!ObjectId.isValid(id)) {
-//     throw {
-//       code: 'invalid_data',
-//       message: 'Wrong product ID or invalid quantity',
-//     };
-//   }
-//   if (!productId || !quantity) {
-//     throw {
-//       code: 'invalid_data',
-//       message: 'Wrong product ID or invalid quantity',
-//     };
-//   }
-//   if (!ObjectId.isValid(productId)) {
-//     throw {
-//       code: 'invalid_data',
-//       message: 'Wrong product ID or invalid quantity',
-//     };
-//   }
-//   if (quantity <= 0) {
-//     throw {
-//       code: 'invalid_data',
-//       message: 'Wrong product ID or invalid quantity',
-//     };
-//   }
-//   if (typeof quantity !== 'number' || !Number.isInteger(quantity)) {
-//     throw {
-//       code: 'invalid_data',
-//       message: 'Wrong product ID or invalid quantity',
-//     };
-//   }
-//   const saleExists = await model.getSalesById(id);
-//   if (!saleExists) {
-//     throw {
-//       code: 'invalid_data',
-//       message: 'Wrong product ID or invalid quantity',
-//     };
-//   }
-//   const productExists = await productModel.getProductsById(productId);
-//   if (!productExists) {
-//     throw {
-//       code: 'invalid_data',
-//       message: 'Wrong product ID or invalid quantity',
-//     };
-//   }
-//   await model.updateSales(id, productId, quantity);
-//   const updated = {
-//     _id: id,
-//     itensSold: [
-//       { productId, quantity },
-//     ],
-//   };
-//   // console.log(updated);
-//   return updated;
-// };
+const update = async (name, ingredients, preparation, id, role, tokenId) => {
+  if (!ingredients || !preparation || !name || !id || !role || !tokenId) {
+    return {
+      error: true,
+      code: 'Bad Request',
+      message: 'Invalid entries. Try again.',
+    };
+  }
+  
+  if (!ObjectId.isValid(id)) {
+  return {
+    error: true,
+    code: 'Not Found',
+    message: 'recipe not found1',
+  };
+  }
+  const recipe = await model.getById(id);
+  
+  if (!recipe) {
+    return {
+      error: true,
+      code: 'Not Found',
+      message: 'recipe not found2',
+    };
+  }
+  console.log(recipe.userId);
+  
+  if ((tokenId !== recipe.userId) && (role !== 'admin')) {
+    return {
+      error: true,
+      code: 'Bad Request',
+      message: 'Invalid entries. Try again.',
+    };
+  }
+  console.log(role);
+  await model.update(name, ingredients, preparation, id);
+  const updated = { id, name, ingredients, preparation, userId: tokenId };
+  console.log(updated);
+  return updated;
+};
 
 // const exclude = async (id) => {
 //   if (!id) {
@@ -145,6 +124,6 @@ module.exports = {
   getAll,
   getById,
   create,
-  // update,
+  update,
   // exclude,
 };
