@@ -83,8 +83,7 @@ recipesRouter.delete(
 const storage = multer.diskStorage({
   destination: 'uploads',
   filename: (req, _file, callback) => {
-    const { id } = req.params;
-    callback(null, `${id}.jpeg`);
+    callback(null, `${req.params.id}.jpeg`);
   },
 });
 
@@ -97,6 +96,5 @@ recipesRouter.put('/:id/image/', upload.single('image'), validateToken, rescue(a
   res.status(200).json(recipeWithId);
   console.log(req.file);
 }));
-
 
 module.exports = recipesRouter;

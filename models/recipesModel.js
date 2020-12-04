@@ -33,8 +33,8 @@ const updateById = async (id, name, ingredients, preparation, userId) => {
 const deleteById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
   return connection()
-  .then((db) => db.collection('recipes'))
-  .then((recipes) => recipes.deleteOne({ _id: ObjectId(id) }));
+    .then((db) => db.collection('recipes'))
+    .then((recipes) => recipes.deleteOne({ _id: ObjectId(id) }));
 };
 
 const updateImage = async (id) => {
