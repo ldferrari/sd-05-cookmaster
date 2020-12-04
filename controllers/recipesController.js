@@ -80,6 +80,9 @@ recipesRouter.delete(
 // Refactoring with error middleware: to manage all res w/ other status
 
 // 9 - Crie um endpoint para a adição de uma imagem a uma receita
+// 10 - Crie um endpoint para acessar a imagem de uma receita
+// Modelo de code: https://github.com/tryber/sd-05-live-lectures/pull/54/files
+
 const storage = multer.diskStorage({
   destination: 'uploads',
   filename: (req, _file, callback) => {
@@ -94,7 +97,9 @@ recipesRouter.put('/:id/image/', upload.single('image'), validateToken, rescue(a
   await recipesModel.updateImage(id);
   const recipeWithId = await recipesModel.getById(id);
   res.status(200).json(recipeWithId);
-  console.log(req.file);
+  // console.log(req.file);
 }));
+
+// http://localhost:3000/images/5fcab2065ca2fba6775abdcd.jpeg shows img!
 
 module.exports = recipesRouter;
