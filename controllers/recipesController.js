@@ -65,12 +65,31 @@ const exclude = async (req, res) => {
   }
 };
 
+const updateWithImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const image = req.savePath;
+    const receita = await recipesServices.getById(id);
+    const { name, ingredients, preparation, userId } = receita;
+    const { role } = req.validatedTokenInfo;
+    if (userId === req.validatedTokenInfo.id || role === 'admin') {
+      const saida = await recipesServices
+        .updateWithImage(id, name, ingredients, preparation, req.validatedTokenInfo.id, image);
+      return res.status(200).json(saida);
+    }
+  } catch (err) {
+    // console.log('err', err);
+    return res.status(500).send({ message: 'Ocorreu um erro no Bd' });
+  }
+};
+
 module.exports = {
   create,
   getAllRecipes,
   getById,
   update,
   exclude,
+  updateWithImage,
 };
 
 //  https://stackoverflow.com/questions/2690065/return-in-catch-block

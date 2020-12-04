@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const usersController = require('./controllers/usersController');
 const recipesController = require('./controllers/recipesController');
 const auth = require('./auth/validateToken');
+const multer = require('./middlewares/multer');
 
 const app = express();
 const PORT = 3000;
@@ -27,6 +28,8 @@ app.get('/recipes/:id', recipesController.getById);
 app.put('/recipes/:id', auth.verifyJWT, recipesController.update);
 
 app.delete('/recipes/:id', auth.verifyJWT, recipesController.exclude);
+
+app.put('/recipes/:id/image/', auth.verifyJWT, multer.upload.single('image'), recipesController.updateWithImage);
 
 app.listen(PORT, () => {
   console.log(`Estou monitorando a porta ${PORT}`);

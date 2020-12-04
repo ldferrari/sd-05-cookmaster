@@ -27,10 +27,18 @@ const update = async (id, name, ingredients, preparation, userId) => {
 const exclude = async (id) => connection()
   .then((db) => db.collection(theCollection).deleteOne({ _id: { $in: [ObjectId(id)] } }));
 
+const updateWithImage = async (id, name, ingredients, preparation, userId, image) => {
+  await connection()
+    .then((db) => db.collection(theCollection)
+      .updateOne({ _id: { $in: [ObjectId(id)] } }, { $set: { userId, image } }));
+  return { _id: id, name, ingredients, preparation, userId, image };
+};
+
 module.exports = {
   create,
   getAllRecipes,
   getById,
   update,
   exclude,
+  updateWithImage,
 };

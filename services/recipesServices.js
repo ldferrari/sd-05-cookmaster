@@ -31,6 +31,9 @@ const update = async (id, name, ingredients, preparation, userId) => recipesMode
 
 const exclude = async (id) => recipesModel.exclude(id);
 
+const updateWithImage = async (id, name, ingredients, preparation, userId, image) => recipesModel
+  .updateWithImage(id, name, ingredients, preparation, userId, image);
+
 module.exports = {
   create,
   validateRecipe,
@@ -38,4 +41,5 @@ module.exports = {
   getById,
   update,
   exclude,
+  updateWithImage,
 };
