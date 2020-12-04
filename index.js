@@ -4,6 +4,7 @@ const path = require('path');
 
 const usersController = require('./controllers/usersController');
 const recipesController = require('./controllers/recipesController');
+const adminController = require('./controllers/adminController');
 const mid = require('./middlewares/index');
 
 const app = express();
@@ -33,6 +34,8 @@ app.put('/recipes/:id', mid.validateToken, recipesController.update);
 app.delete('/recipes/:id', mid.validateToken, recipesController.exclude);
 
 app.put('/recipes/:id/image/', mid.validateToken, mid.multer.upload.single('image'), recipesController.updateWithImage);
+
+app.post('/users/admin', mid.validateToken, adminController.create);
 
 app.listen(PORT, () => {
   console.log(`Estou monitorando a porta ${PORT}`);
