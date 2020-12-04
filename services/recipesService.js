@@ -36,10 +36,18 @@ const exclude = async (id, role) => {
   }
 };
 
+const updateImage = async (id, image) => {
+  const { mimetype } = image;
+  const imageExtension = mimetype.split('/')[1];
+  const imageURL = `localhost:3000/images/${id}.${imageExtension}`;
+  return model.updateImage(id, imageURL);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   exclude,
+  updateImage,
 };

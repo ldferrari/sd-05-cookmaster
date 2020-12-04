@@ -5,9 +5,9 @@ const secret = 'calado';
 
 module.exports = async (req, res, next) => {
   const token = req.headers.authorization;
-
+  console.log(token);
   if (!token) return res.status(401).json({ message: 'missing auth token' });
-
+  console.log(token);
   try {
     const payload = jwt.verify(token, secret, {
       audience: 'identity',

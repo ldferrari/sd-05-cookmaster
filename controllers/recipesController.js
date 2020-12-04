@@ -1,10 +1,19 @@
 const { Router } = require('express');
+const multer = require('multer');
 const rescue = require('express-rescue');
 
 const service = require('../services/recipesService');
 const auth = require('../middlewares/auth');
 
 const recipes = Router();
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+recipes.put('/:id/image', upload.single('image'), auth, rescue(async (req, res, _next) => {
+  const { id } = req.params;
+  const recipeWithImage = await service.updateImage(id, req.file);
+  res.status(200).json(recipeWithImage);
+}));
 
 recipes.post('/', auth, rescue(async (req, res, next) => {
   const recipe = await service.create(req.body, req.user);
