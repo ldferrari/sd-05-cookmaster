@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const usersController = require('./controllers/usersController');
 const recipesController = require('./controllers/recipesController');
@@ -10,6 +11,8 @@ const app = express();
 const PORT = 3000;
 
 app.use(bodyParser.json());
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
