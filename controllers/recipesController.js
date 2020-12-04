@@ -61,7 +61,7 @@ const exclude = async (req, res) => {
       return res.status(204).send();
     }
   } catch (err) {
-    res.status(500).json({ message: 'Ocorreu um erro no Bd' });
+    return res.status(500).json({ message: 'Ocorreu um erro no Bd' });
   }
 };
 
