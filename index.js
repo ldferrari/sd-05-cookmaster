@@ -26,6 +26,8 @@ app.get('/recipes/:id', recipesController.getById);
 
 app.put('/recipes/:id', auth.verifyJWT, recipesController.update);
 
+app.delete('/recipes/:id', auth.verifyJWT, recipesController.exclude);
+
 app.listen(PORT, () => {
   console.log(`Estou monitorando a porta ${PORT}`);
 });
