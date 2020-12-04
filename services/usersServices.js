@@ -1,7 +1,3 @@
-const randtoken = require('rand-token');
-
-const token = randtoken.generate(96);
-
 const model = require('../models');
 
 // https://bit.ly/2VxAplp
