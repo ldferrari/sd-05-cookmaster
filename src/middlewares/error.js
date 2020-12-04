@@ -7,4 +7,10 @@ module.exports = (err, _req, res, _next) => {
   if (code === 'conflict') {
     res.status(409).json({ message });
   }
+  if (code === 'unauthorized_data') {
+    res.status(401).json({ message });
+  }
+  if (code === 'invalid_user') {
+    res.status(401).json({ message });
+  }
 };
