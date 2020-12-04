@@ -34,7 +34,7 @@ recipeRouter.post(
 // multer
 
 const storage = multer.diskStorage({
-  destination: '../images',
+  destination: 'uploads',
   filename: (req, file, callback) => {
     callback(null, `${req.params.id}.jpg`);
   },
