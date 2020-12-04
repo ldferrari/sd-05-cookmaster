@@ -21,6 +21,8 @@ app.post('/recipes', recipesController.create);
 
 app.get('/recipes', recipesController.getAllRecipes);
 
+app.get('/recipes/:id', recipesController.getById);
+
 app.listen(PORT, () => {
   console.log(`Estou monitorando a porta ${PORT}`);
 });

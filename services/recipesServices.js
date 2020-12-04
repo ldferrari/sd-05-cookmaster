@@ -14,8 +14,21 @@ const create = async (name, ingredients, preparation, userId) => recipesModel
 
 const getAllRecipes = async () => recipesModel.getAllRecipes();
 
+const getById = async (id) => {
+  if (id.length < 24) {
+    throw new CodeError(404, 'recipe not found');
+    // Deveria ser código 422 já que o formato do id é inválido, porém o teste valida como 404
+  }
+  const saida = await recipesModel.getById(id);
+  if (!saida) {
+    throw new CodeError(404, 'recipe not found');
+  }
+  return saida;
+};
+
 module.exports = {
   create,
   validateRecipe,
   getAllRecipes,
+  getById,
 };
