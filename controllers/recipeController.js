@@ -77,19 +77,23 @@ const update = async (req, res) => {
   }
 };
 
-// const remove = async (req, res) => { // rescue(
-//   const { id } = req.params;
-//   try {
-//     const removed = await service.exclude(id);
-//     res.status(200).json(removed);
-//   } catch (err) {
-//     if (err.code === 'invalid_data') {
-//       return res.status(422).json({ err: { code: err.code, message: err.message } });
-//     }
-//     console.error(err.message);
-//     res.status(500).json({ message: 'Algo deu errado no REMOVE' });
-//   }
-// }; // )
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const { _id: tokenId, role } = req.userData;
+  try {
+    await service.exclude(id, role, tokenId);
+    res.status(204).end();
+  } catch (err) {
+    if (err.code === 'Not Found') {
+      return res.status(440).json({ err: { code: err.code, message: err.message } });
+    }
+    if (err.code === 'Bad Request') {
+      return res.status(400).json({ err: { code: err.code, message: err.message } });
+    }
+    console.error(err.message);
+    res.status(500).json({ message: 'Algo deu errado no exclude' });
+  }
+};
 
 module.exports = {
   // login,
@@ -97,5 +101,5 @@ module.exports = {
   getById,
   create,
   update,
-  // remove,
+  remove,
 };

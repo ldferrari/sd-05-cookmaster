@@ -60,7 +60,7 @@ const update = async (name, ingredients, preparation, id, role, tokenId) => {
     return {
       error: true,
       code: 'Not Found',
-      message: 'recipe not found1',
+      message: 'recipe not found',
     };
   }
   const recipe = await model.getById(id);
@@ -69,10 +69,10 @@ const update = async (name, ingredients, preparation, id, role, tokenId) => {
     return {
       error: true,
       code: 'Not Found',
-      message: 'recipe not found2',
+      message: 'recipe not found',
     };
   }
-  console.log(recipe.userId);
+  // console.log(recipe.userId);
 
   if ((tokenId !== recipe.userId) && (role !== 'admin')) {
     return {
@@ -81,43 +81,56 @@ const update = async (name, ingredients, preparation, id, role, tokenId) => {
       message: 'Invalid entries. Try again.',
     };
   }
-  console.log(role);
+  // console.log(role);
   await model.update(name, ingredients, preparation, id);
   const updated = { id, name, ingredients, preparation, userId: tokenId };
-  console.log(updated);
+  // console.log(updated);
   return updated;
 };
 
-// const exclude = async (id) => {
-//   if (!id) {
-//     throw {
-//       code: 'invalid_data', message: 'Wrong sale ID format',
-//     };
-//   }
-//   if (!ObjectId.isValid(id)) {
-//     throw {
-//       code: 'invalid_data', message: 'Wrong sale ID format',
-//     };
-//   }
-
-// const { _id, itensSold } = await model.getSalesById(id);
-
-// if (!_id || !itensSold) {
-//   throw {
-//     code: 'invalid_data', message: 'Wrong sale ID format',
-//   };
-// }
-
-//   const excludedSale = await model.excludeSales(id);
-//   console.log(excludedSale);
-//   if (!excludedSale) {
-//     throw {
-//       code: 'invalid_data', message: 'Wrong sale ID format',
-//     };
-//   }
-//   console.log(excludedSale);
-//   return excludedSale;
-// };
+const exclude = async (id, role, tokenId) => {
+  if (!id || !role || !tokenId) {
+    return {
+      error: true,
+      code: 'Bad Request',
+      message: 'Invalid entries. Try again.',
+    };
+  }
+  if (!ObjectId.isValid(id)) {
+    return {
+      error: true,
+      code: 'Bad Request',
+      message: 'Invalid entries. Try again.',
+    };
+  }
+  const recipe = await model.getById(id);
+  if (!recipe) {
+    return {
+      error: true,
+      code: 'Not Found',
+      message: 'recipe not found',
+    };
+  }
+  // console.log(recipe.userId);
+  if ((tokenId !== recipe.userId) && (role !== 'admin')) {
+    return {
+      error: true,
+      code: 'Bad Request',
+      message: 'Invalid entries. Try again.',
+    };
+  }
+  const excluded = await model.exclude(id);
+  // console.log(excluded);  
+  if (!excluded) {
+    return {
+      error: true,
+      code: 'Bad Request',
+      message: 'Invalid entries. Try again.',
+    };
+  }
+  console.log("one excluded")
+  return excluded;
+};
 
 module.exports = {
   // login,
@@ -125,5 +138,5 @@ module.exports = {
   getById,
   create,
   update,
-  // exclude,
+  exclude,
 };

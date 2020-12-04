@@ -19,15 +19,13 @@ app.post('/login', userController.login);
 
 app.post('/recipes', authMiddleware, recipeController.create);
 
-// app.post('/login', userController.create);
-
 app.get('/recipes', recipeController.getAll);
 
 app.get('/recipes/:id', recipeController.getById);
 
 app.put('/recipes/:id', authMiddleware, recipeController.update);
 
-// app.delete('/products/:id', productController.remove);
+app.delete('/recipes/:id', authMiddleware, recipeController.remove);
 
 // // Sales:
 

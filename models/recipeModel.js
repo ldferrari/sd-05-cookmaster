@@ -27,12 +27,12 @@ const update = async (name, ingredients, preparation, id) => { // userID
   return (recipe);
 };
 
-// const excludeSales = async (id) => {
-//   const deleted = await getCollection('sales')
-//     .then((db) => db.deleteOne({ _id: ObjectId(id) }));
-//   // console.log(deleted);
-//   return deleted;
-// };
+const exclude = async (id) => {
+  const deleted = await getCollection('recipes')
+    .then((recipes) => recipes.deleteOne({ _id: ObjectId(id) }));
+  // console.log(deleted);
+  return deleted;
+};
 
 module.exports = {
   getAll,
@@ -40,5 +40,5 @@ module.exports = {
   // getUserByEmail,
   create,
   update,
-  // excludeSales,
+  exclude,
 };
