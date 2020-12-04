@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const usersController = require('./controllers/usersController');
 const loginController = require('./controllers/loginController');
-
+const recipesController = require('./controllers/recipesController')
 const app = express();
 
 app.use(bodyParser.json());
@@ -14,5 +14,6 @@ app.get('/', (request, response) => {
 
 app.use('/users', usersController);
 app.use('/login', loginController);
+app.use('/recipes', recipesController)
 
 app.listen(3000, () => console.log('Listening on 3000'));
