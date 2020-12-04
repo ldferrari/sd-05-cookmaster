@@ -8,4 +8,12 @@ module.exports = async (err, _req, res, _next) => {
   if (err.message === 'Email already registered') {
     return res.status(409).json(errorWithoutError);
   }
+
+  if (err.message === 'All fields must be filled') {
+    return res.status(401).json(errorWithoutError);
+  }
+
+  if (err.message === 'Incorrect username or password') {
+    return res.status(401).json(errorWithoutError);
+  }
 };
