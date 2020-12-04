@@ -1,17 +1,19 @@
 const jwt = require('jsonwebtoken');
 
-const secret = require('./secret');
+const secret = require('../auth/secret');
 
 const verifyJWT = (req, res, next) => {
   const { authorization } = req.headers;
+
+  if (!authorization) {
+    return res.status(401).json({ message: 'missing auth token' });
+  }
+
   jwt.verify(authorization, secret, (err, decoded) => {
     if (req.url === '/recipes' && err) {
       //  recurso técnico, pois não há um padrão
       //  de saída na avaliação de erros dos testes do projeto.
       return res.status(401).json({ message: 'jwt malformed' });
-    }
-    if (!authorization) {
-      return res.status(401).json({ message: 'missing auth token' });
     }
 
     if (err) {
@@ -23,7 +25,7 @@ const verifyJWT = (req, res, next) => {
   });
 };
 
-module.exports = { verifyJWT };
+module.exports = verifyJWT;
 
 //  https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-nodejs/
 //  https://www.npmjs.com/package/jsonwebtoken
