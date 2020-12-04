@@ -13,6 +13,23 @@ const getAll = async () =>
 const getById = async (id) => getCollection('recipes')
   .then((recipes) => recipes.findOne(ObjectId(id)));
 
+// const updateSales = async (id, productId, quantity) => {
+//   const sale = await getCollection('sales')
+//     .then((sales) => sales.updateOne(
+//       { _id: ObjectId(id), 'itensSold.productId': productId },
+//       { $set: { 'intensSold[0].quantity': quantity } },
+//     ));
+
+//   return sale;
+// };
+
+// const excludeSales = async (id) => {
+//   const deleted = await getCollection('sales')
+//     .then((db) => db.deleteOne({ _id: ObjectId(id) }));
+//   // console.log(deleted);
+//   return deleted;
+// };
+
 module.exports = {
   getAll,
   getById,

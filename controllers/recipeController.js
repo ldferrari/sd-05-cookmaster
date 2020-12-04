@@ -39,7 +39,7 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const { id } = req.params
+    const { id } = req.params;
     // console.log(dadosBody);
     const goGetById = await service.getById(id);
     // console.log(login);
@@ -55,6 +55,36 @@ const getById = async (req, res) => {
     res.status(500).json({ message: 'Algo deu bem ruim no getId' });
   }
 };
+
+// const update = async (req, res) => { // rescue(
+//   const { id } = req.params;
+//   const { productId, quantity } = req.body[0]; // ?[0]
+//   // console.log(id, productId, quantity);
+//   try {
+//     const updatedSale = await service.update(id, productId, quantity);
+//     res.status(200).json(updatedSale); // não seria 204?
+//   } catch (err) {
+//     if (err.code === 'invalid_data') {
+//       return res.status(422).json({ err: { code: err.code, message: err.message } });
+//     }
+//     // console.error(err.message);
+//     res.status(500).json({ message: 'Algo deu errado no update' });
+//   }
+// }; // )
+
+// const remove = async (req, res) => { // rescue(
+//   const { id } = req.params;
+//   try {
+//     const removed = await service.exclude(id);
+//     res.status(200).json(removed);
+//   } catch (err) {
+//     if (err.code === 'invalid_data') {
+//       return res.status(422).json({ err: { code: err.code, message: err.message } });
+//     }
+//     console.error(err.message);
+//     res.status(500).json({ message: 'Algo deu errado no REMOVE' });
+//   }
+// }; // )
 
 module.exports = {
   // login,
