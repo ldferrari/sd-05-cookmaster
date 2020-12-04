@@ -120,7 +120,7 @@ const exclude = async (id, role, tokenId) => {
     };
   }
   const excluded = await model.exclude(id);
-  // console.log(excluded);  
+  // console.log(excluded);
   if (!excluded) {
     return {
       error: true,
@@ -128,7 +128,7 @@ const exclude = async (id, role, tokenId) => {
       message: 'Invalid entries. Try again.',
     };
   }
-  console.log("one excluded")
+  console.log('one excluded');
   return excluded;
 };
 
