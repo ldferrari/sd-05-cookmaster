@@ -21,4 +21,16 @@ recipes.get('/', rescue(async (_req, res) => {
   res.status(200).json(allRecipes);
 }));
 
+recipes.get('/:id', rescue(async (req, res, next) => {
+  const { id } = req.params;
+
+  const recipe = await service.getById(id);
+
+  if (recipe.error) {
+    return next(recipe);
+  }
+
+  res.status(200).json(recipe);
+}));
+
 module.exports = recipes;

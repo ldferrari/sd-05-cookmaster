@@ -20,4 +20,8 @@ module.exports = async (err, _req, res, _next) => {
   if (err.message === 'jwt malformed') {
     res.status(401).json(errorWithoutError);
   }
+
+  if (err.message === 'recipe not found') {
+    res.status(404).json(errorWithoutError);
+  }
 };
