@@ -21,9 +21,9 @@ app.post('/recipes', authMiddleware, recipeController.create);
 
 // app.post('/login', userController.create);
 
-// app.get('/products', productController.getAll);
+app.get('/recipes', recipeController.getAll);
 
-// app.get('/products/:id', productController.getById);
+app.get('/recipes/:id', recipeController.getById);
 
 // app.put('/products/:id', productController.update);
 

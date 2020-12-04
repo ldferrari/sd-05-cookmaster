@@ -25,10 +25,41 @@ const create = async (req, res) => {
   }
 };
 
+const getAll = async (req, res) => {
+  try {
+    const recipes = await service.getAll();
+    // const sales = await model.getAllSales();
+    // console.log(sales);
+    res.status(200).json(recipes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Algo deu ruim no getAll recipes' });
+  }
+};
+
+const getById = async (req, res) => {
+  try {
+    const { id } = req.params
+    // console.log(dadosBody);
+    const goGetById = await service.getById(id);
+    // console.log(login);
+    if (goGetById.error) {
+      if (goGetById.code === 'Not Found') {
+        return res.status(404).json({ message: goGetById.message });
+      }
+      return res.status(500).json({ message: 'Algo deu ruim no getId' });
+    }
+    res.status(200).json(goGetById);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: 'Algo deu bem ruim no getId' });
+  }
+};
+
 module.exports = {
   // login,
-  // getAll,
-  // getById,
+  getAll,
+  getById,
   create,
   // update,
   // remove,
