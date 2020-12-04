@@ -1,11 +1,13 @@
 const express = require('express');
 const rescue = require('express-rescue');
+const multer = require('multer');
 const { ObjectId } = require('mongodb');
 const {
   getAllRecipes,
   getRecipeById,
   update,
   exclude,
+  updatedWithImage,
 } = require('../models/recipeModel');
 const { addRecipeServ } = require('../services/recipeService');
 const validation = require('./validation');
@@ -26,6 +28,36 @@ recipeRouter.post(
     // console.log({ recipe });
 
     return res.status(201).json({ recipe });
+  }),
+);
+
+// multer
+
+const storage = multer.diskStorage({
+  destination: '../images',
+  filename: (req, file, callback) => {
+    callback(null, `${req.params.id}.jpg`);
+  },
+});
+
+const upload = multer({ storage });
+
+recipeRouter.put(
+  '/:id/image',
+  upload.single('image'),
+  validation,
+  rescue(async (req, res) => {
+    const { id } = req.params;
+
+    await updatedWithImage(id);
+
+    const recipe = await getRecipeById(id);
+
+    console.log('====================================');
+    console.log({ recipe });
+    console.log('====================================');
+
+    return res.status(200).json(recipe);
   }),
 );
 

@@ -26,8 +26,22 @@ const update = async (id, name, ingredients, preparation) =>
       { $set: { name, ingredients, preparation } },
     ));
 
+const updatedWithImage = (id) =>
+  getCollection('recipes').then((recipes) =>
+    recipes.updateOne(
+      { _id: ObjectID(id) },
+      { $set: { image: `localhost:3000/images/${id}.jpeg` } },
+    ));
+
 const exclude = async (id) =>
   getCollection('recipes').then((recipes) =>
     recipes.deleteOne({ _id: ObjectID(id) }));
 
-module.exports = { addRecipe, getAllRecipes, getRecipeById, update, exclude };
+module.exports = {
+  addRecipe,
+  getAllRecipes,
+  getRecipeById,
+  update,
+  exclude,
+  updatedWithImage,
+};

@@ -10,6 +10,8 @@ const recipeRouter = require('./controllers/recipeController');
 const app = express();
 
 app.use(bodyParser.json());
+app.use('/images', express.static('images'));
+
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
