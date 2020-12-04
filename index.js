@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const path = require('path');
 
 // IMPORTATIONS
 const app = express();
@@ -16,23 +17,15 @@ const { errorMiddleware } = require('./middlewares');
 // ENDPOINTS
 
 // 0 - Não remova esse endpoint, é para o avaliador funcionar
-app.get('/', (request, response) => {
+app.get('/', (_request, response) => {
   response.send();
 });
 
 app.use('/users', usersController);
 app.use('/login', loginController);
 app.use('/recipes', recipesController);
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
 app.use(errorMiddleware);
-
-// Usar middleware static para permitir acesso a imagens via a API
-// const path = require('path');
-// ...
-// /images é o caminho da API onde as imagens estarão disponíveis
-// path.join(__dirname, 'uploads')
-// é o caminho da pasta onde o multer salva suas imagens ao realizar o upload
-// app.use('/images', express.static(path.join(__dirname, 'uploads')));
-// ...
 
 // PORT LISTENER
 const PORT = process.env.PORT || 3000;

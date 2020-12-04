@@ -1,11 +1,6 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-// const getRecipe = async (email) =>
-//   connection()
-//     .then((db) => db.collection('recipes'))
-//     .then((products) => products.findOne({ name }));
-
 const create = async (name, ingredients, preparation, userId) =>
   connection()
     .then((db) => db.collection('recipes').insertOne({ name, ingredients, preparation, userId }))
@@ -38,8 +33,20 @@ const updateById = async (id, name, ingredients, preparation, userId) => {
 const deleteById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
   return connection()
-    .then((db) => db.collection('recipes'))
-    .then((recipes) => recipes.deleteOne({ _id: ObjectId(id) }));
+  .then((db) => db.collection('recipes'))
+  .then((recipes) => recipes.deleteOne({ _id: ObjectId(id) }));
 };
 
-module.exports = { create, getAll, getById, updateById, deleteById };
+const updateImage = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  const imgPath = `localhost:3000/images/${id}.jpeg`;
+  return connection()
+    .then((db) => db.collection('recipes'))
+    .then((recipes) =>
+      recipes.updateOne(
+        { _id: ObjectId(id) },
+        { $set: { image: `${imgPath}` } },
+      ));
+};
+
+module.exports = { create, getAll, getById, updateById, deleteById, updateImage };

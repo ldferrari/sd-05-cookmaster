@@ -2,6 +2,7 @@ const { Router } = require('express');
 
 const recipesRouter = Router();
 const rescue = require('express-rescue');
+const multer = require('multer');
 
 const recipesServices = require('../services/recipesServices');
 const recipesModel = require('../models/recipesModel');
@@ -76,6 +77,26 @@ recipesRouter.delete(
 );
 
 // Refactoring with rescue: do not need try and catch (err 500) anymore
-// Rafactoring with error middleware: to manage all res w/ other status
+// Refactoring with error middleware: to manage all res w/ other status
+
+// 9 - Crie um endpoint para a adição de uma imagem a uma receita
+const storage = multer.diskStorage({
+  destination: 'uploads',
+  filename: (req, _file, callback) => {
+    const { id } = req.params;
+    callback(null, `${id}.jpeg`);
+  },
+});
+
+const upload = multer({ storage });
+
+recipesRouter.put('/:id/image/', upload.single('image'), validateToken, rescue(async (req, res) => {
+  const { id } = req.params;
+  await recipesModel.updateImage(id);
+  const recipeWithId = await recipesModel.getById(id);
+  res.status(200).json(recipeWithId);
+  console.log(req.file);
+}));
+
 
 module.exports = recipesRouter;
