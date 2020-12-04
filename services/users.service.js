@@ -5,7 +5,7 @@ const {
   // verifyToken,
 } = require('../auth/token.auth');
 
-const COLLECTION = 'users'; 
+const COLLECTION = 'users';
 
 const LOGIN_SCHEMA = Joi.object({
   email: Joi.string().email().required(),
@@ -57,7 +57,7 @@ const loginUser = async (req, _res, next) => {
       next();
       return;
     }
-    next({ ...INVALID_DATA, status: 401, message: 'Incorrect username or password' })
+    next({ ...INVALID_DATA, status: 401, message: 'Incorrect username or password' });
   } catch ({ message }) {
     console.error(message);
     next({ ...INVALID_DATA, status: 401, message: 'All fields must be filled' });
