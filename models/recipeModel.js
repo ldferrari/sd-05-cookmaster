@@ -24,6 +24,12 @@ const update = async (id, name, ingredients, preparation) =>
     recipes.updateOne(
       { _id: ObjectID(id) },
       { $set: { name, ingredients, preparation } },
-    ));
+    ),
+  );
 
-module.exports = { addRecipe, getAllRecipes, getRecipeById, update };
+const exclude = async (id) =>
+  getCollection('recipes').then((recipes) =>
+    recipes.deleteOne({ _id: ObjectID(id) }),
+  );
+
+module.exports = { addRecipe, getAllRecipes, getRecipeById, update, exclude };

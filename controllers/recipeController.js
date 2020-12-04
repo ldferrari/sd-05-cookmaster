@@ -5,6 +5,7 @@ const {
   getAllRecipes,
   getRecipeById,
   update,
+  exclude,
 } = require('../models/recipeModel');
 const { addRecipeServ } = require('../services/recipeService');
 const validation = require('./validation');
@@ -45,6 +46,17 @@ recipeRouter.put(
       preparation,
       userId: id,
     });
+  }),
+);
+recipeRouter.delete(
+  '/:id',
+  validation,
+  rescue(async (req, res) => {
+    const { id } = req.params;
+
+    await exclude(id);
+
+    return res.status(204).end();
   }),
 );
 
