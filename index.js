@@ -4,6 +4,8 @@ const parser = require('body-parser');
 
 const routes = require('./routes/index');
 
+const path = require('path');
+
 const app = express();
 
 app.use(parser.json());
@@ -14,7 +16,11 @@ app.get('/', (request, response) => {
   response.send();
 });
 
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
+
 app.use('/users', routes.users);
+
+app.use('/', routes.login);
 // app.use('/recipes', routes.recipes);
 
 app.listen(PORT, () => {

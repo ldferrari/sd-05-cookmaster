@@ -1,3 +1,7 @@
+const randtoken = require('rand-token');
+
+const token = randtoken.generate(96);
+
 const model = require('../models');
 
 // https://bit.ly/2VxAplp
@@ -29,10 +33,26 @@ const create = async (name, email, password, role) => {
     throw new CodeError('Invalid entries. Try again.', 'invalid_data');
   }
 
-  const createdUser = await model.users.create(name, email, role);
+  const createdUser = await model.users.create(name, email, password, role);
   return createdUser;
+};
+
+const login = async (email, password) => {
+  if (!password || password === '' || !email || email === '') {
+    throw new CodeError('All fields must be filled', 'invalid_data');
+  }
+
+  // const verifyPassword = await model.users.checkPassword(email, password);
+  const verifyUser = await model.users.findByEmail(email);
+  console.log(verifyUser);
+  if (!verifyUser || verifyUser.password !== password) {
+    throw new CodeError('Incorrect username or password', 'incorrect_data');
+  }
+
+  return verifyUser;
 };
 
 module.exports = {
   create,
+  login,
 };
