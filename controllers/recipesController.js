@@ -15,4 +15,10 @@ recipes.post('/', rescue(async (req, res, next) => {
   res.status(201).json({ recipe: createdRecipe });
 }));
 
+recipes.get('/', rescue(async (_req, res) => {
+  const allRecipes = await service.getAll();
+
+  res.status(200).json(allRecipes);
+}));
+
 module.exports = recipes;

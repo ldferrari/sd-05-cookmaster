@@ -28,6 +28,9 @@ const createRecipe = async (req) => {
   }
 };
 
+const getAll = async () => recipeModel.getAll();
+
 module.exports = {
   createRecipe,
+  getAll,
 };
