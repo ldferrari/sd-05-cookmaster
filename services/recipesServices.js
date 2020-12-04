@@ -26,9 +26,13 @@ const getById = async (id) => {
   return saida;
 };
 
+const update = async (id, name, ingredients, preparation, userId) => recipesModel
+  .update(id, name, ingredients, preparation, userId);
+
 module.exports = {
   create,
   validateRecipe,
   getAllRecipes,
   getById,
+  update,
 };

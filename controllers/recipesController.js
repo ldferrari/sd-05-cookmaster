@@ -1,27 +1,23 @@
 const recipesServices = require('../services/recipesServices');
-const validateToken = require('../auth/validateToken');
 
 const create = async (req, res) => {
   try {
-    const { authorization } = req.headers;
-    const tokenInfo = validateToken(authorization);
-    const { id: userId } = tokenInfo;
+    const { id: userId } = req.validatedTokenInfo;
     const { name, ingredients, preparation } = req.body;
     recipesServices.validateRecipe(name, ingredients, preparation);
     const saida = await recipesServices.create(name, ingredients, preparation, userId);
-    res.status(201).json({ recipe: saida });
+    return res.status(201).json({ recipe: saida });
   } catch (err) {
-    res.status(err.code).json({ message: err.message });
+    return res.status(err.code).json({ message: err.message });
   }
 };
 
 const getAllRecipes = async (req, res) => {
   try {
     const saida = await recipesServices.getAllRecipes();
-    res.status(200).json(saida);
+    return res.status(200).json(saida);
   } catch (err) {
-    // console.log(err);
-    res.status(500).json({ message: 'Something wrong happenned' });
+    return res.status(500).json({ message: 'Something wrong happenned' });
   }
 };
 
@@ -29,10 +25,28 @@ const getById = async (req, res) => {
   try {
     const { id } = req.params;
     const saida = await recipesServices.getById(id);
-    res.status(200).json(saida);
+    return res.status(200).json(saida);
   } catch (err) {
     // console.log('err', err);
-    res.status(err.code).json({ message: err.message });
+    return res.status(err.code).json({ message: err.message });
+  }
+};
+
+const update = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const { id: userId, role } = req.validatedTokenInfo;
+    const receita = await recipesServices.getById(id);
+    const { userId: userIdFromRecipe } = receita;
+
+    if (userIdFromRecipe === userId || role === 'admin') {
+      const saida = await recipesServices.update(id, name, ingredients, preparation, userId);
+      return res.status(200).json(saida);
+    }
+  } catch (err) {
+    // console.log('o err eh', err);
+    return res.status(500).json({ message: 'Something REALLY wrong happenned' });
   }
 };
 
@@ -40,4 +54,7 @@ module.exports = {
   create,
   getAllRecipes,
   getById,
+  update,
 };
+
+//  https://stackoverflow.com/questions/2690065/return-in-catch-block

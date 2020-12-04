@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 
 const usersController = require('./controllers/usersController');
 const recipesController = require('./controllers/recipesController');
+const auth = require('./auth/validateToken');
 
 const app = express();
 const PORT = 3000;
@@ -17,11 +18,13 @@ app.post('/users', usersController.create);
 
 app.post('/login', usersController.login);
 
-app.post('/recipes', recipesController.create);
+app.post('/recipes', auth.verifyJWT, recipesController.create);
 
 app.get('/recipes', recipesController.getAllRecipes);
 
 app.get('/recipes/:id', recipesController.getById);
+
+app.put('/recipes/:id', auth.verifyJWT, recipesController.update);
 
 app.listen(PORT, () => {
   console.log(`Estou monitorando a porta ${PORT}`);
