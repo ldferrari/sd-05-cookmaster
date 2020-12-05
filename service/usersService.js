@@ -11,16 +11,17 @@ const createUser = async (name, email, password) => {
   return model.createUser(name, email, password);
 };
 
-const login = async (email, password) => {
-  if (!email || !password) {
+const login = async (email, password1) => {
+  if (!email || !password1) {
     throw { code: 401, message: 'All fields must be filled' };
   }
   const emailExists = await model.getByEmail(email);
-  if (!emailExists || password !== emailExists.password) {
+  if (!emailExists || password1 !== emailExists.password) {
     throw { code: 401, message: 'Incorrect username or password' };
   }
-  /* console.log(emailExists._id) */
-  return emailExists._id;
+  const { password: _, ...userData } = emailExists
+  console.log(userData)
+  return userData;
 };
 
 module.exports = {
