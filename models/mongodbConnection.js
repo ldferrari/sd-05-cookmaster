@@ -6,8 +6,8 @@ const { MongoClient } = require('mongodb');
 let connection = null;
 
 const DB_NAME = 'Cookmaster';
-const MONGO_DB_URL = `mongodb://localhost:27017/${DB_NAME}`;
-// const MONGO_DB_URL = `mongodb://mongodb:27017/${DB_NAME}`;
+// const MONGO_DB_URL = `mongodb://localhost:27017/${DB_NAME}`;
+const MONGO_DB_URL = `mongodb://mongodb:27017/${DB_NAME}`;
 
 module.exports = async (collectionName) => {
   connection = connection

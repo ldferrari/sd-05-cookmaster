@@ -23,7 +23,7 @@ recipes.post(
   auth,
   rescue(async (req, res) => {
     const { name, ingredients, preparation } = req.body;
-    const { userId } = req.user;
+    const userId = req.user;
     const createRecipe = await recipesServices.createRecipe(name, ingredients, preparation, userId);
     res.status(201).json(createRecipe);
   }),
@@ -48,6 +48,36 @@ recipes.get(
     }
 
     res.status(200).json(recipe);
+  }),
+);
+
+recipes.put(
+  '/:id',
+  auth,
+  rescue(async (req, res) => {
+    const { id: recipeId } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const userId = req.user;
+
+    const updatedRecipe = await recipesServices.updateRecipe(
+      name,
+      ingredients,
+      preparation,
+      recipeId,
+      userId,
+    );
+
+    res.status(200).json(updatedRecipe);
+  }),
+);
+
+recipes.delete(
+  '/:id',
+  auth,
+  rescue(async (req, res) => {
+    const { id: recipeId } = req.params;
+    const deletedRecipe = await recipesServices.deleteRecipe(recipeId);
+    res.status(204).json(deletedRecipe);
   }),
 );
 
