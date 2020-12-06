@@ -2,12 +2,10 @@ const { MongoClient } = require('mongodb');
 
 // não esquecer de mudar a URL para o avaliador funcionar
 
-// const MONGO_DB_URL = 'mongodb://mongodb:27017/CockMaster';
+// const MONGO_DB_URL = 'mongodb://localhost:27017/Cookmaster';
+const MONGO_DB_URL = 'mongodb://mongo:27017/Cookmaster';
 
-// const MONGO_DB_URL = 'mongodb://localhost:27017/Cockmaster';
-const MONGO_DB_URL = 'mongodb://mongo:27017/Cockmaster';
-
-const DB_NAME = 'Cockmaster';
+const DB_NAME = 'Cookmaster';
 
 const connection = (collectionName) => MongoClient
   .connect(MONGO_DB_URL, {

@@ -25,7 +25,7 @@ const {
 //   updateSale,
 // } = require('./controllers/recipesControllers');
 
-const { validateUser } = require('./middlewares');
+const { validateUserSignUp } = require('./middlewares');
 
 // app.put('/sales/:id', validateSale, updateSale, getSaleById);
 // app.get('/sales/:id', getSaleById);
@@ -33,7 +33,7 @@ const { validateUser } = require('./middlewares');
 // app.post('/products', validateProduct, addProduct);
 // app.get('/recipes', getAllRecipes);
 
-app.post('/users', validateUser, createUser);
+app.post('/users', validateUserSignUp, createUser);
 
 // app.get('/products/:id', getProductById);
 // app.delete('/products/:id', deleteProduct);
