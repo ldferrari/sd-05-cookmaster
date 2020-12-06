@@ -11,34 +11,30 @@ app.get('/', (request, response) => {
 
 const {
   createUser,
-  // getAllUsers,
-  //   getProductById,
-  //   deleteProduct,
-  //   updateProduct,
+  loginUser,
 } = require('./controllers/usersControllers');
 
 // const {
-//   createSale,
-// getAllRecipes,
-//   getSaleById,
-//   deleteSale,
-//   updateSale,
+//   createRecipe,
+// //   getAllRecipes,
+// //   getRecipeById,
+// //   deleteRecipe,
+// //   updateRecipe,
 // } = require('./controllers/recipesControllers');
 
-const { validateUserSignUp } = require('./middlewares');
-
-// app.put('/sales/:id', validateSale, updateSale, getSaleById);
-// app.get('/sales/:id', getSaleById);
-// app.post('/sales', validateSale, createSale);
-// app.post('/products', validateProduct, addProduct);
-// app.get('/recipes', getAllRecipes);
+const {
+  validateUserSignUp,
+  validateUserLogin,
+  // validateJWT,
+} = require('./middlewares');
 
 app.post('/users', validateUserSignUp, createUser);
-
-// app.get('/products/:id', getProductById);
-// app.delete('/products/:id', deleteProduct);
-// app.put('/products/:id', validateProduct, updateProduct, getProductById);
-// app.delete('/sales/:id', deleteSale);
+app.post('/login', validateUserLogin, loginUser);
+// app.post('/recipes', validateJWT, createRecipe);
+// app.get('/recipes', validateJWT, getAllRecipes);
+// app.get('/recipes/:id', validateJWT, getRecipeById);
+// app.delete('/recipes/:id', validateJWT, deleteRecipe);
+// app.put('/recipes/:id', validateJWT, updateRecipe, getRecipeById);
 
 app.use((err, _req, res, _next) => {
   if (err) {

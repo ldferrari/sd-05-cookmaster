@@ -9,11 +9,11 @@ const createUser = async ({ name, email, password, role }) => getConnection('use
     role,
   }));
 
-const getUserbyEmail = async (email) => getConnection('users').then((user) => user.findOne({ email }));
+const findUserbyEmail = async (email) => getConnection('users').then((user) => user.findOne({ email }));
 
 module.exports = {
   createUser,
-  getUserbyEmail,
+  findUserbyEmail,
 };
 
 /*

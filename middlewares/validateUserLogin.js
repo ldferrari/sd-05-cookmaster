@@ -1,10 +1,9 @@
 const rescue = require('express-rescue');
-const { getUserbyEmail } = require('../models/usersModels');
-const checkEmail = require('./emailValidation');
+const { findUserbyEmail } = require('../models/usersModels');
+const validateEmail = require('./emailValidation');
 
 module.exports = rescue(async (req, res, next) => {
   const { email, password } = req.body;
-  const user = await getUserbyEmail(email);
 
   if (!email || !password) {
     return res.status(401).json({
@@ -12,15 +11,16 @@ module.exports = rescue(async (req, res, next) => {
     });
   }
 
-  if (!checkEmail(email)) {
-    return res.status(401).json({ message: 'Incorret username or password' });
+  if (!validateEmail(email)) {
+    return res.status(401).json({ message: 'Incorrect username or password' });
   }
 
-  if (user && password !== user.password) {
+  const user = await findUserbyEmail(email);
+
+  if (!user || password !== user.password) {
     return res.status(401).json({
-      message: 'Incorret username or password',
+      message: 'Incorrect username or password',
     });
   }
-
   next();
 });
