@@ -1,7 +1,5 @@
 const { MongoClient } = require('mongodb');
 
-require('dotenv').config({ path: 'variables.env' });
-
 const DB_NAME = 'Cookmaster';
 // SOMENTE PARA DESENVOLVIMENTO LOCAL
 // const MONGO_DB_URL = 'mongodb://localhost:27017/Cookmaster';
