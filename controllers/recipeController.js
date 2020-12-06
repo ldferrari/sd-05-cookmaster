@@ -55,4 +55,15 @@ recipeRouter.put(
   }),
 );
 
+recipeRouter.delete(
+  '/:id',
+  jwtAuth,
+  rescue(async (req, res) => {
+    const { id } = req.params;
+    const recipeDelete = await recipeModel.deleteRecipe(id);
+
+    return !recipeDelete ? recipeDelete : res.status(204).json(null);
+  }),
+);
+
 module.exports = recipeRouter;
