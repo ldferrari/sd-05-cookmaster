@@ -1,11 +1,22 @@
 const express = require('express');
+require('dotenv').config();
+const bodyParser = require('body-parser');
+
+const userController = require('./controllers/userController');
+const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
+app.use(bodyParser.json());
 
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
 });
+
+// Endpoints
+app.use('/users', userController);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
