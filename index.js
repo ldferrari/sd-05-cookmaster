@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
+const recipeController = require('./controllers/recipeController');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
@@ -17,7 +18,9 @@ app.get('/', (request, response) => {
 // Endpoints
 app.use('/users', userController);
 app.use('/login', loginController);
+app.use('/recipes', recipeController);
 
+// Middleware
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
