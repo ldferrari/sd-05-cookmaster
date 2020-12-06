@@ -100,7 +100,7 @@ const deleteRecipe = async (req, _res, next) => {
 
     next();
   } catch ({ message }) {
-    console.log(message)
+    console.error(message);
     if (message === 'jwt malformed' || message === 'missing auth token') {
       next({ ...INVALID_DATA, message, status: 401 });
       return;
