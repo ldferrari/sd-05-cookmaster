@@ -2,7 +2,6 @@ const Joi = require('@hapi/joi');
 const crudModel = require('../models/crud.model');
 const {
   generateToken,
-  // verifyToken,
 } = require('../auth/token.auth');
 
 const COLLECTION = 'users';
