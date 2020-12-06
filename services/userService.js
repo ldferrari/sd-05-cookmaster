@@ -31,4 +31,17 @@ async function createUser(name, email, password) {
   return { user: addUser };
 }
 
-module.exports = { createUser };
+async function loginUser(email, password) {
+  if (!email || !password) {
+    throw new ErrorCode('All fields must be filled', 'invalid_user');
+  }
+
+  const userProfile = await userModel.getUserByEmail(email);
+  if (!userProfile || userProfile.password !== password) {
+    throw new ErrorCode('Incorrect username or password', 'unauthorized');
+  }
+
+  return userProfile;
+}
+
+module.exports = { createUser, loginUser };

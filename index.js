@@ -3,6 +3,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 
 const userController = require('./controllers/userController');
+const loginController = require('./controllers/loginController');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
@@ -15,6 +16,7 @@ app.get('/', (request, response) => {
 
 // Endpoints
 app.use('/users', userController);
+app.use('/login', loginController);
 
 app.use(errorHandler);
 
