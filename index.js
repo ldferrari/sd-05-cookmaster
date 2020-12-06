@@ -17,22 +17,24 @@ const {
   //   updateProduct,
 } = require('./controllers/usersControllers');
 
-const {
-  //   createSale,
-  getAllRecipes,
-  //   getSaleById,
-  //   deleteSale,
-  //   updateSale,
-} = require('./controllers/recipesControllers');
+// const {
+//   createSale,
+// getAllRecipes,
+//   getSaleById,
+//   deleteSale,
+//   updateSale,
+// } = require('./controllers/recipesControllers');
 
-// const { validateProduct, validateSale } = require('./middlewares');
+const { validateUser } = require('./middlewares');
 
 // app.put('/sales/:id', validateSale, updateSale, getSaleById);
 // app.get('/sales/:id', getSaleById);
 // app.post('/sales', validateSale, createSale);
 // app.post('/products', validateProduct, addProduct);
 // app.get('/recipes', getAllRecipes);
-app.post('/users', createUser);
+
+app.post('/users', validateUser, createUser);
+
 // app.get('/products/:id', getProductById);
 // app.delete('/products/:id', deleteProduct);
 // app.put('/products/:id', validateProduct, updateProduct, getProductById);
