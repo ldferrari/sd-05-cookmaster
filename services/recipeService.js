@@ -29,4 +29,12 @@ async function getRecipeById(id) {
   return myRecipe;
 }
 
-module.exports = { createRecipe, getRecipeById };
+async function updateRecipe(id, name, ingredients, preparation, userId) {
+  const validRecipe = await validateRecipe(id, name, ingredients, preparation);
+  if (!validRecipe) return false;
+
+  const recipeUpdate = await recipeModel.updateRecipe(id, name, ingredients, preparation, userId);
+  return recipeUpdate;
+}
+
+module.exports = { createRecipe, getRecipeById, updateRecipe };

@@ -36,4 +36,23 @@ recipeRouter.get(
   }),
 );
 
+recipeRouter.put(
+  '/:id',
+  jwtAuth,
+  rescue(async (req, res) => {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const { _id: userId } = req.userPayload;
+    const recipeUpdate = await recipeService.updateRecipe(
+      id,
+      name,
+      ingredients,
+      preparation,
+      userId,
+    );
+
+    return res.status(200).json(recipeUpdate);
+  }),
+);
+
 module.exports = recipeRouter;

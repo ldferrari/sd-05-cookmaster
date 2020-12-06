@@ -21,4 +21,17 @@ async function getRecipeById(id) {
     .then((recipes) => recipes.findOne(ObjectId(id)));
 }
 
-module.exports = { createRecipe, getAllRecipes, getRecipeById };
+async function updateRecipe(id, name, ingredients, preparation, userId) {
+  if (!ObjectId.isValid(id)) return null;
+
+  return connection()
+    .then((db) => db.collection('recipes'))
+    .then((recipes) =>
+      recipes.updateOne(
+        { _id: ObjectId(id) },
+        { $set: { name, ingredients, preparation, userId } },
+      ))
+    .then((_data) => ({ _id: ObjectId(id), name, ingredients, preparation, userId }));
+}
+
+module.exports = { createRecipe, getAllRecipes, getRecipeById, updateRecipe };
