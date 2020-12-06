@@ -4,8 +4,8 @@ const { MongoClient } = require('mongodb');
 
 // const MONGO_DB_URL = 'mongodb://mongodb:27017/CockMaster';
 
-const MONGO_DB_URL = 'mongodb://localhost:27017/Cockmaster';
-// const MONGO_DB_URL = 'mongodb://mongo:27017/Cockmaster';
+// const MONGO_DB_URL = 'mongodb://localhost:27017/Cockmaster';
+const MONGO_DB_URL = 'mongodb://mongo:27017/Cockmaster';
 
 const DB_NAME = 'Cockmaster';
 
