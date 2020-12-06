@@ -1,3 +1,4 @@
+const { ObjectID } = require('mongodb');
 const Joi = require('@hapi/joi');
 const crudModel = require('../models/crud.model');
 const {
@@ -44,10 +45,12 @@ const registerRecipe = async (req, _res, next) => {
 
 const listRecipes = async (req, _res, next) => {
   try {
-    req.data = await crudModel.readDocument(null, COLLECTION);
+    const { id } = req.params;
+    if (id) req.data = await crudModel.readDocument({ _id: ObjectID(id) }, COLLECTION);
+    else req.data = await crudModel.readDocument(null, COLLECTION);
     next();
-  } catch (message) {
-    next({ ...INVALID_DATA, message });
+  } catch {
+    next({ ...INVALID_DATA, message: 'recipe not found', status: 404 });
   }
 };
 

@@ -10,6 +10,10 @@ users.get('/', listRecipes, (req, res) => {
   res.status(200).json(req.data);
 });
 
+users.get('/:id', listRecipes, (req, res) => {
+  res.status(200).json(req.data);
+});
+
 users.post('/', registerRecipe, (req, res) => {
   res.status(201).json({ recipe: req.data });
 });
