@@ -27,4 +27,13 @@ recipeRouter.get(
   }),
 );
 
+recipeRouter.get(
+  '/:id',
+  rescue(async (req, res) => {
+    const { id } = req.params;
+    const myRecipe = await recipeService.getRecipeById(id);
+    res.status(200).json(myRecipe);
+  }),
+);
+
 module.exports = recipeRouter;

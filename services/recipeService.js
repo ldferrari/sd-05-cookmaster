@@ -23,4 +23,10 @@ async function createRecipe(name, ingredients, preparation, userId) {
   return { recipe: addRecipe };
 }
 
-module.exports = { createRecipe };
+async function getRecipeById(id) {
+  const myRecipe = await recipeModel.getRecipeById(id);
+  if (!myRecipe) throw new ErrorCode('recipe not found', 'not_found');
+  return myRecipe;
+}
+
+module.exports = { createRecipe, getRecipeById };
