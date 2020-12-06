@@ -10,8 +10,8 @@ app.get('/', (request, response) => {
 });
 
 const {
-  // createUser,
-  getAllUsers,
+  createUser,
+  // getAllUsers,
   //   getProductById,
   //   deleteProduct,
   //   updateProduct,
@@ -31,8 +31,8 @@ const {
 // app.get('/sales/:id', getSaleById);
 // app.post('/sales', validateSale, createSale);
 // app.post('/products', validateProduct, addProduct);
-app.get('/recipes', getAllRecipes);
-app.get('/users', getAllUsers);
+// app.get('/recipes', getAllRecipes);
+app.post('/users', createUser);
 // app.get('/products/:id', getProductById);
 // app.delete('/products/:id', deleteProduct);
 // app.put('/products/:id', validateProduct, updateProduct, getProductById);
@@ -40,7 +40,7 @@ app.get('/users', getAllUsers);
 
 app.use((err, _req, res, _next) => {
   if (err) {
-    // console.log(err);
+    console.log(err);
     return res.status(422).json({ err });
   }
   res.status(500).json({ message: `algo deu errado ${err.message}` });

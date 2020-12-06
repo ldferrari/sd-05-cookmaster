@@ -1,3 +1,18 @@
+const getConnection = require('./connection');
+
+const createUser = async ({ name, email, password, role }) => getConnection('users').then((user) => user.insertOne({ name, email, password, role }))
+  .then((response) => ({
+    _id: response.insertedId,
+    name,
+    email,
+    password,
+    role,
+  }));
+
+module.exports = {
+  createUser,
+};
+
 /*
 formato do dos campos a ser salvo na tabela de usuarios:
 
