@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const userController = require('./controllers/users.controller');
+const recipesController = require('./controllers/recipes.controller');
 
 const {
   loginUser,
@@ -11,6 +12,7 @@ const PORT = 3000;
 
 app.use(bodyParser.json());
 app.use('/users', userController);
+app.use('/recipes', recipesController);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
