@@ -13,7 +13,11 @@ const create = async (name, email, password) =>
 const findByEmail = async (emailParam) =>
   connection('users').then((user) => user.findOne({ email: emailParam }));
 
+const login = async (email, password) =>
+  connection('users').then((user) => user.findOne({ email, password }));
+
 module.exports = {
   create,
   findByEmail,
+  login,
 };
