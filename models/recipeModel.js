@@ -8,11 +8,9 @@ async function createRecipe(name, ingredients, preparation, userId) {
 }
 
 async function getAllRecipes() {
-  const allRecipes = await connection().then((db) => {
-    db.collection('recipes').find().toArray();
-  });
-  console.log(allRecipes);
-  return allRecipes;
+  return connection()
+    .then((db) => db.collection('recipes'))
+    .then((recipes) => recipes.find().toArray());
 }
 
 module.exports = { createRecipe, getAllRecipes };
