@@ -20,8 +20,9 @@ app.use('/images', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/users', routes.users);
 
+app.use('/recipes', routes.recipes);
+
 app.use('/', routes.login);
-// app.use('/recipes', routes.recipes);
 
 app.listen(PORT, () => {
   console.log(`knocking on ${PORT}'s door`);

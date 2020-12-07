@@ -1,4 +1,3 @@
-// const { ObjectId } = require('mongodb');
 const getCollection = require('./get-collection');
 
 const create = (name, email, password, role = 'user') =>
@@ -8,11 +7,7 @@ const create = (name, email, password, role = 'user') =>
 
 const findByEmail = (email) => getCollection('users').then((users) => users.findOne({ email }));
 
-// const verifyPassword = (email, password) =>
-//   getCollection('users').then((users) => users.findOne({ email, password }));
-
 module.exports = {
   create,
   findByEmail,
-  // verifyPassword,
 };
