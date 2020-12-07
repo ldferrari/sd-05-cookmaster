@@ -18,10 +18,10 @@ login.post('/', async (req, res) => {
     const { email, password } = req.body;
     const user = await service.login(email, password);
     if (user.err) {
-      res.status(user.code).json({ message: user.message });
+      return res.status(user.code).json({ message: user.message });
     }
     const token = jwt.sign({ data: user }, secret, jwtConfig);
-    res.status(200).json({ token });
+    return res.status(200).json({ token });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e });

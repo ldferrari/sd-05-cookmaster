@@ -13,10 +13,10 @@ recipes.post('/', tokenAuth, async (req, res) => {
   try {
     const newRecipe = await service.createRecipe(name, ingredients, preparation, user);
     if (newRecipe.err) {
-      res.status(newRecipe.code).json({ message: newRecipe.message });
+      return res.status(newRecipe.code).json({ message: newRecipe.message });
     }
     console.log(newRecipe);
-    res.status(201).json({ recipe: newRecipe });
+    return res.status(201).json({ recipe: newRecipe });
   } catch (e) {
     res.status(500).json({ message: e });
   }
