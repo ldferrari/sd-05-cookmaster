@@ -37,7 +37,19 @@ const getAll = async () => {
   return listAllRecipes;
 };
 
+const getById = async (id) => {
+  const getRecipeById = await model.recipes.getById(id);
+  console.log(getRecipeById);
+
+  if (!getRecipeById) {
+    throw new CodeError('recipe not found', 'invalid_id');
+  }
+
+  return getRecipeById;
+};
+
 module.exports = {
   create,
   getAll,
+  getById,
 };

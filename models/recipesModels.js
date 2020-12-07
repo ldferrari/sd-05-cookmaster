@@ -1,3 +1,5 @@
+const { ObjectId } = require('mongodb');
+
 const getCollection = require('./get-collection');
 
 const create = (name, ingredients, preparation) =>
@@ -9,8 +11,14 @@ const findByName = (name) => getCollection('recipes').then((recipes) => recipes.
 
 const getAll = () => getCollection('recipes').then((recipes) => recipes.find().toArray());
 
+const getById = (id) =>
+  !ObjectId.isValid(id)
+    ? null
+    : getCollection('recipes').then((recipes) => recipes.findOne(ObjectId(id)));
+
 module.exports = {
   create,
   findByName,
   getAll,
+  getById,
 };

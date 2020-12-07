@@ -38,9 +38,8 @@ const login = async (email, password) => {
     throw new CodeError('All fields must be filled', 'invalid_data');
   }
 
-  // const verifyPassword = await model.users.checkPassword(email, password);
   const verifyUser = await model.users.findByEmail(email);
-  console.log(verifyUser);
+
   if (!verifyUser || verifyUser.password !== password) {
     throw new CodeError('Incorrect username or password', 'incorrect_data');
   }
