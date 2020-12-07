@@ -187,7 +187,7 @@ describe('3 - Crie um endpoint para o cadastro de receitas', () => {
   });
 });
 
-describe('4 - Crie um endpoint para a listagem de receitas', () => {
+describe.only('4 - Crie um endpoint para a listagem de receitas', () => {
   let connection;
   let db;
 
