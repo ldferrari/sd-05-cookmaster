@@ -18,7 +18,7 @@ const getById = (id) =>
     : getCollection('recipes').then((recipes) => recipes.findOne(ObjectId(id))));
 
 const removeById = (id) =>
-  getCollection('recipes').then((recipes) => recipes.deleteOne(ObjectId(id)));
+  getCollection('recipes').then((recipes) => recipes.deleteOne({ _id: ObjectId(id) }));
 
 module.exports = {
   create,

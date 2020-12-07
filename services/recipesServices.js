@@ -48,7 +48,7 @@ const getById = async (id) => {
 };
 
 const removeById = async (id) => {
-  const removedRecipe = await model.recipes.removeById;
+  const removedRecipe = await model.recipes.removeById(id);
   return removedRecipe;
 };
 
