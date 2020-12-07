@@ -38,8 +38,19 @@ const getById = async (req, res) => {
   }
 };
 
+const removeById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const removedRecipe = await services.recipes.removeById(id);
+    res.status(204).json(removedRecipe);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  removeById,
 };

@@ -17,7 +17,11 @@ const authToken = async (req, res, next) => {
     req.user = decoded.userData;
     next();
   } catch (err) {
-    res.status(401).json({ message: 'jwt malformed' });
+    console.log('Erro: ', err.message);
+    if (err.message === 'jwt malformed') {
+      return res.status(401).json({ message: 'jwt malformed' });
+    }
+    res.status(401).json({ message: 'missing auth token' });
   }
 };
 

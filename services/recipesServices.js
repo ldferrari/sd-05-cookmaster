@@ -39,7 +39,6 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const getRecipeById = await model.recipes.getById(id);
-  console.log(getRecipeById);
 
   if (!getRecipeById) {
     throw new CodeError('recipe not found', 'invalid_id');
@@ -48,8 +47,14 @@ const getById = async (id) => {
   return getRecipeById;
 };
 
+const removeById = async (id) => {
+  const removedRecipe = await model.recipes.removeById;
+  return removedRecipe;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  removeById,
 };
