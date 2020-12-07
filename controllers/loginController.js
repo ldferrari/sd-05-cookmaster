@@ -8,7 +8,6 @@ const login = async (req, res) => {
     const profile = await services.users.login(email, password);
 
     const token = await tokenJWT(profile);
-    // res.status(200).json(profile);
     res.status(200).json({ token });
   } catch (err) {
     if (err.code === 'invalid_data' || err.code === 'incorrect_data') {

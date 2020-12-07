@@ -8,14 +8,12 @@ class CodeError extends Error {
   }
 }
 
-// const checkEmail = (mail) => mail.match(/\S+@\S+\.\S+/);
-
 const create = async (name, ingredients, preparation) => {
-  // const thisRecipeExists = await model.users.findByName(name);
+  const thisRecipeExists = await model.recipes.findByName(name);
 
-  // if (thisEmailExists) {
-  //   throw new CodeError('Email already registered', 'invalid_email');
-  // }
+  if (thisRecipeExists) {
+    throw new CodeError('Recipe already registered', 'invalid_entry');
+  }
 
   // prettier-ignore
   if (
@@ -25,7 +23,6 @@ const create = async (name, ingredients, preparation) => {
     || ingredients === ''
     || !preparation
     || preparation === ''
-    // || !token
   ) {
     throw new CodeError('Invalid entries. Try again.', 'invalid_data');
   }
@@ -34,21 +31,13 @@ const create = async (name, ingredients, preparation) => {
   return createdRecipe;
 };
 
-// const login = async (email, password) => {
-//   if (!password || password === '' || !email || email === '') {
-//     throw new CodeError('All fields must be filled', 'invalid_data');
-//   }
+const getAll = async () => {
+  const listAllRecipes = await model.recipes.getAll();
 
-// const verifyPassword = await model.users.checkPassword(email, password);
-//   const verifyUser = await model.users.findByEmail(email);
-//   console.log(verifyUser);
-//   if (!verifyUser || verifyUser.password !== password) {
-//     throw new CodeError('Incorrect username or password', 'incorrect_data');
-//   }
-
-//   return verifyUser;
-// };
+  return listAllRecipes;
+};
 
 module.exports = {
   create,
+  getAll,
 };

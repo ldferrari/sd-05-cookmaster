@@ -14,21 +14,6 @@ const create = async (req, res) => {
   }
 };
 
-// const login = async (req, res) => {
-//   const { name, password } = req.body;
-//   try {
-//     const profile = await services.users.login(name, password);
-//     console.log(profile);
-//     res.status(200).json(profile);
-//   } catch (err) {
-//     if (err.code === 'invalid_data' || err.code === 'incorrect_data') {
-//       return res.status(401).json({ message: err.message });
-//     }
-//     console.error(err.message);
-//     res.status(401).json({ message: err.message });
-//   }
-// };
-
 module.exports = {
   create,
 };
