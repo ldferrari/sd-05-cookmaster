@@ -1,7 +1,9 @@
 const validateEmail = require('./validateEmail');
-const tokenGenerator = require('./JWT');
+const JWT = require('./JWT');
+const authorization = require('./authorization');
 
 module.exports = {
   validateEmail,
-  tokenGenerator,
+  JWT,
+  authorization,
 };

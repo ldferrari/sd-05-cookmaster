@@ -22,7 +22,8 @@ const login = async (email, password) => {
   if (!user) {
     throw new Errors.IncorrectEntries();
   }
-  const token = middlewares.tokenGenerator(user);
+  const { _id: id } = user;
+  const token = middlewares.JWT.tokenGenerator(user, id);
   return token;
 };
 

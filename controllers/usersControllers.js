@@ -31,6 +31,7 @@ const login = async (req, res) => {
     if (err instanceof Errors.RequiredFields) {
       return res.status(401).json({ message: err.message });
     }
+    console.log(err);
     return res
       .status(500)
       .json({ message: 'Algo deu Ruim no login do Controller' });

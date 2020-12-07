@@ -11,6 +11,7 @@ app.use(parser.json());
 app.use('/images', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/', routes.users);
+app.use('/recipes', routes.recipes);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
