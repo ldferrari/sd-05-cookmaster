@@ -39,7 +39,7 @@ logins.post('/', async (req, res) => {
       // Audience => Quem deve aceitar este token
       aud: 'identify',
       // Subject => A quem pertence esse token
-      sub: user._id,
+      // sub: user._id,
       userData: userWithoutPassword,
     };
     const token = jwt.sign(payload, secret, jwtConfig);

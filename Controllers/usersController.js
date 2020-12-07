@@ -11,6 +11,7 @@ userss.post('/', async (req, res) => {
     if (newUser.error) {
       return res.status(newUser.statusCode).json({ message: newUser.message });
     }
+    // res.status(201).json({ user: newUser });
     res.status(201).json({ user: newUser });
   } catch (error) {
     console.error(error);
