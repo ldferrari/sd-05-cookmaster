@@ -1,6 +1,5 @@
 const models = require('../models/index');
 const Errors = require('./Errors/index');
-const middlewares = require('../middlewares/index');
 
 const createRecipe = async (name, ingredients, preparation, userId) => {
   if (!name || !ingredients || !preparation) {
