@@ -24,7 +24,7 @@ const login = async (email, password) => {
   }
   const { _id: id } = user;
   const token = middlewares.JWT.tokenGenerator(user, id);
-  return token;
+  return { token };
 };
 
 module.exports = {
