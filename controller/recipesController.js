@@ -12,10 +12,13 @@ recipes.post('/', tokenAuth, async (req, res) => {
   console.log(user);
   try {
     const newRecipe = await service.createRecipe(name, ingredients, preparation, user);
+    if (newRecipe.err) {
+      res.status(newRecipe.code).json({ message: newRecipe.message });
+    }
     console.log(newRecipe);
     res.status(201).json(newRecipe);
   } catch (e) {
-    res.status(e.code).json({ message: e.message });
+    res.status(500).json({ message: e });
   }
 });
 

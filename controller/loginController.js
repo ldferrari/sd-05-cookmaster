@@ -17,11 +17,14 @@ login.post('/', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await service.login(email, password);
+    if (user.err) {
+      res.status(user.code).json({ message: user.message });
+    }
     const token = jwt.sign({ data: user }, secret, jwtConfig);
     res.status(200).json({ token });
   } catch (e) {
     console.log(e);
-    res.status(e.code).json({ message: e.message });
+    res.status(500).json({ message: e });
   }
 });
 

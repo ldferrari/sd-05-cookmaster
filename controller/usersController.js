@@ -8,10 +8,14 @@ users.post('/', async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const newUser = await service.createUser(name, email, password);
+    if (newUser.err) {
+      res.status(newUser.code).json({ message: newUser.message });
+    }
     console.log(newUser);
     res.status(201).json({ users: newUser });
   } catch (e) {
-    res.status(e.code).json({ message: e.message });
+    console.log(e);
+    res.status(500).json(e);
   }
 });
 
