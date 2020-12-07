@@ -2,6 +2,10 @@ const express = require('express');
 
 const bodyParser = require('body-parser');
 
+const usersController = require('./Controllers/usersController');
+
+const loginController = require('./Controllers/loginController');
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -11,6 +15,12 @@ app.get('/', (request, response) => {
   response.send();
 });
 // ------------------------------------
+
+// exericício 10 app.use('/images', express.static(path.join(__dirname, 'uploads')));
+
+app.use('/users', usersController);
+
+app.use('/login', loginController);
 
 const PORT = 3000;
 app.listen(PORT, () => {

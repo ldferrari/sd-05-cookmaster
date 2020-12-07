@@ -96,9 +96,9 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
           name: 'Erick Jacquin',
           email: 'erickjaquin@gmail.com',
           password: '12345678',
-        })
+        }) // aqui
       .expect('status', 201);
-
+      
     await frisby
       .post(`${url}/users/`,
         {
