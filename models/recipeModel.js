@@ -37,12 +37,12 @@ const exclude = async (id) => {
 const uploadImage = async (id) => {
   const imgUrl = `localhost:3000/images/${id}.jpeg`;
 
-  const imgUpdate= await getCollection('recipes')
+  await getCollection('recipes')
     .then((recipes) => recipes.updateOne(
       { _id: ObjectId(id) },
       { $set: { image: imgUrl } },
     ));
-  const { name, ingredients, preparation, userId } = await getById(id)
+  const { name, ingredients, preparation, userId } = await getById(id);
   const updatedImageRecipe = { name, ingredients, preparation, userId, image: imgUrl };
   return (updatedImageRecipe);
 };

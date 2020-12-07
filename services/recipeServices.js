@@ -163,7 +163,6 @@ const uploadImage = async (id, tokenId, role) => {
   return uploadedImage;
 };
 
-
 module.exports = {
   // login,
   getAll,
