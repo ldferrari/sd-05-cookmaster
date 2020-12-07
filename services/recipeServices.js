@@ -23,11 +23,6 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  // if (!id) {
-  //   throw {
-  //     code: 'not_found', message: 'Sale not found',
-  //   };
-  // }
   if (!ObjectId.isValid(id)) {
     return {
       error: true,
@@ -132,6 +127,43 @@ const exclude = async (id, role, tokenId) => {
   return excluded;
 };
 
+const uploadImage = async (id, tokenId, role) => {
+  if (!ObjectId.isValid(id)) {
+    return {
+      error: true,
+      code: 'Not Found',
+      message: 'recipe not found',
+    };
+  }
+  const recipe = await model.getById(id);
+  if (!recipe) {
+    return {
+      error: true,
+      code: 'Not Found',
+      message: 'recipe not found',
+    };
+  }
+  if ((tokenId !== recipe.userId) && (role !== 'admin')) {
+    return {
+      error: true,
+      code: 'Bad Request',
+      message: 'Invalid entries. Try again.',
+    };
+  }
+
+  const uploadedImage = await model.uploadImage(id);
+
+  if (!uploadedImage) {
+    return {
+      error: true,
+      code: 'Not Found',
+      message: 'recipe not found',
+    };
+  }
+  return uploadedImage;
+};
+
+
 module.exports = {
   // login,
   getAll,
@@ -139,4 +171,5 @@ module.exports = {
   create,
   update,
   exclude,
+  uploadImage,
 };

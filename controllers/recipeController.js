@@ -1,3 +1,4 @@
+// const multer = require('multer');
 const service = require('../services/recipeServices');
 
 const create = async (req, res) => {
@@ -95,6 +96,28 @@ const remove = async (req, res) => {
   }
 };
 
+const upload = async (req, res) => {
+  try {
+    const { _id: tokenId, role } = req.userData;
+    const { id } = req.params;
+
+    const updateImg = await service.uploadImage(id, tokenId, role);
+    
+    if (updateImg.error) {
+      if (updateImg.code === ('Not Found' || 'Bad Request')) {
+        return res.status(404).json({ message: updateImg.message });
+      }
+      return res.status(500).json({ message: 'Algo deu ruim no img getId upload update' });
+    }
+
+    res.status(200).json(updateImg);
+    
+  } catch (error) {
+    console.error(err.message);
+    res.status(500).json({ message: 'Algo deu bem ruim no upload' });
+  };
+};
+
 module.exports = {
   // login,
   getAll,
@@ -102,4 +125,5 @@ module.exports = {
   create,
   update,
   remove,
+  upload,
 };
