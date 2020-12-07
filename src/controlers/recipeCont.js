@@ -7,7 +7,7 @@ const token = require('../middlewares/token');
 const route = Router();
 
 route.post('/', token, rescue(async (req, res, next) => {
-  const recipe = await service.create(req.body);
+  const recipe = await service.create(req.body, req.user);
   if (recipe.error) {
     return next(recipe);
   }
