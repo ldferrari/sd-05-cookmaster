@@ -2,9 +2,9 @@ const Router = require('express');
 
 const login = Router();
 
-const service = require('../service/usersService');
-
 const jwt = require('jsonwebtoken');
+
+const service = require('../service/usersService');
 
 const secret = 'thebeatlesÉsuperestimado';
 

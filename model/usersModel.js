@@ -11,7 +11,7 @@ const getByEmail = (email) => connection('users').then((users) => users.findOne(
 const getById = (id) =>
   connection('users').then((users) => {
     if (ObjectId.isValid(id)) {
-      return products.findOne({ _id: ObjectId(id) });
+      return users.findOne({ _id: ObjectId(id) });
     }
     return null;
   });
