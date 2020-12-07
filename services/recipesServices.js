@@ -7,7 +7,7 @@ const createRecipe = async (name, ingredients, preparation, userId) => {
     name,
     ingredients,
     preparation,
-    imgURL: "./url/img/no_do_arquivo.jpg",
+    imgURL: './url/img/no_do_arquivo.jpg',
     userId,
   };
   const saveRecipe = await models.createRecipe(recipe);
