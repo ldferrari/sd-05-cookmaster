@@ -16,7 +16,7 @@ const createUser = rescue(async (req, res) => {
 //
 const loginUser = rescue(async (req, res) => {
   const { email } = req.body;
-  const user = await services.userLogin(email);
+  const user = await services.userExists(email);
 
   const jwtConfig = {
     expiresIn: '30min',
@@ -24,6 +24,7 @@ const loginUser = rescue(async (req, res) => {
   };
 
   const token = jwt.sign({ data: user }, secret, jwtConfig);
+
   res.status(200).json({ token });
 });
 

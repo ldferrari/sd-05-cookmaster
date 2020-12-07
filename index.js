@@ -14,24 +14,25 @@ const {
   loginUser,
 } = require('./controllers/usersControllers');
 
-// const {
-//   createRecipe,
-// //   getAllRecipes,
+const {
+  createRecipe,
+  getAllRecipes,
 // //   getRecipeById,
 // //   deleteRecipe,
 // //   updateRecipe,
-// } = require('./controllers/recipesControllers');
+} = require('./controllers/recipesControllers');
 
 const {
   validateUserSignUp,
   validateUserLogin,
-  // validateJWT,
+  validateJWT,
+  recipeValidate,
 } = require('./middlewares');
 
 app.post('/users', validateUserSignUp, createUser);
 app.post('/login', validateUserLogin, loginUser);
-// app.post('/recipes', validateJWT, createRecipe);
-// app.get('/recipes', validateJWT, getAllRecipes);
+app.post('/recipes', recipeValidate, validateJWT, createRecipe);
+app.get('/recipes', getAllRecipes);
 // app.get('/recipes/:id', validateJWT, getRecipeById);
 // app.delete('/recipes/:id', validateJWT, deleteRecipe);
 // app.put('/recipes/:id', validateJWT, updateRecipe, getRecipeById);

@@ -1,3 +1,5 @@
+const getConnection = require('./connection');
+
 /*
 formato do dos campos a ser salvo na tabela de receitas:
 
@@ -18,3 +20,15 @@ formato do retorno do banco apos a requisição:
 }
 
 */
+
+const createRecipe = (recipe) => getConnection('recipes')
+  .then((response) => response.insertOne({ recipe }))
+  .then((results) => (results.ops[0]));
+
+const getAllRecipes = () => getConnection('recipes')
+  .then((results) => results.find({}).toArray());
+
+module.exports = {
+  getAllRecipes,
+  createRecipe,
+};
