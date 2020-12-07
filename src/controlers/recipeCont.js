@@ -11,7 +11,12 @@ route.post('/', token, rescue(async (req, res, next) => {
   if (recipe.error) {
     return next(recipe);
   }
-  res.status(201).json(recipe);
+  res.status(201).json({ recipe });
+}));
+
+route.get('/', rescue(async (req, res) => {
+  const allRecipes = await service.getAll();
+  res.status(200).json(allRecipes);
 }));
 
 module.exports = route;

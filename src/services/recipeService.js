@@ -1,5 +1,7 @@
 const model = require('../models/recipes');
 
+const getAll = async () => model.getAll();
+
 const create = async (recipe) => {
   const { name, ingredients, preparation } = recipe;
   if (!name || !ingredients || !preparation) {
@@ -14,4 +16,5 @@ const create = async (recipe) => {
 
 module.exports = {
   create,
+  getAll,
 };
