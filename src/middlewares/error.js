@@ -13,4 +13,7 @@ module.exports = (err, _req, res, _next) => {
   if (code === 'invalid_user') {
     res.status(401).json({ message });
   }
+  if (code === 'not_found') {
+    res.status(404).json({ message });
+  }
 };

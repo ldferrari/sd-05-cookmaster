@@ -14,7 +14,20 @@ const create = async (recipe) => {
   return model.create(recipe);
 };
 
+const getById = async (id) => {
+  const recipe = await model.getById(id);
+  if (!recipe) {
+    return {
+      code: 'not_found',
+      message: 'recipe not found',
+      error: true,
+    };
+  }
+  return recipe;
+};
+
 module.exports = {
   create,
   getAll,
+  getById,
 };
