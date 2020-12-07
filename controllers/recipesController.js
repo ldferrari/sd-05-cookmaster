@@ -24,6 +24,16 @@ const getAll = async (req, res) => {
   }
 };
 
+const updateById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const updatedRecipe = await services.recipes.updateById;
+    res.status(204).json(err.message);
+  } catch (err) {
+    res.status(401).json({ message: err.message });
+  }
+};
+
 const getById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -31,7 +41,7 @@ const getById = async (req, res) => {
     res.status(200).json(getRecipeById);
   } catch (err) {
     if (err.code === 'invalid_id') {
-      res.status(404).json({ message: err.message });
+      return res.status(404).json({ message: err.message });
     }
     console.error(err.message);
     res.status(500).json({ message: err.message });
