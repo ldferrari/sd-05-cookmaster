@@ -24,15 +24,15 @@ const getAll = async (req, res) => {
   }
 };
 
-const updateById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const updatedRecipe = await services.recipes.updateById;
-    res.status(204).json(err.message);
-  } catch (err) {
-    res.status(401).json({ message: err.message });
-  }
-};
+// const updateById = async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const updatedRecipe = await services.recipes.updateById;
+//     res.status(204).json(err.message);
+//   } catch (err) {
+//     res.status(401).json({ message: err.message });
+//   }
+// };
 
 const getById = async (req, res) => {
   const { id } = req.params;
