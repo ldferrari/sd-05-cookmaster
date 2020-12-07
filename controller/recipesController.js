@@ -16,7 +16,7 @@ recipes.post('/', tokenAuth, async (req, res) => {
       res.status(newRecipe.code).json({ message: newRecipe.message });
     }
     console.log(newRecipe);
-    res.status(201).json(newRecipe);
+    res.status(201).json({ recipe: newRecipe });
   } catch (e) {
     res.status(500).json({ message: e });
   }

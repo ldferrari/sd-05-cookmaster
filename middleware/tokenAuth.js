@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const model = require('../model/usersModel');
+// const model = require('../model/usersModel');
 
 const secret = 'thebeatlesÉsuperestimado';
 
@@ -11,9 +11,9 @@ module.exports = async (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, secret);
-    const user = await model.getById(decoded);
-    console.log(user);
-    req.user = user;
+    const { data: { _id } } = decoded;
+    console.log(_id);
+    req.user = _id;
     next();
   } catch (err) {
     return res.status(401).json({ message: 'jwt malformed' });
