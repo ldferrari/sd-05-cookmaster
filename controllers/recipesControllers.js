@@ -7,6 +7,7 @@ const getAllRecipes = rescue(async (_req, res) => {
   // if (req.user) {
   //   user = req.user;
   // }
+  console.log(recipes);
   res.status(200).json(recipes);
 });
 
@@ -19,7 +20,7 @@ const createRecipe = rescue(async (req, res) => {
     return res.status(400).json({ message: 'Invalid entries, Try again.' });
   }
 
-  res.status(201).json(recipe);
+  res.status(201).json({ recipe });
 });
 
 module.exports = {

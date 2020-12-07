@@ -2,6 +2,7 @@ const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
 const MONGO_DB_URL = process.env.MONGO_DB_URL || 'mongodb://mongodb:27017/Cookmaster';
+
 /*
  [HONESTIDADE ACADEMICA] na linha 2 e 4 deste arquivo foi feito
 um pesquisa para saber o pq de o avaliador nao está corrigindo

@@ -20,9 +20,10 @@ formato do retorno do banco apos a requisição:
 }
 
 */
-
+//  [ HONESTIDADE ACADÊMICA ] Recebi ajuda do Felipe Vieira,
+// para identificar um erro de validação no github
 const createRecipe = (recipe) => getConnection('recipes')
-  .then((response) => response.insertOne({ recipe }))
+  .then((response) => response.insertOne(recipe))
   .then((results) => (results.ops[0]));
 
 const getAllRecipes = () => getConnection('recipes')
