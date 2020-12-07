@@ -11,10 +11,11 @@ const findByName = (name) => getCollection('recipes').then((recipes) => recipes.
 
 const getAll = () => getCollection('recipes').then((recipes) => recipes.find().toArray());
 
+// prettier-ignore
 const getById = (id) =>
-  !ObjectId.isValid(id)
+  (!ObjectId.isValid(id)
     ? null
-    : getCollection('recipes').then((recipes) => recipes.findOne(ObjectId(id)));
+    : getCollection('recipes').then((recipes) => recipes.findOne(ObjectId(id))));
 
 module.exports = {
   create,
