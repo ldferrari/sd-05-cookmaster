@@ -7,9 +7,7 @@ const auth = require('../Middlewares/auth');
 const recipes = Router();
 
 recipes.get('/', async (_req, res) => {
-  // const { token } = auth;
   const allRecipes = await service.getAll();
-  // if (token || !token) 
   return res.status(200).json(allRecipes);
 });
 

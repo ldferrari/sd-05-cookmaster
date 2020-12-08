@@ -8,7 +8,7 @@ const loginController = require('./Controllers/loginController');
 
 const recipesController = require('./Controllers/recipesController');
 
-const authMiddleware = require('./Middlewares/auth');
+// const authMiddleware = require('./Middlewares/auth');
 
 const app = express();
 

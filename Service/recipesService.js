@@ -4,7 +4,7 @@ const model = require('../Models/recipesModel');
 const getAll = async () => model.getAll();
 
 const getById = async (id) => {
-  const recipe = await model.getById(id);   
+  const recipe = await model.getById(id);
   if (!recipe) {
     return {
       error: true,
