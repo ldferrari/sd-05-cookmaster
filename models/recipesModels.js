@@ -26,8 +26,7 @@ const updateById = (id, name, ingredients, preparation, userId) =>
         recipes.updateOne(
           { _id: ObjectId(id) },
           { $set: { name, ingredients, preparation, userId } },
-        ),
-      )
+        ))
       .then((_res) => ({
         _id: ObjectId(id),
         name,
