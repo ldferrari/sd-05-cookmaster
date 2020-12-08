@@ -6,7 +6,7 @@ const User = require('../Models/usersModel');
 
 const logins = Router();
 
-const secret = 'senhaSecreta';
+const secret = 'secretPassword';
 
 const jwtConfig = {
   expiresIn: '15m',

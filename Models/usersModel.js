@@ -1,4 +1,4 @@
-// const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
 
 // const product = require('../Controllers/productsController');
 
@@ -12,7 +12,13 @@ const create = async (name, email, password, role = 'user') =>
     .then((user) => user.insertOne({ name, email, password, role }))
     .then((result) => ({ _id: result.insertedId, name, email, role }));
 
+const getById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  return getCollection('users').then((i) => i.findOne(ObjectId(id)));
+};
+
 module.exports = {
   getByEmail,
   create,
+  getById,
 };
