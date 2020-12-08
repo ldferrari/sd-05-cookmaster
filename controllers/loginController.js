@@ -8,9 +8,8 @@ const loginRoute = Router();
 
 loginRoute.post('/', login, rescue(async (req, res) => {
   const { email } = req.body;
-  const payload = await hasEmail(email);
-  const { password: _, ...payloadWithoutPassword } = payload;
-  const token = createToken(payloadWithoutPassword);
+  const userLogged = await hasEmail(email);
+  const token = await createToken(userLogged);
 
   return res.status(200).json({ token });
 }));
