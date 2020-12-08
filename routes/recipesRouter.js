@@ -7,9 +7,8 @@ const middlewares = require('../middlewares');
 const recipesRouter = Router();
 
 recipesRouter.post('/', middlewares.auth.authToken, controllers.recipes.create);
-
 recipesRouter.get('/:id', controllers.recipes.getById);
-// recipesRouter.put('/', controllers.recipes.update);
+recipesRouter.put('/:id', middlewares.auth.authToken, controllers.recipes.updateById);
 recipesRouter.delete('/:id', middlewares.auth.authToken, controllers.recipes.removeById);
 recipesRouter.get('/', controllers.recipes.getAll);
 

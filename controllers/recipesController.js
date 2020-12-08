@@ -24,16 +24,6 @@ const getAll = async (req, res) => {
   }
 };
 
-// const updateById = async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const updatedRecipe = await services.recipes.updateById;
-//     res.status(204).json(err.message);
-//   } catch (err) {
-//     res.status(401).json({ message: err.message });
-//   }
-// };
-
 const getById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -45,6 +35,27 @@ const getById = async (req, res) => {
     }
     console.error(err.message);
     res.status(500).json({ message: err.message });
+  }
+};
+
+const updateById = async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const { _id: userId } = req.user;
+  // console.log(
+  //   `\nid: ${id}\nname: ${name}\ningredients: ${ingredients}\npreparation: ${preparation}\nuserId: ${userId}\n`,
+  // );
+  try {
+    const updatedRecipe = await services.recipes.updateById(
+      id,
+      name,
+      ingredients,
+      preparation,
+      userId,
+    );
+    res.status(200).json(updatedRecipe);
+  } catch (err) {
+    res.status(401).json({ message: err.message });
   }
 };
 
@@ -63,4 +74,5 @@ module.exports = {
   getAll,
   getById,
   removeById,
+  updateById,
 };

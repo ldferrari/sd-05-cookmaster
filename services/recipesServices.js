@@ -47,6 +47,12 @@ const getById = async (id) => {
   return getRecipeById;
 };
 
+const updateById = async (id, name, ingredients, preparation, userId) => {
+  const updatedRecipe = await model.recipes.updateById(id, name, ingredients, preparation, userId);
+  console.log('Updated recipe: \n', updatedRecipe);
+  return updatedRecipe;
+};
+
 const removeById = async (id) => {
   const removedRecipe = await model.recipes.removeById(id);
   return removedRecipe;
@@ -57,4 +63,5 @@ module.exports = {
   getAll,
   getById,
   removeById,
+  updateById,
 };
