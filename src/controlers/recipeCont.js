@@ -23,6 +23,16 @@ route.get('/:id', rescue(async (req, res, next) => {
   res.status(200).json(recipe);
 }));
 
+route.put('/:id', token, rescue(async (req, res, next) => {
+  const { id } = req.params;
+  const { _id: userId } = req.user;
+  const recipe = await service.update(id, req.body, userId);
+  if (recipe.error) {
+    return next(recipe);
+  }
+  res.status(200).json(recipe);
+}));
+
 route.get('/', rescue(async (req, res) => {
   const all = await service.getAll();
   res.status(200).json(all);
