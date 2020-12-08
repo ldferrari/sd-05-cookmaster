@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const getConnection = require('./connection');
 
 /*
@@ -29,7 +30,11 @@ const createRecipe = (recipe) => getConnection('recipes')
 const getAllRecipes = () => getConnection('recipes')
   .then((results) => results.find({}).toArray());
 
+const getRecipeById = (id) => getConnection('recipes')
+  .then((result) => (ObjectId.isValid(id) ? result.findOne({ _id: ObjectId(id) }) : null));
+
 module.exports = {
   getAllRecipes,
   createRecipe,
+  getRecipeById,
 };

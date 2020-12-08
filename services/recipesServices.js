@@ -2,6 +2,13 @@ const models = require('../models/recipesModels');
 
 const allRecipes = async () => models.getAllRecipes();
 
+const getRecipeById = async (id) => {
+  const recipe = await models.getRecipeById(id);
+  if (!recipe) {
+    return { message: 'recipe not found' };
+  }
+  return recipe;
+};
 const createRecipe = async (name, ingredients, preparation, userId) => {
   const recipe = {
     name,
@@ -20,4 +27,5 @@ const createRecipe = async (name, ingredients, preparation, userId) => {
 module.exports = {
   allRecipes,
   createRecipe,
+  getRecipeById,
 };
