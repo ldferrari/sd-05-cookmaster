@@ -42,9 +42,7 @@ const updateById = async (req, res) => {
   const { id } = req.params;
   const { name, ingredients, preparation } = req.body;
   const { _id: userId } = req.user;
-  // console.log(
-  //   `\nid: ${id}\nname: ${name}\ningredients: ${ingredients}\npreparation: ${preparation}\nuserId: ${userId}\n`,
-  // );
+
   try {
     const updatedRecipe = await services.recipes.updateById(
       id,

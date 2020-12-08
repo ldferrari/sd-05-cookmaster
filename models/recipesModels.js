@@ -22,19 +22,19 @@ const updateById = (id, name, ingredients, preparation, userId) =>
   (!ObjectId.isValid(id)
     ? null
     : getCollection('recipes')
-        .then((recipes) =>
-          recipes.updateOne(
-            { _id: ObjectId(id) },
-            { $set: { name, ingredients, preparation, userId } },
-          ),
-        )
-        .then((_res) => ({
-          _id: ObjectId(id),
-          name,
-          ingredients,
-          preparation,
-          userId,
-        })));
+      .then((recipes) =>
+        recipes.updateOne(
+          { _id: ObjectId(id) },
+          { $set: { name, ingredients, preparation, userId } },
+        ),
+      )
+      .then((_res) => ({
+        _id: ObjectId(id),
+        name,
+        ingredients,
+        preparation,
+        userId,
+      })));
 
 const removeById = (id) =>
   getCollection('recipes').then((recipes) => recipes.deleteOne({ _id: ObjectId(id) }));
