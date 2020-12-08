@@ -26,6 +26,14 @@ const getById = async (id) => {
   return recipe;
 };
 
+const delRecipe = async (id, role) => {
+  if (role === 'admin') {
+    model.delRecipe(id);
+  } else {
+    return { error: true, code: 'invalid_user', message: 'missing auth token' };
+  }
+};
+
 const update = async (id, recipe, userId) => model.update(id, recipe, userId);
 
 module.exports = {
@@ -33,4 +41,5 @@ module.exports = {
   getAll,
   getById,
   update,
+  delRecipe,
 };

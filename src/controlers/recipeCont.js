@@ -38,4 +38,14 @@ route.get('/', rescue(async (req, res) => {
   res.status(200).json(all);
 }));
 
+route.delete('/:id', token, rescue(async (req, res, next) => {
+  const { id } = req.params;
+  const { role } = req.user;
+  const isAdmin = await service.delRecipe(id, role);
+  if (!isAdmin) {
+    next(isAdmin);
+  }
+  res.status(204).json();
+}));
+
 module.exports = route;
