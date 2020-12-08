@@ -40,8 +40,16 @@ const getById = async (id) => {
   return recipe;
 };
 
+const update = async (req) => {
+  const { id } = req.params;
+  const { _id: userId } = req.user;
+
+  return recipeModel.update(id, req.body, userId);
+};
+
 module.exports = {
   createRecipe,
   getAll,
   getById,
+  update,
 };

@@ -14,8 +14,18 @@ const getById = async (id) => {
   return getCollection('recipes').then((collection) => collection.findOne(ObjectId(id)));
 };
 
+const update = async (id, { name, ingredients, preparation }, userId) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  await getCollection('recipes').then((collection) =>
+    collection.updateOne({ _id: Object(id) },
+      { $set: { name, ingredients, preparation, userId } }));
+  return { _id: id, name, ingredients, preparation, userId };
+};
+
 module.exports = {
   createRecipe,
   getAll,
   getById,
+  update,
 };
