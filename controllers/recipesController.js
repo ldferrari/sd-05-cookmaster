@@ -3,7 +3,6 @@ const rescue = require('express-rescue');
 
 const service = require('../services/recipesService');
 const authToken = require('../middlewares/authToken');
-const recipesModel = require('../models/recipesModel');
 
 const recipes = Router();
 
