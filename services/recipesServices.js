@@ -1,4 +1,3 @@
-const { response } = require('express');
 const models = require('../models/recipesModels');
 
 const allRecipes = async () => models.getAllRecipes();
