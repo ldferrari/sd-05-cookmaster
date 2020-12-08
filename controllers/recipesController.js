@@ -3,6 +3,7 @@ const rescue = require('express-rescue');
 
 const service = require('../services/recipesService');
 const authToken = require('../middlewares/authToken');
+const recipesModel = require('../models/recipesModel');
 
 const recipes = Router();
 
@@ -42,6 +43,14 @@ recipes.put('/:id', authToken, rescue(async (req, res, next) => {
   }
 
   res.status(200).json(updatedRecipe);
+}));
+
+recipes.delete('/:id', authToken, rescue(async (req, res) => {
+  const { id } = req.params;
+
+  await service.remove(id);
+
+  res.status(204).json();
 }));
 
 module.exports = recipes;

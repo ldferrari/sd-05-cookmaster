@@ -47,9 +47,12 @@ const update = async (req) => {
   return recipeModel.update(id, req.body, userId);
 };
 
+const remove = async (id) => recipeModel.remove(id);
+
 module.exports = {
   createRecipe,
   getAll,
   getById,
   update,
+  remove,
 };
