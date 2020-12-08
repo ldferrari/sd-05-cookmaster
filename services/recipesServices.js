@@ -34,9 +34,18 @@ const createRecipe = async (name, ingredients, preparation, userId) => {
   return saveRecipe;
 };
 
+const updateRecipe = async (id, recipe) => {
+  const idExists = await models.getRecipeById(id);
+  if (idExists) {
+    await models.update(id, recipe);
+  }
+  return { message: 'Recipe doesn\'t exists' };
+};
+
 module.exports = {
   allRecipes,
   createRecipe,
   getRecipeById,
   excludeRecipe,
+  updateRecipe,
 };
