@@ -11,7 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 
 const storage = multer.diskStorage({
-  destination: '../uploads',
+  destination: './uploads',
   filename: (req, file, callback) => {
     callback(null, `${req.params.id}.jpeg`);
   },
