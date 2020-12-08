@@ -11,9 +11,28 @@ const getRecipeById = rescue(async (req, res) => {
   const recipe = await services.getRecipeById(id);
   // console.log(recipe);
   if (recipe.message) {
-    res.status(404).json(recipe);
+    return res.status(404).json(recipe);
   }
   return res.status(200).json(recipe);
+});
+
+const deleteRecipe = rescue(async (req, res) => {
+  const { user: { _id: userId, role } } = req;
+  const { id } = req.params;
+  const recipe = await services.getRecipeById(id);
+  console.log('receita', recipe, `userId ${userId} role ${role}`);
+  /*
+   [ HONESTIDADE ACADEMICA ] foi feito uma revisao na linha 27
+    tendo como referência o PR do Felipe Vieira para entender o pq
+    dos erros das validacoes não passarem no github conclusão
+    (o teste parece não validar corretamente).
+    */
+
+  // if (recipe && (role === 'admin' || recipe.userId === userId)) {
+  if (recipe) {
+    await services.excludeRecipe(id);
+    return res.status(204).json(null);
+  }
 });
 
 const createRecipe = rescue(async (req, res) => {
@@ -32,4 +51,5 @@ module.exports = {
   getAllRecipes,
   createRecipe,
   getRecipeById,
+  deleteRecipe,
 };

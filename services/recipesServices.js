@@ -1,3 +1,4 @@
+const { response } = require('express');
 const models = require('../models/recipesModels');
 
 const allRecipes = async () => models.getAllRecipes();
@@ -9,6 +10,16 @@ const getRecipeById = async (id) => {
   }
   return recipe;
 };
+
+const excludeRecipe = async (id) => {
+  const recipeExists = await models.getRecipeById(id);
+  if (!recipeExists) {
+    return { message: 'Receita não encontrada' };
+  }
+  await models.exclude(id);
+  return recipeExists;
+};
+
 const createRecipe = async (name, ingredients, preparation, userId) => {
   const recipe = {
     name,
@@ -28,4 +39,5 @@ module.exports = {
   allRecipes,
   createRecipe,
   getRecipeById,
+  excludeRecipe,
 };

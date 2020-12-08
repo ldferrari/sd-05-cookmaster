@@ -10,15 +10,16 @@ module.exports = async (req, res, next) => {
   // console.log('validateJWT:', token);
   try {
     if (!token) {
-      return res.status(401).json({ message: 'jwt malformed' });
+      return res.status(401).json({ message: 'missing auth token' });
     }
     const decoded = jwt.verify(token, secret);
     const user = await findUserbyEmail(decoded.data.email);
-    console.log('decoded:', user);
     if (!user) {
       return res.status(401).json({ message: 'Acess not authorized' });
     }
-    req.user = user;
+    const { password, ...noPassword } = user;
+    req.user = noPassword;
+    // console.log('sem password:', noPassword);
     next();
   } catch (err) {
     return res.status(401).json({ message: 'jwt malformed' });

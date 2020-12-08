@@ -23,18 +23,22 @@ formato do retorno do banco apos a requisição:
 */
 //  [ HONESTIDADE ACADÊMICA ] Recebi ajuda do Felipe Vieira,
 // para identificar um erro de validação no github
-const createRecipe = (recipe) => getConnection('recipes')
+const createRecipe = async (recipe) => getConnection('recipes')
   .then((response) => response.insertOne(recipe))
   .then((results) => (results.ops[0]));
 
-const getAllRecipes = () => getConnection('recipes')
+const getAllRecipes = async () => getConnection('recipes')
   .then((results) => results.find({}).toArray());
 
-const getRecipeById = (id) => getConnection('recipes')
+const getRecipeById = async (id) => getConnection('recipes')
   .then((result) => (ObjectId.isValid(id) ? result.findOne({ _id: ObjectId(id) }) : null));
+
+const exclude = async (id) => getConnection('recipes')
+  .then((response) => response.deleteOne({ _id: ObjectId(id) }));
 
 module.exports = {
   getAllRecipes,
   createRecipe,
   getRecipeById,
+  exclude,
 };

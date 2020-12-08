@@ -18,7 +18,7 @@ const {
   createRecipe,
   getAllRecipes,
   getRecipeById,
-// //   deleteRecipe,
+  deleteRecipe,
 // //   updateRecipe,
 } = require('./controllers/recipesControllers');
 
@@ -34,7 +34,7 @@ app.post('/login', validateUserLogin, loginUser);
 app.post('/recipes', recipeValidate, validateJWT, createRecipe);
 app.get('/recipes', getAllRecipes);
 app.get('/recipes/:id', getRecipeById);
-// app.delete('/recipes/:id', validateJWT, deleteRecipe);
+app.delete('/recipes/:id', validateJWT, deleteRecipe);
 // app.put('/recipes/:id', validateJWT, updateRecipe, getRecipeById);
 
 app.use((err, _req, res, _next) => {
