@@ -1,10 +1,22 @@
+// const { ObjectId } = require('mongodb');
 const model = require('../Models/recipesModel');
 
-// const usersModel = require('../Models/usersModel');
+const getAll = async () => model.getAll();
+
+const getById = async (id) => {
+  const recipe = await model.getById(id);   
+  if (!recipe) {
+    return {
+      error: true,
+      code: 'invalid_data',
+      message: 'recipe not found',
+      statusCode: 404,
+    };
+  }
+  return recipe;
+};
 
 const create = async (name, ingredients, preparation, userId) => {
-  // const { token } = authMiddleware;
-  // const { _id } = authMiddleware.user;
   if (!name || !ingredients || !preparation) {
     return {
       error: true,
@@ -26,4 +38,6 @@ const create = async (name, ingredients, preparation, userId) => {
 
 module.exports = {
   create,
+  getAll,
+  getById,
 };

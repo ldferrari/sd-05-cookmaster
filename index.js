@@ -26,7 +26,7 @@ app.use('/users', usersController);
 
 app.use('/login', loginController);
 
-app.use('/recipes', authMiddleware, recipesController);
+app.use('/recipes', recipesController);
 
 const PORT = 3000;
 app.listen(PORT, () => {
