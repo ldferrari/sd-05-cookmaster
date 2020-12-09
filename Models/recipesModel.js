@@ -17,9 +17,8 @@ const getById = async (id) => {
 const update = async (id, name, ingredients, preparation, userId) => {
   if (!ObjectId.isValid(id)) return null;
   getCollection('recipes').then((recipe) =>
-    recipe.updateOne(({ _id: ObjectId(id) },
-    { $set: { name, ingredients, preparation, userId } }
-    )));
+    recipe.updateOne({ _id: ObjectId(id) },
+      { $set: { name, ingredients, preparation, userId } }));
   return { _id: id, name, ingredients, preparation, userId };
 };
 
