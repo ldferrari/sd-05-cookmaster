@@ -37,13 +37,13 @@ const create = async (name, ingredients, preparation, userId) => {
 };
 
 const update = async (id, name, ingredients, preparation, userId) => {
-  const recipe = await model.update(id);
+  const recipe = await model.getById(id);
   if (!recipe) {
     return {
       error: true,
       code: 'invalid_data',
       message: 'Algo deu errado',
-      statusCode: 500,
+      statusCode: 401,
     };
   }
   return model.update(id, name, ingredients, preparation, userId);
