@@ -32,7 +32,7 @@ app.use('/recipes', recipesController);
 
 // app.use('/images', express.static(path.join(__dirname, '.', 'uploads')));
 app.use('/images', express.static(path.join(__dirname, 'jacquinho.jpg')));
-//jacquinho.jpg
+// jacquinho.jpg
 
 const PORT = 3000;
 app.listen(PORT, () => {

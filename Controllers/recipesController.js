@@ -32,14 +32,14 @@ recipes.put('/:id', auth, async (req, res) => {
     const { id } = req.params;
     const { name, ingredients, preparation } = req.body;
     const { _id: userId } = req.user;
-    console.log('aqui é o body ' + name);
-    if (!auth) return res.status(401).json({ message: 'missing auth token' });
+    // console.log('aqui é o body ' + name);
+    // if (!auth) return res.status(401).json({ message: 'missing auth token' });
     const updateRecipe = await service.update(id, name, ingredients, preparation, userId);
     if (updateRecipe.error) {
       return res.status(updateRecipe.statusCode).json({ message: updateRecipe.message });
     }
-    console.log('linha 41' + updateRecipe)
-    return res.status(200).json({ updateRecipe });
+    // console.log('linha 41' + updateRecipe);
+    return res.status(200).json(updateRecipe);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ message: 'Algo de errado não está certo' });
