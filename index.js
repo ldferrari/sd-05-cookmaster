@@ -22,8 +22,6 @@ app.get('/', (request, response) => {
 });
 // ------------------------------------
 
-// exericício 10
-
 app.use('/users', usersController);
 
 app.use('/login', loginController);
