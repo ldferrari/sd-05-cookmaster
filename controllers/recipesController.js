@@ -2,6 +2,7 @@ const { Router } = require('express');
 const jwt = require('jsonwebtoken');
 const autJWT = require('../service/autJWT');
 const recipesService = require('../service/recipesService');
+const recipesModels = require('../models/recipesModels');
 
 const recipesRouter = Router();
 
@@ -18,6 +19,15 @@ recipesRouter.post('/', autJWT, async (req, res) => {
       return res.status(newRecipe.statusCode).json({ message: newRecipe.message });
     }
     res.status(201).json({ recipe: newRecipe });
+  } catch (err) {
+    res.status(500).json({ message: 'Algo deu errado' });
+  }
+});
+
+recipesRouter.get('/', async (req, res) => {
+  try {
+    const allRecipe = await recipesModels.findAll();
+    res.status(200).json(allRecipe);
   } catch (err) {
     res.status(500).json({ message: 'Algo deu errado' });
   }
