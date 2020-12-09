@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const bodyParser = require('body-parser');
 const usersController = require('./controller/usersController');
@@ -13,6 +14,8 @@ app.use(bodyParser.json());
 app.get('/', (request, response) => {
   response.send();
 });
+
+app.use('/images', express.static(path.join(__dirname, '/uploads')));
 
 app.use('/users', usersController);
 

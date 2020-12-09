@@ -8,13 +8,13 @@ const createRecipe = async (name, ingredients, preparation, userId) =>
 
 const getAll = async () => connection('recipes').then((recipes) => recipes.find({}).toArray());
 
-const getById = async (id) =>
-  connection('recipes').then((recipes) => {
-    if (ObjectId.isValid(id)) {
-      return recipes.findOne({ _id: ObjectId(id) });
-    }
-    return null;
+const getById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  return connection('recipes').then((recipes) => {
+    console.log('entrou no getbyid');
+    return recipes.findOne({ _id: ObjectId(id) });
   });
+};
 
 const updateRecipe = async (recipeID, name, ingredients, preparation, userID) => {
   if (!ObjectId.isValid(recipeID)) return;
@@ -33,10 +33,25 @@ const deleteRecipe = async (id) => {
   }
 };
 
+const updateImage = async (id, userID) => {
+  const recipe = await getById(id);
+  console.log(recipe);
+  console.log(userID);
+  if (recipe.userId !== userID) {
+    console.log('entrou no if do userID');
+    return null;
+  }
+  const path = `localhost:3000/images/${id}.jpeg`;
+  connection('recipes')
+    .then((recipes) => recipes.updateOne({ _id: ObjectId(id) }, { $set: { image: path } }));
+  return getById(id);
+};
+
 module.exports = {
   createRecipe,
   getAll,
   getById,
   updateRecipe,
   deleteRecipe,
+  updateImage,
 };

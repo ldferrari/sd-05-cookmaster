@@ -1,10 +1,22 @@
 const Router = require('express');
+const multer = require('multer');
+const model = require('../model/recipesModel');
 
 const recipes = Router();
 
 const tokenAuth = require('../middleware/tokenAuth');
 
 const service = require('../service/recipesService');
+
+const storage = multer.diskStorage({
+  destination: 'uploads',
+  filename: (req, _file, callBack) => {
+    const { id } = req.params;
+    callBack(null, `${id}.jpeg`);
+  },
+});
+
+const upload = multer({ storage });
 
 recipes.post('/', tokenAuth, async (req, res) => {
   const { name, ingredients, preparation } = req.body;
@@ -53,7 +65,7 @@ recipes.put('/:id', tokenAuth, async (req, res) => {
     const updatedRecipe = await service.updateRecipe(
       name, ingredients, preparation, id, userID,
     );
-    // if (updatedRecipe.err) {
+      // if (updatedRecipe.err) {
     //   return res.status(updatedRecipe.code).json({ message: updatedRecipe.message });
     // }
     return res.status(200).json(updatedRecipe);
@@ -70,6 +82,17 @@ recipes.delete('/:id', tokenAuth, async (req, res) => {
   } catch (e) {
     console.log(e);
     return res.status(500).json(e);
+  }
+});
+
+recipes.put('/:id/image', tokenAuth, upload.single('image'), async (req, res) => {
+  const { id } = req.params;
+  const { userID } = req;
+  try {
+    const updatedImage = await model.updateImage(id, userID);
+    res.status(200).json(updatedImage);
+  } catch (e) {
+    res.status(500).json(e);
   }
 });
 
