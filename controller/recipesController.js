@@ -8,10 +8,10 @@ const service = require('../service/recipesService');
 
 recipes.post('/', tokenAuth, async (req, res) => {
   const { name, ingredients, preparation } = req.body;
-  const { user } = req;
-  console.log(user);
+  const { userID } = req;
+  console.log(userID);
   try {
-    const newRecipe = await service.createRecipe(name, ingredients, preparation, user);
+    const newRecipe = await service.createRecipe(name, ingredients, preparation, userID);
     if (newRecipe.err) {
       return res.status(newRecipe.code).json({ message: newRecipe.message });
     }
@@ -41,6 +41,24 @@ recipes.get('/:id', async (req, res) => {
     return res.status(200).json(recipeFound);
   } catch (e) {
     return res.status(500).json({ message: e });
+  }
+});
+
+recipes.put('/:id', tokenAuth, async (req, res) => {
+  const { name, ingredients, preparation } = req.body;
+  const { id } = req.params;
+  console.log(id);
+  const { userID } = req;
+  try {
+    const updatedRecipe = await service.updateRecipe(
+      name, ingredients, preparation, id, userID,
+    );
+    // if (updatedRecipe.err) {
+    //   return res.status(updatedRecipe.code).json({ message: updatedRecipe.message });
+    // }
+    return res.status(200).json(updatedRecipe);
+  } catch (e) {
+    return res.status(500).json(e);
   }
 });
 

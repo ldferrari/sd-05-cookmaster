@@ -16,8 +16,20 @@ const getById = async (id) =>
     return null;
   });
 
+const updateRecipe = async (recipeID, name, ingredients, preparation, userID) => {
+  if (!ObjectId.isValid(recipeID)) return;
+  connection('recipes').then((recipes) =>
+    recipes.updateOne({
+      _id: ObjectId(recipeID) }, { $set: { name, ingredients, preparation, userID },
+    }));
+  const updatedRecipe = { _id: recipeID, name, ingredients, preparation, userID };
+  console.log(updatedRecipe);
+  return updatedRecipe;
+};
+
 module.exports = {
   createRecipe,
   getAll,
   getById,
+  updateRecipe,
 };
