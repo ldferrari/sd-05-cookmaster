@@ -7,13 +7,13 @@ const funToken = (userFound) => {
     algorithm: 'HS256', // algorítimo assimétrico (algotítimo padrão, não necessário colocar)
   };
 
-  // const { password: _, ...userWithoutPassword } = userFound;
-  const { _id: userId, email } = userFound;
+  const { password: _, ...userWithoutPassword } = userFound;
+  const { _id: userId } = userFound;
   const payload = {
     iss: 'post-api', // issuer -> quem emitiu o token
     aud: 'post-api', // Audience -> quem deve aceitar o token
     sub: userId, // Suject -> A quem pertence esse token
-    useData: email,
+    useData: userWithoutPassword,
   };
   const token = jwt.sign(payload, secret, jwtConfig);
   return token;

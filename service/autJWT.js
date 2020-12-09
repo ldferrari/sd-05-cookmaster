@@ -13,7 +13,7 @@ const funAuthorization = (async (req, res, next) => {
     }
     const secret = 'segredo';
     const payload = jwt.verify(auth, secret);
-    const user = await usersModels.findByEmail(payload.useData);
+    const user = await usersModels.findByEmail(payload.useData.email);
     if (!user) {
       return {
         err: true,

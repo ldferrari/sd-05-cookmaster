@@ -33,4 +33,19 @@ recipesRouter.get('/', async (req, res) => {
   }
 });
 
+recipesRouter.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const oneRecipe = await recipesService.findByID(id);
+
+    if (oneRecipe.err) {
+      return res.status(oneRecipe.statusCode).json({ message: oneRecipe.message });
+    }
+    res.status(200).json(oneRecipe);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: 'Algo deu errado' });
+  }
+});
+
 module.exports = recipesRouter;
