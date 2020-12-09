@@ -27,9 +27,9 @@ logins.post('/', async (req, res) => {
       return res.status(401).json({ message: 'Incorrect username or password' });
     }
 
-    if (password.length <= 6) {
+    /* if (password.length <= 6) {
       return res.status(401).json({ message: 'Incorrect username or password' });
-    }
+    } */
 
     const user = await User.create(email);
     const { password: _, ...userWithoutPassword } = user;
