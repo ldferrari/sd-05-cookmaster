@@ -62,4 +62,15 @@ recipes.put('/:id', tokenAuth, async (req, res) => {
   }
 });
 
+recipes.delete('/:id', tokenAuth, async (req, res) => {
+  const { id } = req.params;
+  try {
+    await service.deleteRecipe(id);
+    return res.send(204);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json(e);
+  }
+});
+
 module.exports = recipes;
