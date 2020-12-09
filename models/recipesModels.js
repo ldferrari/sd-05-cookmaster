@@ -14,8 +14,25 @@ const findByID = async (recipeId) =>
   getCollection('recipes')
     .then((oneRecipe) => oneRecipe.findOne(ObjectId(recipeId)));
 
+const upRecipe = async (id, name, ingredients, preparation, userId) => {
+  if (ObjectId.isValid(id)) {
+    getCollection('recipes')
+      .then((newRecipe) => newRecipe.updateOne(
+        { _id: ObjectId(id) },
+        { $set: { name, ingredients, preparation, userId } },
+      ));
+  }
+  return { _id: ObjectId(id), name, ingredients, preparation, userId };
+};
+
+const deleteRecipe = async (recipeId) =>
+  getCollection('recipes')
+    .then((recipe) => recipe.deleteOne({ _id: ObjectId(recipeId) }));
+
 module.exports = {
   createRecipe,
   findAll,
   findByID,
+  upRecipe,
+  deleteRecipe,
 };

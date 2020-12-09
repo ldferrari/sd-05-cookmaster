@@ -5,21 +5,13 @@ const funAuthorization = (async (req, res, next) => {
   try {
     const auth = req.headers.authorization;
     if (!auth) {
-      return {
-        err: true,
-        message: 'jwt malformed',
-        statusCode: 401,
-      };
+      return res.status(401).json({ message: 'missing auth token' });
     }
     const secret = 'segredo';
     const payload = jwt.verify(auth, secret);
     const user = await usersModels.findByEmail(payload.useData.email);
     if (!user) {
-      return {
-        err: true,
-        message: 'invalid token',
-        statusCode: 400,
-      };
+      return res.status(401).json({ message: 'jwt malformed' });
     }
     return next();
   } catch (err) {

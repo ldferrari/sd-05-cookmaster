@@ -43,6 +43,36 @@ recipesRouter.get('/:id', async (req, res) => {
     }
     res.status(200).json(oneRecipe);
   } catch (err) {
+    res.status(500).json({ message: 'Algo deu errado' });
+  }
+});
+
+recipesRouter.put('/:id', autJWT, async (req, res) => {
+  try {
+    const auth = req.headers.authorization;
+    const secret = 'segredo';
+    const payload = jwt.verify(auth, secret);
+    const userId = payload.sub;
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+
+    const newRecipe = await recipesModels.upRecipe(id, name, ingredients, preparation, userId);
+    res.status(200).json(newRecipe);
+  } catch (err) {
+    res.status(500).json({ message: 'Algo deu errado' });
+  }
+});
+
+recipesRouter.delete('/:id', autJWT, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const delRecipe = await recipesModels.deleteRecipe(id);
+
+    if (delRecipe.err) {
+      return res.status(delRecipe.statusCode).json({ message: delRecipe.message });
+    }
+    res.status(204).json('successfully deleted');
+  } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: 'Algo deu errado' });
   }
