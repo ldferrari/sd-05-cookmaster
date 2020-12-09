@@ -13,7 +13,6 @@ userRouter.post('/', async (req, res) => {
     }
     res.status(201).json({ user: newUser });
   } catch (err) {
-    console.log(`${err.message} 500 usersController`);
     res.status(500).json({ message: 'Algo deu errado' });
   }
 });

@@ -1,4 +1,3 @@
-// const { ObjectId } = require('mongodb');
 const usersModels = require('../models/usersModels');
 
 function emailValido(email) {
@@ -26,17 +25,6 @@ const createUser = async (user) => {
   return usersModels.createUser(name, email, password);
 };
 
-const login = async (email, password) => {
-  if (!email || !password) {
-    return {
-      err: true,
-      message: 'All fields must be filled',
-    };
-  }
-  return usersModels.login(email, password);
-};
-
 module.exports = {
   createUser,
-  login,
 };
