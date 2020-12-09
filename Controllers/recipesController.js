@@ -27,6 +27,23 @@ recipes.post('/', auth, async (req, res) => {
   }
 });
 
+recipes.put('/:id', auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const { _id: userId } = req.user;
+    if (!auth) return res.status(401).json({ message: 'missing auth token' });
+    const updateRecipe = await service.update(id, name, ingredients, preparation, userId);
+    if (updateRecipe.error) {
+      return res.status(updateRecipe.statusCode).json({ message: updateRecipe.message });
+    }
+    res.status(200).json({ updateRecipe });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Algo de errado não está certo' });
+  }
+});
+
 recipes.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -35,6 +52,22 @@ recipes.get('/:id', async (req, res) => {
       return res.status(recipe.statusCode).json({ message: recipe.message });
     }
     res.status(200).json(recipe);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Algo de errado não está certo' });
+  }
+});
+
+recipes.delete('/:id', auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    // const recipe = await service.getById(id);
+    const removeRecipe = await service.remove(id);
+    if (!auth) return res.status(401).json({ message: 'missing auth token' });
+    /* if (updateRecipe.error) {
+      return res.status(updateRecipe.statusCode).json({ message: updateRecipe.message });
+    } */
+    res.status(204).json(removeRecipe);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ message: 'Algo de errado não está certo' });

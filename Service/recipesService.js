@@ -36,8 +36,36 @@ const create = async (name, ingredients, preparation, userId) => {
   return model.create(name, ingredients, preparation, userId);
 };
 
+const update = async (id, name, ingredients, preparation, userId) => {
+  const recipe = await model.update(id);
+  if (!recipe) {
+    return {
+      error: true,
+      code: 'invalid_data',
+      message: 'Algo deu errado',
+      statusCode: 500,
+    };
+  }
+  return model.update(id, name, ingredients, preparation, userId);
+};
+
+const remove = async (id) => {
+  const recipe = await model.exclude(id);
+  if (!recipe) {
+    return {
+      error: true,
+      code: 'invalid_data',
+      message: 'Algo deu errado',
+      statusCode: 500,
+    };
+  }
+  return recipe;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
+  remove,
 };
