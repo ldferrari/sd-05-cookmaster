@@ -71,9 +71,26 @@ const editRecipe = async (req, res) => {
   }
 };
 
+const deleteRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await services.recipes.deleteRecipeById(id);
+    res.status(204).send();
+  } catch (err) {
+    console.log(err);
+    if (err instanceof Errors.RecipeNotFound) {
+      return res.status(404).json({ message: err.message });
+    }
+    return res
+      .status(500)
+      .json({ message: 'Algo deu Ruim no deleteRecipe do Controller' });
+  }
+};
+
 module.exports = {
   createRecipe,
   listRecipes,
   showRecipe,
   editRecipe,
+  deleteRecipe,
 };

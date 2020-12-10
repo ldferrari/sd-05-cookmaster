@@ -30,9 +30,16 @@ const update = (id, name, ingredients, preparation) => {
     ));
 };
 
+const exclude = (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  return connection('recipes').then((recipes) =>
+    recipes.deleteOne({ _id: ObjectId(id) }));
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  exclude,
 };
