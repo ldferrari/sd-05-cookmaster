@@ -29,10 +29,24 @@ const deleteRecipe = async (recipeId) =>
   getCollection('recipes')
     .then((recipe) => recipe.deleteOne({ _id: ObjectId(recipeId) }));
 
+const imageAdd = async (id) => {
+  if (ObjectId.isValid(id)) {
+    const imgPath = `localhost:3000/images/${id}.jpeg`;
+    getCollection('recipes')
+      .then((newRecipe) => newRecipe.updateOne(
+        { _id: ObjectId(id) },
+        { $set: { image: `${imgPath}` } },
+      ));
+  } else {
+    return null;
+  }
+};
+
 module.exports = {
   createRecipe,
   findAll,
   findByID,
   upRecipe,
   deleteRecipe,
+  imageAdd,
 };

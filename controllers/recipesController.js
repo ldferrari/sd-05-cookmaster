@@ -1,3 +1,4 @@
+const multer = require('multer');
 const { Router } = require('express');
 const jwt = require('jsonwebtoken');
 const autJWT = require('../service/autJWT');
@@ -74,6 +75,27 @@ recipesRouter.delete('/:id', autJWT, async (req, res) => {
     res.status(204).json('successfully deleted');
   } catch (err) {
     console.log(err.message);
+    res.status(500).json({ message: 'Algo deu errado' });
+  }
+});
+
+const storage = multer.diskStorage({
+  destination: '../uploads/',
+  filename: (req, _file, callback) => {
+    callback(null, `${req.params.id}.jpeg`);
+  },
+});
+const upload = multer({
+  storage,
+});
+
+recipesRouter.put('/:id/image/', upload.single('image'), autJWT, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await recipesModels.imageAdd(id);
+    const returnId = await recipesModels.findByID(id);
+    res.status(200).json(returnId);
+  } catch (err) {
     res.status(500).json({ message: 'Algo deu errado' });
   }
 });
