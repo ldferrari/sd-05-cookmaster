@@ -5,7 +5,12 @@ const createRecipe = async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;
     const userId = req.user.sub;
-    const recipe = await services.recipes.createRecipe(name, ingredients, preparation, userId);
+    const recipe = await services.recipes.createRecipe(
+      name,
+      ingredients,
+      preparation,
+      userId,
+    );
     return res.status(201).json({ recipe });
   } catch (err) {
     if (err instanceof Errors.InvalidEntries) {
@@ -21,6 +26,19 @@ const createRecipe = async (req, res) => {
   }
 };
 
+const listRecipes = async (req, res) => {
+  try {
+    const recipesList = await services.recipes.listRecipes();
+    return res.status(200).json(recipesList);
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ message: 'Algo deu Ruim no recipesList do Controller' });
+  }
+};
+
 module.exports = {
   createRecipe,
+  listRecipes,
 };
