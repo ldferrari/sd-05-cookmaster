@@ -8,7 +8,11 @@ app.use(bodyParser.json());
 
 const usersController = require('./controllers/usersController');
 
+const loginController = require('./controllers/loginController');
+
 app.use('/users', usersController);
+
+app.use('/login', loginController);
 
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Escutando na porta ${PORT}`));
