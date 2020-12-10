@@ -21,8 +21,18 @@ const getById = async (id) => {
     recipes.findOne({ _id: ObjectId(id) }));
 };
 
+const update = (id, name, ingredients, preparation) => {
+  if (!ObjectId.isValid(id)) return null;
+  return connection('recipes').then((recipes) =>
+    recipes.updateOne(
+      { _id: ObjectId(id) },
+      { $set: { id, name, ingredients, preparation } },
+    ));
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };

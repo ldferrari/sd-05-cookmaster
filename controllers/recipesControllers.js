@@ -54,8 +54,26 @@ const showRecipe = async (req, res) => {
   }
 };
 
+const editRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const recipe = await services.recipes.editRecipe(id, name, ingredients, preparation);
+    return res.status(200).json(recipe);
+  } catch (err) {
+    console.log(err);
+    if (err instanceof Errors.RecipeNotFound) {
+      return res.status(404).json({ message: err.message });
+    }
+    return res
+      .status(500)
+      .json({ message: 'Algo deu Ruim no editRecipe do Controller' });
+  }
+};
+
 module.exports = {
   createRecipe,
   listRecipes,
   showRecipe,
+  editRecipe,
 };

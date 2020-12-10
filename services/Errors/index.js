@@ -5,6 +5,7 @@ const IncorrectEntries = require('./IncorrectEntries');
 const RequiredFields = require('./RequiredFields');
 const AuthorizationFailed = require('./AuthorizationFailed');
 const RecipeNotFound = require('./RecipeNotFound');
+const MissingToken = require('./MissingToken');
 
 module.exports = {
   IdNotFound,
@@ -14,4 +15,5 @@ module.exports = {
   RequiredFields,
   AuthorizationFailed,
   RecipeNotFound,
+  MissingToken,
 };
