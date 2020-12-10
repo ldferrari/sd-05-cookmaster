@@ -7,7 +7,8 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-app.use('/uploads', express.static(__dirname, 'uploads'));
+// app.use('/uploads', express.static(__dirname, 'uploads'));
+app.use(express.static(`${__dirname}/uploads`));
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
