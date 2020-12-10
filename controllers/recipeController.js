@@ -1,7 +1,7 @@
 const rescue = require('express-rescue');
 const { Router } = require('express');
 const { hasToken, isRecipes } = require('../middlewares');
-const addNewRecipe = require('../models/ModelRecipes');
+const { addNewRecipe, getAllRecipes, getById } = require('../models/ModelRecipes');
 
 const recipeController = Router();
 
@@ -14,6 +14,20 @@ recipeController.post('/', isRecipes, hasToken, rescue(async (req, res) => {
     return res.status(400).json({ message: 'Recipe was not Created' });
   }
   res.status(201).json({ recipe });
+}));
+
+recipeController.get('/', rescue(async (_req, res) => {
+  const recipes = await getAllRecipes();
+  return res.status(200).json(recipes);
+}));
+
+recipeController.get('/:id', rescue(async (req, res) => {
+  const { id } = req.params;
+  const recipe = await getById(id);
+  if (!recipe) {
+    return res.status(404).json({ message: 'recipe not found' });
+  }
+  return res.status(200).json(recipe);
 }));
 
 module.exports = recipeController;
