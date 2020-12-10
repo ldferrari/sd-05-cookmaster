@@ -34,10 +34,10 @@ login.post('/', async (req, res) => {
     const payload = {
       iss: 'post_api',
       aud: 'identity',
-      sub: user._id,
+      sub: user.id,
       userData: userWithoutPassword,
     };
-    
+
     const token = jwt.sign(payload, secret, jwtConfig);
     res.status(200).json({ token });
   } catch (error) {
