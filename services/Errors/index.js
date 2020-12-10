@@ -4,6 +4,7 @@ const EmailAlreadyExists = require('./EmailAlreadyExists');
 const IncorrectEntries = require('./IncorrectEntries');
 const RequiredFields = require('./RequiredFields');
 const AuthorizationFailed = require('./AuthorizationFailed');
+const RecipeNotFound = require('./RecipeNotFound');
 
 module.exports = {
   IdNotFound,
@@ -12,4 +13,5 @@ module.exports = {
   IncorrectEntries,
   RequiredFields,
   AuthorizationFailed,
+  RecipeNotFound,
 };
