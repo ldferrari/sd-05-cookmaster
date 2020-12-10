@@ -48,7 +48,7 @@ const createRecipe = rescue(async (req, res) => {
   res.status(201).json({ recipe });
 });
 
-const updateRecipe = rescue(async (req, res, next) => {
+const updateRecipe = rescue(async (req, _res, next) => {
   const { name, ingredients, preparation } = req.body;
   const { id } = req.params;
   const { user: { _id: userId } } = req;

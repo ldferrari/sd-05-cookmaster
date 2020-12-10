@@ -37,7 +37,9 @@ const exclude = async (id) => getConnection('recipes')
   .then((response) => response.deleteOne({ _id: ObjectId(id) }));
 
 const update = async (id, recipe) => {
-  await (ObjectId.isValid(id) ? getConnection('recipes').then((response) => response.updateOne({ _id: ObjectId(id) }, { $set: recipe })) : null
+  await (ObjectId.isValid(id) ? getConnection('recipes')
+    .then((response) => response
+      .updateOne({ _id: ObjectId(id) }, { $set: recipe })) : null
   );
 };
 

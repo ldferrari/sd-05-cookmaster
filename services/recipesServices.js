@@ -24,7 +24,7 @@ const createRecipe = async (name, ingredients, preparation, userId) => {
     name,
     ingredients,
     preparation,
-    imgURL: './url/img/no_do_arquivo.jpg',
+    image: '',
     userId,
   };
   const saveRecipe = await models.createRecipe(recipe);
@@ -42,10 +42,23 @@ const updateRecipe = async (id, recipe) => {
   return { message: 'Recipe doesn\'t exists' };
 };
 
+const addImage = async (id, image) => {
+  const recipe = await models.getRecipeById(id);
+  console.log('services', recipe);
+  if (recipe) {
+    // const path = `http://localhost:3000/uploads/${id}.jpg`;
+    // const path = `uploads/${id}.jpg`;
+    recipe.image = image;
+    return models.update(id, recipe);
+  }
+  return { message: 'Recipe doesn\'t exists' };
+};
+// uploads/5fd18499f7c9898d758e233d.jpg
 module.exports = {
   allRecipes,
   createRecipe,
   getRecipeById,
   excludeRecipe,
   updateRecipe,
+  addImage,
 };
