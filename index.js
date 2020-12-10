@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const usersController = require('./controllers/usersController');
 const loginController = require('./controllers/loginController');
 const recipesController = require('./controllers/recipesController');

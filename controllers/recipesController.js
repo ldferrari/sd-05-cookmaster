@@ -85,9 +85,7 @@ const storage = multer.diskStorage({
     callback(null, `${req.params.id}.jpeg`);
   },
 });
-const upload = multer({
-  storage,
-});
+const upload = multer({ storage });
 
 recipesRouter.put('/:id/image/', upload.single('image'), autJWT, async (req, res) => {
   try {
