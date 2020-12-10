@@ -5,15 +5,15 @@ const addNewRecipe = require('../models/ModelRecipes');
 
 const recipeController = Router();
 
-recipeController.post('/', hasToken, rescue(async (req, res) => {
+recipeController.post('/', isRecipes, hasToken, rescue(async (req, res) => {
   const { name, ingredients, preparation } = req.body;
-  const { _id: userId } = req.user;
+  const { _id: userId } = req.payloadWithoutPassword;
 
-  const newRecipe = await addNewRecipe(name, ingredients, preparation, userId);
-  if (!newRecipe) {
+  const recipe = await addNewRecipe(name, ingredients, preparation, userId);
+  if (!recipe) {
     return res.status(400).json({ message: 'Recipe was not Created' });
   }
-  res.status(201).json(newRecipe);
+  res.status(201).json({ recipe });
 }));
 
 module.exports = recipeController;

@@ -19,7 +19,7 @@ const login = rescue(async (req, res, next) => {
 
   const hasEmail = await Model.hasEmail(email);
 
-  if (!hasEmail || hasEmail.user.password !== password) {
+  if (!hasEmail || hasEmail.password !== password) {
     return res.status(401).json(emailOrPassIncorrect);
   }
 
