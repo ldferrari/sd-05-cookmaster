@@ -80,7 +80,7 @@ recipesRouter.delete('/:id', autJWT, async (req, res) => {
 });
 
 const storage = multer.diskStorage({
-  destination: '../uploads/',
+  destination: 'uploads',
   filename: (req, _file, callback) => {
     callback(null, `${req.params.id}.jpeg`);
   },
