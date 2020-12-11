@@ -4,7 +4,7 @@ const login = Router();
 
 const jwt = require('jsonwebtoken');
 
-const secret = '123456';
+const secret = '12345678';
 
 const usersModel = require('../models/usersModel');
 
@@ -21,7 +21,7 @@ login.post('/', async (req, res) => {
       return res.status(401).json({ message: 'All fields must be filled' });
     }
 
-    const getEmail = await usersModel.getEmail(email);
+    const getEmail = await usersModel.getEmail({ email });
 
     if (!getEmail) {
       return res.status(401).json({ message: 'Incorrect username or password' });

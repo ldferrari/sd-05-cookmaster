@@ -8,8 +8,8 @@ const isValid = async (name, email, password) => {
   if (!name || !email || !password) {
     return {
       error: true,
-      message: 'Invalid entries. Try again.',
       statusCode: 400,
+      message: 'Invalid entries. Try again.',
     };
   }
 
@@ -22,7 +22,8 @@ const isValid = async (name, email, password) => {
   }
 
   if (emailExistente) {
-    return { error: true,
+    return {
+      error: true,
       statusCode: 409,
       message: 'Email already registered',
     };
