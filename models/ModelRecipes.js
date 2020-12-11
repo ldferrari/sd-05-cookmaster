@@ -33,7 +33,7 @@ const update = async (id, name, ingredients, preparation) => {
   return result;
 };
 
-const remove = async(id) => {
+const remove = async (id) => {
   if (!ObjectId.isValid(id)) return null;
   const db = await getCollection('recipes');
   const result = await db.deleteOne({ _id: ObjectId(id) });
