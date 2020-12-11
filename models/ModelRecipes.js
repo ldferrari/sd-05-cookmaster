@@ -26,7 +26,17 @@ const update = async (id, name, ingredients, preparation) => {
   const db = await getCollection('recipes');
   const recipe = await db.findOne({ _id: ObjectId(id) });
   if (!recipe) return null;
-  const result = db.updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
+  const result = await db.updateOne(
+    { _id: ObjectId(id) },
+    { $set: { name, ingredients, preparation } },
+  );
+  return result;
+};
+
+const remove = async(id) => {
+  if (!ObjectId.isValid(id)) return null;
+  const db = await getCollection('recipes');
+  const result = await db.deleteOne({ _id: ObjectId(id) });
   return result;
 };
 
@@ -35,4 +45,5 @@ module.exports = {
   getAllRecipes,
   getById,
   update,
+  remove,
 };
