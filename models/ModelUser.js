@@ -1,6 +1,6 @@
 const getCollection = require('./get-collection');
 
-const addUser = async (name, email, password, role = 'user') => {
+const addUser = async ({ name, email, password }, role) => {
   const db = await getCollection('users');
   const result = await db.insertOne({ name, email, password, role });
 
