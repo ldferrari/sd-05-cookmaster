@@ -46,7 +46,7 @@ recipes.put('/:id', auth, async (req, res) => {
     const { id } = req.params;
     const { name, ingredients, preparation } = req.body;
     const { _id: userId } = req.user;
-    
+
     const atualizaReceita = await recipesService.update(id, name, ingredients, preparation, userId);
     if (atualizaReceita.error) {
       return res.status(atualizaReceita.statusCode).json({ message: atualizaReceita.message });

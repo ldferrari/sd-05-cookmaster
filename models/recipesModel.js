@@ -14,7 +14,7 @@ const getAll = async () =>
 const getById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
   return cookMasterCollection('recipes')
-    .then((recipe) => recipe.findOne({_id: ObjectId(id)}));
+    .then((recipe) => recipe.findOne({ _id: ObjectId(id) }));
 };
 
 const update = async (id, name, ingredients, preparation, userId) => {
