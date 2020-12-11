@@ -187,7 +187,7 @@ describe('3 - Crie um endpoint para o cadastro de receitas', () => {
   });
 });
 
-describe.only('4 - Crie um endpoint para a listagem de receitas', () => {
+describe('4 - Crie um endpoint para a listagem de receitas', () => {
   let connection;
   let db;
 
@@ -303,7 +303,7 @@ describe.only('4 - Crie um endpoint para a listagem de receitas', () => {
   });
 });
 
-describe.only('5 - Crie um endpoint para visualizar uma receita específica', () => {
+describe('5 - Crie um endpoint para visualizar uma receita específica', () => {
   let connection;
   let db;
 
@@ -504,7 +504,7 @@ describe.only('5 - Crie um endpoint para visualizar uma receita específica', ()
   });
 });
 
-describe.only('7 - Crie um endpoint para a edição de uma receita', () => {
+describe('7 - Crie um endpoint para a edição de uma receita', () => {
   let connection;
   let db;
 
@@ -773,7 +773,7 @@ describe.only('7 - Crie um endpoint para a edição de uma receita', () => {
   });
 });
 
-describe.only('8 - Crie um endpoint para a exclusão de uma receita', () => {
+describe('8 - Crie um endpoint para a exclusão de uma receita', () => {
   let connection;
   let db;
 

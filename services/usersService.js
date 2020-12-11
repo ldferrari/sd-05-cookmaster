@@ -3,7 +3,7 @@ const usersModel = require('../models/usersModel');
 const isValid = async (name, email, password) => {
   const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   const validEmail = regex.test(String(email).toLowerCase());
-  const emailExistente = await usersModel.getEmail(email);
+  const emailExistente = await usersModel.getEmail({ email });
 
   if (!name || !email || !password) {
     return {
