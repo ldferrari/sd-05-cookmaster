@@ -21,7 +21,6 @@ usersRouter.post('/users', async (req, res) => {
   } catch (error) {
     if (error.code === 'invalid_entries') return res.status(400).json(error);
     if (error.code === 'email_used') return res.status(409).json(error);
-    console.error(error);
     res.status(500).json({ message: 'Deu ruim no POST' });
   }
 });
@@ -36,7 +35,6 @@ usersRouter.post('/login', async (req, res) => {
   } catch (error) {
     if (error.code === 'invalid_data') return res.status(401).json(error);
     if (error.code === 'email_used') return res.status(409).json(error);
-    console.error(error);
     res.status(500).json({ message: 'Deu ruim no POST' });
   }
 });
@@ -44,7 +42,6 @@ usersRouter.post('/login', async (req, res) => {
 usersRouter.get('/users/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    // console.log('id no controller => ', id);
     const products = await services.getProduct(id);
     res.status(200).json(products);
   } catch (error) {
@@ -91,7 +88,6 @@ usersRouter.post('/users/', auth, async (req, res) => {
   } catch (error) {
     if (error.code === 'invalid_entries') return res.status(400).json(error);
     if (error.code === 'email_used') return res.status(409).json(error);
-    console.error(error);
     res.status(500).json({ message: 'Deu ruim no POST' });
   }
 });

@@ -10,7 +10,6 @@ const services = require('../services/recipes');
 const recipesRouter = Router();
 
 recipesRouter.get('/', async (req, res) => {
-  console.log('passei aqui');
   const recipes = await services.getAll();
   res.status(200).json(recipes);
 });
@@ -24,7 +23,6 @@ recipesRouter.post('/', auth, async (req, res) => {
   } catch (error) {
     if (error.code === 'invalid_entries') return res.status(400).json(error);
     if (error.code === 'invalid_jwt') return res.status(401).json(error);
-    console.error(error);
     res.status(500).json({ message: 'Deu ruim no POST' });
   }
 });
@@ -72,7 +70,6 @@ recipesRouter.put('/:id', auth, recipesFields, async (req, res) => {
     const { name, ingredients, preparation } = req.body;
     const { email } = req.payload;
     const { id } = req.params;
-    console.log(id, name, ingredients, preparation);
     const updated = await services.update(id, name, ingredients, preparation, email);
     res.status(200).json(updated);
   } catch (error) {
@@ -88,7 +85,6 @@ recipesRouter.delete('/:id', auth, async (req, res) => {
   try {
     const { id } = req.params;
     const { email } = req.payload;
-    console.log(id);
     const deleted = await services.remove(id, email);
     res.status(204).json(deleted);
   } catch (error) {

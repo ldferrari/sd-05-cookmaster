@@ -49,7 +49,6 @@ const update = async (id, name, ingredients, preparation, userEmail) => {
   const user = await modelUser.getByEmail(userEmail);
   const { _id: userId } = user;
   if (recipe.userId.toString() === userId.toString()) {
-    console.log('aqui');
     return model.updateRecipe(id, name, ingredients, preparation, userId.toString());
   }
   // const user = modelUser.getById(userId);
