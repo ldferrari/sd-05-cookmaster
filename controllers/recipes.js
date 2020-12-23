@@ -2,21 +2,24 @@
 const { Router } = require('express');
 
 const multer = require('multer');
+const auth = require('../middleware/auth');
+const recipesFields = require('../middleware/recipesFields');
 
 const services = require('../services/recipes');
 
 const recipesRouter = Router();
 
-recipesRouter.get('/recipes', async (req, res) => {
+recipesRouter.get('/', async (req, res) => {
+  console.log('passei aqui');
   const recipes = await services.getAll();
   res.status(200).json(recipes);
 });
 
-recipesRouter.post('/', async (req, res) => {
+recipesRouter.post('/', auth, async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;
-
-    const token = await services.cadastro(name, ingredients, preparation);
+    const { email } = req.payload;
+    const token = await services.cadastro(name, ingredients, preparation, email);
     return res.status(200).json(token);
   } catch (error) {
     if (error.err.code === 'invalid_entries') return res.status(400).json(error);
@@ -50,9 +53,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-recipesRouter.put('/:id/image', upload.single('image'), async (req, res) => {
+recipesRouter.put('/:id/image', auth, upload.single('image'), async (req, res) => {
   try {
-    const { authorization } = req.headers;
     const { id } = req.params;
     const updated = await services.update(id, name, ingredients, preparation, userId);
     res.status(200).json(updated);
@@ -65,11 +67,13 @@ recipesRouter.put('/:id/image', upload.single('image'), async (req, res) => {
   }
 });
 
-recipesRouter.put('/:id', async (req, res) => {
+recipesRouter.put('/:id', auth, recipesFields, async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;
+    const { email } = req.payload;
     const { id } = req.params;
-    const updated = await services.update(id, name, ingredients, preparation, userId);
+    console.log(id, name, ingredients, preparation);
+    const updated = await services.update(id, name, ingredients, preparation, email);
     res.status(200).json(updated);
   } catch (error) {
     if (error.err.code === 'missing_token') return res.status(401).json(error);
@@ -80,10 +84,12 @@ recipesRouter.put('/:id', async (req, res) => {
   }
 });
 
-recipesRouter.delete('/:id', async (req, res) => {
+recipesRouter.delete('/:id', auth, async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await services.remove(id);
+    const { email } = req.payload;
+    console.log(id);
+    const deleted = await services.remove(id,email);
     res.status(204).json(deleted);
   } catch (error) {
     if (error.err.code === 'missing_token') return res.status(401).json(error);

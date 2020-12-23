@@ -46,8 +46,8 @@ const create = async (name, email, password) => {
   return model.createUser(name, email, password, 'user');
 };
 
-const cadastro = async (name, ingredients, preparation, idUser) => {
-  if (!name && !ingredients && !preparation) {
+const cadastro = async (name, ingredients, preparation, email) => {
+  if (!name || !ingredients || !preparation) {
     throw {
       err: {
         code: 'invalid_entries',
@@ -55,35 +55,42 @@ const cadastro = async (name, ingredients, preparation, idUser) => {
       },
     };
   }
-
+  const { _id: idUser } = await modelUser.getByEmail(email);
   return model.createRecipe(name, ingredients, preparation, idUser);
 };
 
-const update = async (id, name, ingredients, preparation, userId) => {
+const update = async (id, name, ingredients, preparation, userEmail) => {
   const recipe = await getRecipe(id);
-  if (recipe.userId === userId) {
-    return model.updateProduct(id, name, ingredients, preparation, userId);
+  const user = await modelUser.getByEmail(userEmail);
+
+  if (recipe.userId.toString() === user['_id'].toString()) {
+    console.log('aqui');
+    return model.updateRecipe(id, name, ingredients, preparation, user['_id'].toString());
   }
-  const user = modelUser.getById(userId);
+  // const user = modelUser.getById(userId);
   if (user.role === 'admin') {
-    return model.updateProduct(id, name, ingredients, preparation, recipe.userId);
+    return model.updateRecipe(id, name, ingredients, preparation, recipe.userId.toString());
   }
   throw { err: { code: 'not_ownwe', message: "You can't edit recipe" } };
 };
 
-const remove = async (id) => {
+const remove = async (id, email) => {
   if (!ObjectId.isValid(id)) {
     throw { err: { code: 'invalid_data', message: 'Wrong id format' } };
   }
   const recipe = await model.getById(id);
   if (!recipe) throw { err: { code: 'invalid_data', message: 'Wrong id format' } };
-
-  if (recipe.userId === userId) {
-    return model.deleteProduct(id);
+  console.log('---------');
+  const user = await modelUser.getByEmail(email);
+  console.log(recipe, user);
+  console.log(recipe.userId);
+  console.log(recipe.userId.toString() === user['_id'].toString());
+  if (recipe.userId.toString() === user['_id'].toString()) {
+    return model.deleteRecipe(id);
   }
-  const user = modelUser.getById(userId);
+
   if (user.role === 'admin') {
-    return model.deleteProduct(id);
+    return model.deleteRecipe(id);
   }
   throw { err: { code: 'not_ownwe', message: "You can't delete this recipe" } };
 };

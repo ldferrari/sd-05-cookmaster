@@ -30,7 +30,7 @@ const create = async (name, email, password) => {
       },
     };
   }
-  const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
+  const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
   if (!validEmail.test(email)) {
     throw {
       err: {
@@ -48,7 +48,7 @@ const create = async (name, email, password) => {
 };
 
 const login = async (email, password) => {
-  if (!password && !email) {
+  if (!password || !email) {
     throw {
       err: {
         code: 'invalid_data',
@@ -56,7 +56,7 @@ const login = async (email, password) => {
       },
     };
   }
-  const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
+  const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
   if (!validEmail.test(email)) {
     throw {
       err: {
@@ -79,9 +79,9 @@ const login = async (email, password) => {
     expiresIn: '7d',
     algorithm: 'HS256',
   };
-  const token = jwt.sign({ name, email, role: gotUser.role }, secret, jwtConfig);
+  const token = jwt.sign({ name: gotUser.name, email, role: gotUser.role }, secret, jwtConfig);
 
-  return token;
+  return {token};
 };
 
 const update = async (id, name, quantity) => {
