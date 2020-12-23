@@ -20,7 +20,7 @@ const getRecipe = async (id) => {
   return item;
 };
 
-const create = async (name, email, password) => {
+/* const create = async (name, email, password) => {
   if (!name && !email) {
     throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
@@ -34,14 +34,14 @@ const create = async (name, email, password) => {
   }
 
   return model.createUser(name, email, password, 'user');
-};
+}; */
 
 const cadastro = async (name, ingredients, preparation, email) => {
   if (!name || !ingredients || !preparation) {
     throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
   const { _id: idUser } = await modelUser.getByEmail(email);
-  return model.createRecipe(name, ingredients, preparation, idUser);
+  return { recipe: await model.createRecipe(name, ingredients, preparation, idUser) };
 };
 
 const update = async (id, name, ingredients, preparation, userEmail) => {
@@ -76,4 +76,4 @@ const remove = async (id, email) => {
   throw errorGenerator('not_ownwe', `${''}You can't delete this recipe`);
 };
 
-module.exports = { getAll, getRecipe, remove, update, create, cadastro };
+module.exports = { getAll, getRecipe, remove, update, cadastro };
