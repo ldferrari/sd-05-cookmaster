@@ -24,11 +24,11 @@ const getUser = async (id) => {
 
 const create = async (name, email, password) => {
   if (!name && !email) {
-    throw errorGenerator('invalid_entries', 'Invalid entries. Try again');
+    throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
   const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
   if (!validEmail.test(email)) {
-    throw errorGenerator('invalid_entries', 'Invalid entries. Try again');
+    throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
   const allUsers = await getAll();
   if (allUsers.map((e) => e.email).includes(email)) {

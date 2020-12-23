@@ -22,11 +22,11 @@ const getRecipe = async (id) => {
 
 const create = async (name, email, password) => {
   if (!name && !email) {
-    throw errorGenerator('invalid_entries', 'Invalid entries. Try again');
+    throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
   const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
   if (!validEmail.test(email)) {
-    throw errorGenerator('invalid_entries', 'Invalid entries. Try again');
+    throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
   const allUsers = await getAll();
   if (allUsers.map((e) => e.email).includes(email)) {
@@ -38,7 +38,7 @@ const create = async (name, email, password) => {
 
 const cadastro = async (name, ingredients, preparation, email) => {
   if (!name || !ingredients || !preparation) {
-    throw errorGenerator('invalid_entries', 'Invalid entries. Try again');
+    throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
   const { _id: idUser } = await modelUser.getByEmail(email);
   return model.createRecipe(name, ingredients, preparation, idUser);

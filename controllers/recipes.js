@@ -19,7 +19,7 @@ recipesRouter.post('/', auth, async (req, res) => {
     const { name, ingredients, preparation } = req.body;
     const { email } = req.payload;
     const token = await services.cadastro(name, ingredients, preparation, email);
-    return res.status(200).json(token);
+    return res.status(201).json(token);
   } catch (error) {
     if (error.code === 'invalid_entries') return res.status(400).json(error);
     if (error.code === 'invalid_jwt') return res.status(401).json(error);
