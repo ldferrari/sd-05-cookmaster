@@ -1,16 +1,11 @@
 /* eslint-disable */
 
 const { ObjectId } = require('mongodb');
+const errorGenerator = require('../errorGenerator');
 
 const model = require('../models/recipes');
 const modelUser = require('../models/users');
 
-function errorGenerator(code, message) {
-  const err = new Error();
-  Object.assign(err, { code, message });
-  return err;
-}
-export default errorGenerator;
 const getAll = async () => model.getAll();
 
 const getRecipe = async (id) => {

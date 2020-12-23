@@ -6,7 +6,7 @@ const secret = 'seusecretdetoken';
 const { ObjectId } = require('mongodb');
 
 const model = require('../models/users');
-const { errorGenerator } = require('./recipes');
+const errorGenerator = require('../errorGenerator');
 
 const getAll = async () => model.getAll();
 
