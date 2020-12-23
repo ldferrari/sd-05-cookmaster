@@ -1,7 +1,7 @@
 /* eslint-disable */
 const { Router } = require('express');
 
-const multer = require('multer');
+/* const multer = require('multer'); */
 const auth = require('../middleware/auth');
 const recipesFields = require('../middleware/recipesFields');
 
@@ -22,8 +22,8 @@ recipesRouter.post('/', auth, async (req, res) => {
     const token = await services.cadastro(name, ingredients, preparation, email);
     return res.status(200).json(token);
   } catch (error) {
-    if (error.err.code === 'invalid_entries') return res.status(400).json(error);
-    if (error.err.code === 'invalid_jwt') return res.status(401).json(error);
+    if (error.code === 'invalid_entries') return res.status(400).json(error);
+    if (error.code === 'invalid_jwt') return res.status(401).json(error);
     console.error(error);
     res.status(500).json({ message: 'Deu ruim no POST' });
   }
@@ -35,13 +35,13 @@ recipesRouter.get('/:id', async (req, res) => {
     const products = await services.getRecipe(id);
     res.status(200).json(products);
   } catch (error) {
-    if (error.err.code === 'invalid_data') {
+    if (error.code === 'invalid_data') {
       return res.status(404).json(error);
     }
     res.status(500).json({ message: 'Deu ruim' });
   }
 });
-
+/*
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, 'uploads');
@@ -59,14 +59,14 @@ recipesRouter.put('/:id/image', auth, upload.single('image'), async (req, res) =
     const updated = await services.update(id, name, ingredients, preparation, userId);
     res.status(200).json(updated);
   } catch (error) {
-    if (error.err.code === 'missing_token') return res.status(401).json(error);
-    if (error.err.code === 'invalid_token') return res.status(401).json(error);
-    if (error.err.code === 'not_ownwe') return res.status(401).json(error);
+    if (error.code === 'missing_token') return res.status(401).json(error);
+    if (error.code === 'invalid_token') return res.status(401).json(error);
+    if (error.code === 'not_ownwe') return res.status(401).json(error);
 
     res.status(500).json({ message: 'Deu ruim' });
   }
 });
-
+ */
 recipesRouter.put('/:id', auth, recipesFields, async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;
@@ -76,9 +76,9 @@ recipesRouter.put('/:id', auth, recipesFields, async (req, res) => {
     const updated = await services.update(id, name, ingredients, preparation, email);
     res.status(200).json(updated);
   } catch (error) {
-    if (error.err.code === 'missing_token') return res.status(401).json(error);
-    if (error.err.code === 'invalid_token') return res.status(401).json(error);
-    if (error.err.code === 'not_ownwe') return res.status(401).json(error);
+    if (error.code === 'missing_token') return res.status(401).json(error);
+    if (error.code === 'invalid_token') return res.status(401).json(error);
+    if (error.code === 'not_ownwe') return res.status(401).json(error);
 
     res.status(500).json({ message: 'Deu ruim' });
   }
@@ -89,11 +89,11 @@ recipesRouter.delete('/:id', auth, async (req, res) => {
     const { id } = req.params;
     const { email } = req.payload;
     console.log(id);
-    const deleted = await services.remove(id,email);
+    const deleted = await services.remove(id, email);
     res.status(204).json(deleted);
   } catch (error) {
-    if (error.err.code === 'missing_token') return res.status(401).json(error);
-    if (error.err.code === 'invalid_data') {
+    if (error.code === 'missing_token') return res.status(401).json(error);
+    if (error.code === 'invalid_data') {
       return res.status(422).json(error);
     }
     res.status(500).json({ message: 'Deu ruim' });

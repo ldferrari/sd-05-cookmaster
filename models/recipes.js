@@ -12,15 +12,17 @@ const createRecipe = async (name, ingredients, preparation, userId) =>
 
 const updateRecipe = async (id, name, ingredients, preparation, userId) => {
   connection('recipes').then((db) =>
-    db.updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation, userId } })
-  );
+    db.updateOne(
+      { _id: ObjectId(id) }, { $set: { name, ingredients, preparation, userId } },
+    ));
   return { _id: id, name, ingredients, preparation, userId };
 };
 
 const updateRecipePhoto = async (id, name, ingredients, preparation, userId, photo) => {
   connection('recipes').then((db) =>
-    db.updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation, userId, photo } })
-  );
+    db.updateOne(
+      { _id: ObjectId(id) }, { $set: { name, ingredients, preparation, userId, photo } },
+    ));
   return { _id: id, name, ingredients, preparation, userId };
 };
 

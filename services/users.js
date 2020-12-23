@@ -6,6 +6,7 @@ const secret = 'seusecretdetoken';
 const { ObjectId } = require('mongodb');
 
 const model = require('../models/users');
+const { errorGenerator } = require('./recipes');
 
 const getAll = async () => model.getAll();
 
@@ -13,35 +14,25 @@ const getByEmail = async (email) => model.getByEmail(email);
 
 const getUser = async (id) => {
   if (!ObjectId.isValid(id)) {
-    throw { err: { code: 'invalid_data', message: 'Wrong id format' } };
+    throw errorGenerator('invalid_data', 'Wrong id format');
   }
   const item = await model.getById(id);
-  if (!item) throw { err: { code: 'invalid_data', message: 'Wrong id format' } };
+  if (!item) throw errorGenerator('invalid_data', 'Wrong id format');
 
   return item;
 };
 
 const create = async (name, email, password) => {
   if (!name && !email) {
-    throw {
-      err: {
-        code: 'invalid_entries',
-        message: 'Invalid entries. Try again',
-      },
-    };
+    throw errorGenerator('invalid_entries', 'Invalid entries. Try again');
   }
   const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
   if (!validEmail.test(email)) {
-    throw {
-      err: {
-        code: 'invalid_entries',
-        message: 'Invalid entries. Try again',
-      },
-    };
+    throw errorGenerator('invalid_entries', 'Invalid entries. Try again');
   }
   const allUsers = await getAll();
   if (allUsers.map((e) => e.email).includes(email)) {
-    throw { err: { code: 'email_used', message: 'Email already registered' } };
+    throw errorGenerator('email_used', 'Email already registered');
   }
 
   return model.createUser(name, email, password, 'user');
@@ -49,30 +40,15 @@ const create = async (name, email, password) => {
 
 const login = async (email, password) => {
   if (!password || !email) {
-    throw {
-      err: {
-        code: 'invalid_data',
-        message: 'All fields must be filled',
-      },
-    };
+    throw errorGenerator('invalid_data', 'All fields must be filled');
   }
   const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
   if (!validEmail.test(email)) {
-    throw {
-      err: {
-        code: 'invalid_data',
-        message: 'Incorrect username or password',
-      },
-    };
+    throw errorGenerator('invalid_data', 'Incorrect username or password');
   }
   const gotUser = await getByEmail(email);
   if (password !== gotUser.password) {
-    throw {
-      err: {
-        code: 'invalid_data',
-        message: 'Incorrect username or password',
-      },
-    };
+    throw errorGenerator('invalid_data', 'Incorrect username or password');
   }
 
   const jwtConfig = {
@@ -81,26 +57,18 @@ const login = async (email, password) => {
   };
   const token = jwt.sign({ name: gotUser.name, email, role: gotUser.role }, secret, jwtConfig);
 
-  return {token};
+  return { token };
 };
 
 const update = async (id, name, quantity) => {
   if (name.length < 5) {
-    console.log(name);
-    throw {
-      err: {
-        code: 'invalid_data',
-        message: '"name" length must be at least 5 characters long',
-      },
-    };
+    throw errorGenerator('invalid_data', '"name" length must be at least 5 characters long');
   }
   if (typeof quantity === 'string') {
-    throw { err: { code: 'invalid_data', message: '"quantity" must be a number' } };
+    throw errorGenerator('invalid_data', '"quantity" must be a number');
   }
   if (quantity <= 0) {
-    throw {
-      err: { code: 'invalid_data', message: '"quantity" must be larger than or equal to 1' },
-    };
+    throw errorGenerator('invalid_data', '"quantity" must be larger than or equal to 1');
   }
 
   return model.updateProduct(id, name, quantity);
@@ -108,10 +76,10 @@ const update = async (id, name, quantity) => {
 
 const remove = async (id) => {
   if (!ObjectId.isValid(id)) {
-    throw { err: { code: 'invalid_data', message: 'Wrong id format' } };
+    throw errorGenerator('invalid_data', 'Wrong id format');
   }
   const item = await model.getById(id);
-  if (!item) throw { err: { code: 'invalid_data', message: 'Wrong id format' } };
+  if (!item) throw errorGenerator('invalid_data', 'Wrong id format');
   return model.deleteProduct(id);
 };
 
