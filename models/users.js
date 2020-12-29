@@ -11,12 +11,15 @@ const getByEmail = async (email) => connection('users').then((db) => db.findOne(
 const createUser = async (name, email, password, role) =>
   connection('users')
     .then((db) => db.insertOne({ name, email, password, role }))
-    .then((result) => ({ _id: result.insertedId, name, email, role }));
+    .then((result) => ({user: { _id: result.insertedId, name, email, role } }));
+
 const updateUser = async (id, name, email, password, role) => {
   connection('users').then((db) =>
-    db.updateOne({ _id: ObjectId(id) }, { $set: { name, email, password, role } }));
+    db.updateOne(
+      { _id: ObjectId(id) }, { $set: { name, email, password, role } },
+    ));
 
-  return { user: { _id: id, name, email, password, role } };
+  return { _id: id, name, email, password, role };
 };
 
 const deleteUser = async (id) =>
