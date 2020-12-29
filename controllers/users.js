@@ -47,7 +47,7 @@ usersRouter.post('/users/admin', auth, userFields, async (req, res) => {
       return res.status(403).json({ message: 'Only admins can register new admins' });
     }
     const newUser = await services.create(name, email, password, 'admin');
-    return res.status(201).json({ user: newUser });
+    return res.status(201).json(newUser);
   } catch (error) {
     if (error.code === 'invalid_entries') return res.status(400).json(error);
     if (error.code === 'email_used') return res.status(409).json(error);
