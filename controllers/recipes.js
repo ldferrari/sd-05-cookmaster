@@ -1,4 +1,4 @@
-/* eslint-disable */
+const express = require('express');
 const { Router } = require('express');
 
 const multer = require('multer');
@@ -55,6 +55,7 @@ const upload = multer({ storage });
 
 recipesRouter.put('/:id/image', auth, upload.single('image'), async (req, res) => {
   try {
+    console.log(req.file);
     const { id } = req.params;
     const { email } = req.payload;
     const newPath = `localhost:3000/images/${req.file.filename}`;
@@ -68,6 +69,7 @@ recipesRouter.put('/:id/image', auth, upload.single('image'), async (req, res) =
     res.status(500).json({ message: 'Deu ruim' });
   }
 });
+
 
 recipesRouter.put('/:id', auth, recipesFields, async (req, res) => {
   try {
