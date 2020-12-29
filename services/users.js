@@ -30,11 +30,11 @@ const create = async (name, email, password, type = 'user') => {
     throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
   const allUsers = await getAll();
-  if (allUsers.map((e) => e.email).includes(email) && type === 'user') {
+  if (allUsers.map((e) => e.email).includes(email)) {
+    if (type === 'admin') {
+      return model.updateUser(name, email, password, type);
+    }
     throw errorGenerator('email_used', 'Email already registered');
-  }
-  if (type === 'admin') {
-    return model.updateUser(name, email, password, type);
   }
   return model.createUser(name, email, password, type);
 };
