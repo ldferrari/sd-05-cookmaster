@@ -26,4 +26,8 @@ const loginUser = async (req, res, _next) => {
   }
 };
 
-module.exports = { loginUser };
+const isLogged = async (req, res, _next) => {
+  const { authorization } = req.headers;
+};
+
+module.exports = { loginUser, isLogged };
