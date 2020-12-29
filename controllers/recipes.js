@@ -46,7 +46,8 @@ const storage = multer.diskStorage({
     callback(null, 'uploads');
   },
   filename: (req, file, callback) => {
-    const ext = file.originalname.match(/.*\.(.*)$/);
+    console.log(file)
+    const ext = file.mimetype.match(/.*\/(.*)$/);
     callback(null, `${req.params.id}.${ext[1]}`);
   },
 });
