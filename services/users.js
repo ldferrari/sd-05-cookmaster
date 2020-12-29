@@ -1,4 +1,3 @@
-/* eslint-disable */
 const jwt = require('jsonwebtoken');
 
 const secret = 'seusecretdetoken';
@@ -42,11 +41,10 @@ const login = async (email, password) => {
   if (!password || !email) {
     throw errorGenerator('invalid_data', 'All fields must be filled');
   }
-  const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
-  if (!validEmail.test(email)) {
+  const gotUser = await getByEmail(email);
+  if (!gotUser) {
     throw errorGenerator('invalid_data', 'Incorrect username or password');
   }
-  const gotUser = await getByEmail(email);
   if (password !== gotUser.password) {
     throw errorGenerator('invalid_data', 'Incorrect username or password');
   }
