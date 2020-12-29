@@ -71,7 +71,6 @@ recipesRouter.put('/:id', auth, recipesFields, async (req, res) => {
     const { name, ingredients, preparation } = req.body;
     const { email } = req.payload;
     const { id } = req.params;
-    console.log(name, ingredients, preparation)
     const updated = await services.update(id, name, ingredients, preparation, email);
     res.status(200).json(updated);
   } catch (error) {

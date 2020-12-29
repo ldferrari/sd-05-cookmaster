@@ -41,12 +41,10 @@ const cadastro = async (name, ingredients, preparation, email) => {
     throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
   const userData = await modelUser.getByEmail(email);
-  if(userData) {
+  if (userData) {
     throw errorGenerator('invalid_user', 'You are trying to use a invalid user.');
   }
-const { _id: idUser } = userData;
-
-  console.log(name, ingredients, preparation, email)
+  const { _id: idUser } = userData;
   return { recipe: await model.createRecipe(name, ingredients, preparation, idUser) };
 };
 
