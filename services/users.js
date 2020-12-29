@@ -21,7 +21,7 @@ const getUser = async (id) => {
   return item;
 };
 
-const create = async (name, email, password) => {
+const create = async (name, email, password, type = 'user') => {
   if (!name || !email || !password) {
     throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
@@ -30,11 +30,13 @@ const create = async (name, email, password) => {
     throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
   const allUsers = await getAll();
-  if (allUsers.map((e) => e.email).includes(email)) {
+  if (allUsers.map((e) => e.email).includes(email) && type === 'user') {
     throw errorGenerator('email_used', 'Email already registered');
   }
-
-  return model.createUser(name, email, password, 'user');
+  if (type === 'admin') {
+    return model.updateUser(name, email, password, type);
+  }
+  return model.createUser(name, email, password, type);
 };
 
 const login = async (email, password) => {
