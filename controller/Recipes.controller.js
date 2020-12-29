@@ -14,4 +14,10 @@ const createRecipes = async (req, res, _next) => {
   res.status(201).json({ recipe });
 };
 
-module.exports = { createRecipes };
+module.exports = {
+  createRecipes,
+  listRecipe: async (req, res, _next) => {
+    const result = await RecipesServices.listRecipe();
+    res.status(200).json(result);
+  },
+};
