@@ -38,8 +38,20 @@ usersRouter.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Deu ruim no POST' });
   }
 });
+/*  1 -- criando users */
+usersRouter.post('/users/admin', auth, async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    const newUser = await services.create(name, email, password);
+    return res.status(201).json(newUser);
+  } catch (error) {
+    if (error.code === 'invalid_entries') return res.status(400).json(error);
+    if (error.code === 'email_used') return res.status(409).json(error);
+    res.status(500).json({ message: 'Deu ruim no POST' });
+  }
+});
 
-usersRouter.get('/users/:id', async (req, res) => {
+/* usersRouter.get('/users/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const products = await services.getProduct(id);
@@ -50,9 +62,9 @@ usersRouter.get('/users/:id', async (req, res) => {
     }
     res.status(500).json({ message: 'Deu ruim' });
   }
-});
+}); */
 
-usersRouter.put('/users/:id', auth, async (req, res) => {
+/* usersRouter.put('/users/:id', auth, async (req, res) => {
   try {
     const { name, quantity } = req.body;
     const { id } = req.params;
@@ -64,9 +76,9 @@ usersRouter.put('/users/:id', auth, async (req, res) => {
     }
     res.status(500).json({ message: 'Deu ruim' });
   }
-});
+}); */
 
-usersRouter.delete('/users/:id', auth, async (req, res) => {
+/* usersRouter.delete('/users/:id', auth, async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await services.remove(id);
@@ -77,7 +89,7 @@ usersRouter.delete('/users/:id', auth, async (req, res) => {
     }
     res.status(500).json({ message: 'Deu ruim' });
   }
-});
+}); */
 
 usersRouter.post('/users/', auth, async (req, res) => {
   try {
