@@ -30,4 +30,4 @@ const loginUser = async (req, res, _next) => {
 //   const { authorization } = req.headers;
 // };
 
-module.exports = { loginUser, isLogged };
+module.exports = { loginUser };
