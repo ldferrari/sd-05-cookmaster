@@ -11,7 +11,7 @@ const getByEmail = async (email) => connection('users').then((db) => db.findOne(
 const createUser = async (name, email, password, role) =>
   connection('users')
     .then((db) => db.insertOne({ name, email, password, role }))
-    .then((result) => ({user: { _id: result.insertedId, name, email, role } }));
+    .then((result) => ({ user: { _id: result.insertedId, name, email, role } }));
 
 const updateUser = async (id, name, email, password, role) => {
   connection('users').then((db) =>
