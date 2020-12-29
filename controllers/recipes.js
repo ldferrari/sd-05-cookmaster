@@ -23,6 +23,7 @@ recipesRouter.post('/', auth, async (req, res) => {
   } catch (error) {
     if (error.code === 'invalid_entries') return res.status(400).json(error);
     if (error.code === 'invalid_jwt') return res.status(401).json(error);
+    if (error.code === 'invalid_user') return res.status(401).json(error);
     res.status(500).json({ message: 'Deu ruim no POST' });
   }
 });
@@ -30,8 +31,8 @@ recipesRouter.post('/', auth, async (req, res) => {
 recipesRouter.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const products = await services.getRecipe(id);
-    res.status(200).json(products);
+    const recipes = await services.getRecipe(id);
+    res.status(200).json(recipes);
   } catch (error) {
     if (error.code === 'invalid_data') {
       return res.status(404).json(error);
@@ -70,6 +71,7 @@ recipesRouter.put('/:id', auth, recipesFields, async (req, res) => {
     const { name, ingredients, preparation } = req.body;
     const { email } = req.payload;
     const { id } = req.params;
+    console.log(name, ingredients, preparation)
     const updated = await services.update(id, name, ingredients, preparation, email);
     res.status(200).json(updated);
   } catch (error) {

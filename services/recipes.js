@@ -10,7 +10,7 @@ const getAll = async () => model.getAll();
 
 const getRecipe = async (id) => {
   if (!ObjectId.isValid(id)) {
-    throw errorGenerator('invalid_data', 'Wrong id format');
+    throw errorGenerator('invalid_data', 'recipe not found');
   }
   const item = await model.getById(id);
   if (!item) {
@@ -40,7 +40,13 @@ const cadastro = async (name, ingredients, preparation, email) => {
   if (!name || !ingredients || !preparation) {
     throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
-  const { _id: idUser } = await modelUser.getByEmail(email);
+  const userData = await modelUser.getByEmail(email);
+  if(userData) {
+    throw errorGenerator('invalid_user', 'You are trying to use a invalid user.');
+  }
+const { _id: idUser } = userData;
+
+  console.log(name, ingredients, preparation, email)
   return { recipe: await model.createRecipe(name, ingredients, preparation, idUser) };
 };
 
