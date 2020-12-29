@@ -7,6 +7,7 @@ const error = {
   },
   missingFields: { message: 'All fields must be filled' },
   incorrectFields: { message: 'Incorrect username or password' },
+  invalidToken: { message: 'jwt malformed' },
 };
 
 module.exports = { ...error };
