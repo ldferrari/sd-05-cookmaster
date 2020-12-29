@@ -23,4 +23,11 @@ router.put(
   RecipesMiddlewares.verifyRecipe,
   RecipesController.updateRecipe,
 );
+router.delete(
+  '/:id',
+  AuthMiddlewares.validateJWT,
+  RecipesMiddlewares.verifyRecipeId,
+  RecipesMiddlewares.canRemove,
+  RecipesController.removeRecipe,
+);
 module.exports = router;

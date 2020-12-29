@@ -6,11 +6,12 @@ module.exports = {
     const { name, ingredients, preparation } = req.body;
     const { authorization } = req.headers;
     const token = await AuthMiddleware.tokenIsValid(authorization);
+    const { _id: userId } = token;
     const recipe = await RecipesServices.createRecipe(
       name,
       ingredients,
       preparation,
-      token.userId,
+      userId,
     );
     return res.status(201).json({ recipe });
   },
@@ -29,5 +30,10 @@ module.exports = {
 
     const updatedRecipe = await RecipesServices.updateRecipe(id, name, ingredients, preparation);
     return res.status(200).send(updatedRecipe);
+  },
+  removeRecipe: async (req, res, _next) => {
+    const { id } = req.params;
+    await RecipesServices.removeRecipe(id);
+    return res.status(204).send();
   },
 };

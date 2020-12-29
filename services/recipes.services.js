@@ -19,7 +19,13 @@ module.exports = {
     return result;
   },
   updateRecipe: async (id, name, ingredients, preparation) => {
-    const updatedRecipe = await RecipesModel.updateRecipe(id, name, ingredients, preparation);
+    const updatedRecipe = await RecipesModel.updateRecipe(
+      id,
+      name,
+      ingredients,
+      preparation,
+    );
     return updatedRecipe;
   },
+  removeRecipe: async (id) => RecipesModel.removeRecipe(id),
 };
