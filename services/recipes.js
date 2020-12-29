@@ -67,7 +67,7 @@ const updateImage = async (id, userEmail, file) => {
   const user = await modelUser.getByEmail(userEmail);
   const { _id: userId } = user;
   if (recipe.userId.toString() === userId.toString() || user.role === 'admin') {
-    const updatedRecipe = await model.updateRecipePhoto(id, file);
+    await model.updateRecipePhoto(id, file);
     return { ...recipe, image: file };
   }
 

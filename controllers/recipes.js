@@ -57,7 +57,7 @@ recipesRouter.put('/:id/image', auth, upload.single('image'), async (req, res) =
   try {
     const { id } = req.params;
     const { email } = req.payload;
-    const newPath = `localhost:3000/images/` + req.file.filename;
+    const newPath = `localhost:3000/images/${req.file.filename}`;
     const updated = await services.updateImage(id, email, newPath);
     res.status(200).json(updated);
   } catch (error) {
