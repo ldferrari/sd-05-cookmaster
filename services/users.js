@@ -23,7 +23,7 @@ const getUser = async (id) => {
 };
 
 const create = async (name, email, password) => {
-  if (!name && !email) {
+  if (!name || !email|| !password) {
     throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
   }
   const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
