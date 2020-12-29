@@ -6,12 +6,14 @@ const bodyParser = require('body-parser');
 
 const usersRoutes = require('./routes/users.routes');
 const loginRoutes = require('./routes/login.routes');
+const recipesRoutes = require('./routes/recipes.routes');
 
 const app = express();
 app.use(bodyParser.json());
 
 app.use('/users', usersRoutes);
 app.use('/login', loginRoutes);
+app.use('/recipes', recipesRoutes);
 
 app.get('/ping', (_req, res, _next) => { res.send('pong'); });
 
