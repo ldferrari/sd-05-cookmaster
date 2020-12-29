@@ -44,7 +44,7 @@ usersRouter.post('/users/admin', auth, userFields, async (req, res) => {
     const { name, email, password } = req.body;
     const { role } = req.payload;
     if (role !== 'admin') {
-      return res.status(400).json({ message: 'Only admins can register new admins' });
+      return res.status(403).json({ message: 'Only admins can register new admins' });
     }
     const newUser = await services.create(name, email, password, 'admin');
     return res.status(201).json(newUser);
