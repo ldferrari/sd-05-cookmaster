@@ -1,7 +1,7 @@
 /* eslint-disable */
 const { Router } = require('express');
 
-/* const multer = require('multer'); */
+const multer = require('multer');
 const auth = require('../middleware/auth');
 const recipesFields = require('../middleware/recipesFields');
 
@@ -40,13 +40,14 @@ recipesRouter.get('/:id', async (req, res) => {
     res.status(500).json({ message: 'Deu ruim' });
   }
 });
-/*
+
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, 'uploads');
   },
   filename: (req, file, callback) => {
-    callback(null, file.originalname);
+    const ext = file.originalname.match(/.*\.(.*)$/);
+    callback(null, `${req.params.id}.${ext[1]}`);
   },
 });
 
@@ -55,7 +56,9 @@ const upload = multer({ storage });
 recipesRouter.put('/:id/image', auth, upload.single('image'), async (req, res) => {
   try {
     const { id } = req.params;
-    const updated = await services.update(id, name, ingredients, preparation, userId);
+    const { email } = req.payload;
+    const newPath = `localhost:3000/images/` + req.file.filename;
+    const updated = await services.updateImage(id, email, newPath);
     res.status(200).json(updated);
   } catch (error) {
     if (error.code === 'missing_token') return res.status(401).json(error);
@@ -65,7 +68,7 @@ recipesRouter.put('/:id/image', auth, upload.single('image'), async (req, res) =
     res.status(500).json({ message: 'Deu ruim' });
   }
 });
- */
+
 recipesRouter.put('/:id', auth, recipesFields, async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;

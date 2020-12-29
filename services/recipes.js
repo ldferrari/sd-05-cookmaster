@@ -62,6 +62,18 @@ const update = async (id, name, ingredients, preparation, userEmail) => {
   throw errorGenerator('not_ownwe', `${''}You can't edit recipe`);
 };
 
+const updateImage = async (id, userEmail, file) => {
+  const recipe = await getRecipe(id);
+  const user = await modelUser.getByEmail(userEmail);
+  const { _id: userId } = user;
+  if (recipe.userId.toString() === userId.toString() || user.role === 'admin') {
+    const updatedRecipe = await model.updateRecipePhoto(id, file);
+    return { ...recipe, image: file };
+  }
+
+  throw errorGenerator('not_ownwe', `${''}You can't edit recipe`);
+};
+
 const remove = async (id, email) => {
   if (!ObjectId.isValid(id)) {
     throw errorGenerator('invalid_data', `${''}Wrong id format`);
@@ -80,4 +92,4 @@ const remove = async (id, email) => {
   throw errorGenerator('not_ownwe', `${''}You can't delete this recipe`);
 };
 
-module.exports = { getAll, getRecipe, remove, update, cadastro };
+module.exports = { getAll, getRecipe, remove, update, cadastro, updateImage };
