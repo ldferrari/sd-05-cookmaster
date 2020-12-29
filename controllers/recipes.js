@@ -1,4 +1,3 @@
-const express = require('express');
 const { Router } = require('express');
 
 const multer = require('multer');
@@ -69,7 +68,6 @@ recipesRouter.put('/:id/image', auth, upload.single('image'), async (req, res) =
     res.status(500).json({ message: 'Deu ruim' });
   }
 });
-
 
 recipesRouter.put('/:id', auth, recipesFields, async (req, res) => {
   try {
