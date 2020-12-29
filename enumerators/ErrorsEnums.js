@@ -9,6 +9,7 @@ const error = {
   incorrectFields: { message: 'Incorrect username or password' },
   invalidToken: { message: 'jwt malformed' },
   noRecipe: { message: 'recipe not found' },
+  missingToken: { message: 'missing auth token' },
 };
 
 module.exports = { ...error };

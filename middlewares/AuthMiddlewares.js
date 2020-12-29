@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { UserModel } = require('../models');
-const { invalidToken } = require('../enumerators/ErrorsEnums');
+const { invalidToken, missingToken } = require('../enumerators/ErrorsEnums');
 
 const tokenIsValid = async (token) => {
   const payload = jwt.verify(token, process.env.SECRET);
@@ -11,6 +11,9 @@ const tokenIsValid = async (token) => {
 
 const validateJWT = async (req, res, next) => {
   const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).send(missingToken);
+  }
   try {
     const validToken = await tokenIsValid(token);
     req.user = validToken;

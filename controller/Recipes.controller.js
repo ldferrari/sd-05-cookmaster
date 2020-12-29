@@ -16,12 +16,18 @@ module.exports = {
   },
   listAllRecipes: async (_req, res, _next) => {
     const result = await RecipesServices.listAllRecipes();
-    console.log('list all');
     return res.status(200).json(result);
   },
   listRecipeById: async (req, res, _next) => {
     const { id } = req.params;
     const result = await RecipesServices.listRecipeById(id);
     return res.status(200).json(result);
+  },
+  updateRecipe: async (req, res, _next) => {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+
+    const updatedRecipe = await RecipesServices.updateRecipe(id, name, ingredients, preparation);
+    return res.status(200).send(updatedRecipe);
   },
 };

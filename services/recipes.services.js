@@ -18,4 +18,8 @@ module.exports = {
     const result = await RecipesModel.listRecipeById(recId);
     return result;
   },
+  updateRecipe: async (id, name, ingredients, preparation) => {
+    const updatedRecipe = await RecipesModel.updateRecipe(id, name, ingredients, preparation);
+    return updatedRecipe;
+  },
 };
