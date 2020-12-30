@@ -10,6 +10,7 @@ const error = {
   invalidToken: { message: 'jwt malformed' },
   noRecipe: { message: 'recipe not found' },
   missingToken: { message: 'missing auth token' },
+  notAdmin: { message: 'Only admins can register new admins' },
 };
 
 module.exports = { ...error };

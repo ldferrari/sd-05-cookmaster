@@ -1,5 +1,6 @@
 const ROLES = {
   user: 'user',
+  admin: 'admin',
 };
 
 const error = {

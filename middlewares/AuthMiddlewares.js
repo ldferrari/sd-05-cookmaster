@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { UserModel } = require('../models');
-const { invalidToken, missingToken } = require('../enumerators/ErrorsEnums');
+const { invalidToken, missingToken, notAdmin } = require('../enumerators/ErrorsEnums');
+const { ROLES } = require('../enumerators/usersEnums');
 
 const tokenIsValid = async (token) => {
   const payload = jwt.verify(token, process.env.SECRET);
@@ -23,4 +24,12 @@ const validateJWT = async (req, res, next) => {
   }
 };
 
-module.exports = { tokenIsValid, validateJWT };
+const isAdmin = async (req, res, next) => {
+  const { role } = req.user;
+  if (role !== ROLES.admin) {
+    return res.status(403).send(notAdmin);
+  }
+  next();
+};
+
+module.exports = { tokenIsValid, validateJWT, isAdmin };
