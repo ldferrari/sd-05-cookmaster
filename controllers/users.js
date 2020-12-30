@@ -55,17 +55,4 @@ usersRouter.post('/users/admin', auth, userFields, async (req, res) => {
   }
 });
 
-/* usersRouter.post('/users/', auth, async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-
-    const newUser = await services.create(name, email, password);
-    return res.status(201).json(newUser);
-  } catch (error) {
-    if (error.code === 'invalid_entries') return res.status(400).json(error);
-    if (error.code === 'email_used') return res.status(409).json(error);
-    res.status(500).json({ message: 'Deu ruim no POST' });
-  }
-}); */
-
 module.exports = usersRouter;

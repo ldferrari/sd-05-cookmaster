@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 const { ObjectId } = require('mongodb');
 const errorGenerator = require('../errorGenerator');
 
@@ -20,22 +18,6 @@ const getRecipe = async (id) => {
   return item;
 };
 
-/* const create = async (name, email, password) => {
-  if (!name && !email) {
-    throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
-  }
-  const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
-  if (!validEmail.test(email)) {
-    throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
-  }
-  const allUsers = await getAll();
-  if (allUsers.map((e) => e.email).includes(email)) {
-    throw errorGenerator('email_used', 'Email already registered');
-  }
-
-  return model.createUser(name, email, password, 'user');
-}; */
-
 const cadastro = async (name, ingredients, preparation, email) => {
   if (!name || !ingredients || !preparation) {
     throw errorGenerator('invalid_entries', 'Invalid entries. Try again.');
@@ -55,7 +37,6 @@ const update = async (id, name, ingredients, preparation, userEmail) => {
   if (recipe.userId.toString() === userId.toString()) {
     return model.updateRecipe(id, name, ingredients, preparation, userId.toString());
   }
-  // const user = modelUser.getById(userId);
   if (user.role === 'admin') {
     return model.updateRecipe(id, name, ingredients, preparation, recipe.userId.toString());
   }
@@ -70,7 +51,6 @@ const updateImage = async (id, userEmail, file) => {
     await model.updateRecipePhoto(id, file);
     return { ...recipe, image: file };
   }
-
   throw errorGenerator('not_ownwe', `${''}You can't edit recipe`);
 };
 
@@ -85,7 +65,6 @@ const remove = async (id, email) => {
   if (recipe.userId.toString() === userId.toString()) {
     return model.deleteRecipe(id);
   }
-
   if (user.role === 'admin') {
     return model.deleteRecipe(id);
   }
