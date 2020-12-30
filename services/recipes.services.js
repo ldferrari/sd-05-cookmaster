@@ -28,4 +28,5 @@ module.exports = {
     return updatedRecipe;
   },
   removeRecipe: async (id) => RecipesModel.removeRecipe(id),
+  addImage: async (id) => RecipesModel.addImage(id),
 };

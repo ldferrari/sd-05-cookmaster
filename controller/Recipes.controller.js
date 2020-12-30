@@ -36,4 +36,9 @@ module.exports = {
     await RecipesServices.removeRecipe(id);
     return res.status(204).send();
   },
+  addImage: async (req, res, _next) => {
+    const { id } = req.params;
+    const newRecipe = await RecipesServices.addImage(id);
+    return res.status(200).send(newRecipe);
+  },
 };

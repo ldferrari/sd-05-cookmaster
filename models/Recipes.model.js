@@ -32,17 +32,27 @@ const listRecipeById = async (recipeId) => {
   return recipes;
 };
 const updateRecipe = async (id, name, ingredients, preparation) => {
-  const recipe = await listRecipeById(id);
   await getCollection(TABLES.recipes).then((db) =>
     db.updateOne(
       { _id: ObjectId(id) },
       { $set: { name, ingredients, preparation } },
     ));
-  return { ...recipe, name, ingredients, preparation };
+  const recipe = await listRecipeById(id);
+  return recipe;
 };
 
 const removeRecipe = async (id) => {
   await getCollection(TABLES.recipes).then((db) => db.deleteOne({ _id: ObjectId(id) }));
+};
+
+const addImage = async (id) => {
+  await getCollection(TABLES.recipes).then((db) =>
+    db.updateOne(
+      { _id: ObjectId(id) },
+      { $set: { image: `localhost:3000/images/${id}.jpeg` } },
+    ));
+  const recipe = await listRecipeById(id);
+  return recipe;
 };
 
 module.exports = {
@@ -51,4 +61,5 @@ module.exports = {
   listRecipeById,
   updateRecipe,
   removeRecipe,
+  addImage,
 };

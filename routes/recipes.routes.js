@@ -1,6 +1,10 @@
 const express = require('express');
 const { RecipesController } = require('../controller');
-const { AuthMiddlewares, RecipesMiddlewares } = require('../middlewares');
+const {
+  AuthMiddlewares,
+  RecipesMiddlewares,
+  UploadMiddlewares,
+} = require('../middlewares');
 
 const router = express.Router();
 
@@ -15,6 +19,13 @@ router.post(
   AuthMiddlewares.validateJWT,
   RecipesMiddlewares.verifyRecipe,
   RecipesController.createRecipes,
+);
+router.put(
+  '/:id/image',
+  AuthMiddlewares.validateJWT,
+  RecipesMiddlewares.verifyRecipeId,
+  UploadMiddlewares.upload.single('image'),
+  RecipesController.addImage,
 );
 router.put(
   '/:id',

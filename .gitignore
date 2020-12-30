@@ -289,5 +289,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/node,macos,windows,linux,visualstudiocode,intellij
-# Ignoring my envo file
+# Ignoring my env file
 .env.testing
+# ignoring test images from uploads
+uploads/*.jpeg
