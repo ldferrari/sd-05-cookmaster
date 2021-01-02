@@ -5,7 +5,7 @@ const { MongoClient } = require('mongodb');
 const mongoDbUrl = 'mongodb://localhost:27017/Cookmaster';
 const url = 'http://localhost:3000';
 
-describe.skip('6 - Permissões do usuário admin', () => {
+describe('6 - Permissões do usuário admin', () => {
   let connection;
   let db;
 
