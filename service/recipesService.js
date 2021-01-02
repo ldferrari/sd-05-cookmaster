@@ -11,7 +11,11 @@ const create = async (recipe) => {
   }
   return model.create(recipe);
 };
-
+const getAll = async () => {
+  const recipes = await model.getAll();
+  return recipes;
+};
 module.exports = {
   create,
+  getAll,
 };
