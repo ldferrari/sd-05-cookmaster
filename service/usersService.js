@@ -1,7 +1,8 @@
 const model = require('../models/usersModel');
 
+const regEmail = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/;
+
 const create = async (name, email, password) => {
-  const regEmail = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/;
   if (!name || !email || !password || !email.match(regEmail)) {
     return {
       error: true,
@@ -20,9 +21,17 @@ const create = async (name, email, password) => {
   const retorno = await model.create(name, email, password);
   return retorno;
 };
-// const login = async (email, password) => {
-//   if
-// }
+const login = async (email, password) => {
+  const cUser = await model.checkUSer(email, password);
+  if (!email || !password || !email.match(regEmail) || !cUser) {
+    return {
+      error: true,
+      code: 'invalid_login',
+      message: 'All fields must be filled',
+    };
+  }
+};
 module.exports = {
   create,
+  login,
 };
