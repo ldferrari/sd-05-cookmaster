@@ -6,7 +6,7 @@ const path = require('path');
 const mongoDbUrl = 'mongodb://localhost:27017/Cookmaster';
 const url = 'http://localhost:3000';
 
-describe.skip('3 - Crie um endpoint para o cadastro de receitas', () => {
+describe('3 - Crie um endpoint para o cadastro de receitas', () => {
   let connection;
   let db;
 
@@ -1227,7 +1227,7 @@ describe.skip('9 - Crie um endpoint para a adição de uma imagem a uma receita'
   });
 });
 
-describe('10 - Crie um endpoint para acessar a imagem de uma receita', () => {
+describe.skip('10 - Crie um endpoint para acessar a imagem de uma receita', () => {
   let connection;
   let db;
 
