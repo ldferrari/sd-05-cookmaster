@@ -1,0 +1,19 @@
+const jwt = require('jsonwebtoken');
+
+const hasToken = (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ message: 'jwt malformed' });
+  }
+
+  jwt.verify(token, 'minha frase secreta', (err, decoded) => {
+    console.log('erro:', err);
+    if (err && err != null) {
+      return res.status(401).json({ message: 'jwt malformed' });
+    }
+    req.user = decoded;
+  });
+  return next();
+};
+
+module.exports = hasToken;

@@ -1,5 +1,6 @@
+const path = require('path');
 const express = require('express');
-const usersControllers = require('./controller').usersController;
+const { usersController, loginController, recipesController } = require('./controller');
 
 const app = express();
 const PORT = 3000;
@@ -10,7 +11,9 @@ app.use(express.json());
 app.get('/', (request, response) => {
   response.send();
 });
-
-app.use('/users', usersControllers);
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
+app.use('/users', usersController);
+app.use('/login', loginController);
+app.use('/recipes', recipesController);
 
 app.listen(PORT, () => console.log(`Running on ${PORT}`));
