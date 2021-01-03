@@ -6,7 +6,7 @@ const route = Router();
 
 route.post('/', hasToken, async (req, res) => {
   let userId = null;
-  if (req.user.data) {
+  if (req.user) {
     const { user: { data: { _id: id } } } = req;
     userId = id;
   }
