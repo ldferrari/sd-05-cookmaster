@@ -7,7 +7,6 @@ const hasToken = (req, res, next) => {
   }
 
   jwt.verify(token, 'minha frase secreta', (err, decoded) => {
-    console.log('erro:', err);
     if (err && err != null) {
       return res.status(401).json({ message: 'jwt malformed' });
     }

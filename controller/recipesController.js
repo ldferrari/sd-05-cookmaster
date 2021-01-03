@@ -5,7 +5,11 @@ const hasToken = require('../middleware/hasToken');
 const route = Router();
 
 route.post('/', hasToken, async (req, res) => {
-  const { user: { data: { _id: userId } } } = req;
+  let userId = null;
+  if (req.user) {
+    // eslint-disable-next-line no-underscore-dangle
+    userId = req.user.data._id;
+  }
   const { name, ingredients, preparation } = req.body;
   const result = await newRecipeService(name, ingredients, preparation, null, userId);
 
@@ -24,7 +28,6 @@ route.get('/', async (req, res) => {
 route.get('/:id', async (req, res) => {
   const { id } = req.params;
   const result = await getOneRecipeService(id);
-  console.log(id);
   if (result.message) {
     return res.status(404).json(result);
   }
