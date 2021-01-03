@@ -6,9 +6,9 @@ const route = Router();
 
 route.post('/', hasToken, async (req, res) => {
   let userId = null;
-  if (req.user) {
-    // eslint-disable-next-line no-underscore-dangle
-    userId = req.user.data._id;
+  if (req.user.data) {
+    const { user: { data: { _id: id } } } = req;
+    userId = id;
   }
   const { name, ingredients, preparation } = req.body;
   const result = await newRecipeService(name, ingredients, preparation, null, userId);
