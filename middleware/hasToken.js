@@ -11,8 +11,8 @@ const hasToken = (req, res, next) => {
       return res.status(401).json({ message: 'jwt malformed' });
     }
     req.user = decoded;
+    return next();
   });
-  return next();
 };
 
 module.exports = hasToken;
