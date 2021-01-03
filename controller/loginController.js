@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { userExists } = require('../service/loginService');
+const { userExists } = require('../service').login;
 
 const route = Router();
 
