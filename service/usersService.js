@@ -2,7 +2,7 @@ const model = require('../models/usersModel');
 
 const regEmail = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/;
 
-const create = async (name, email, password) => {
+const create = async (name, email, password, role) => {
   if (!name || !email || !password || !email.match(regEmail)) {
     return {
       error: true,
@@ -18,7 +18,9 @@ const create = async (name, email, password) => {
       message: 'Email already registered',
     };
   }
-  const retorno = await model.create(name, email, password);
+  let retRole = 'user';
+  if (role === 'admin') retRole = 'admin';
+  const retorno = await model.create(name, email, password, retRole);
   return retorno;
 };
 const login = async (email, password) => {

@@ -1,9 +1,9 @@
 const getCollection = require('./getCollection');
 
-const create = async (name, email, password) =>
+const create = async (name, email, password, role) =>
   getCollection('users')
-    .then((user) => user.insertOne({ name, email, password, role: 'user' }))
-    .then((result) => ({ user: { name, email, password, role: 'user', _id: result.insertedId } }));
+    .then((user) => user.insertOne({ name, email, password, role }))
+    .then((result) => ({ user: { name, email, password, role, _id: result.insertedId } }));
 
 const checkEmail = async (email) => getCollection('users').then((user) => user.findOne({ email }));
 const checkUSer = async (email, password) =>
