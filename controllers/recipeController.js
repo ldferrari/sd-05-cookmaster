@@ -67,10 +67,10 @@ route.delete('/:id', validateJWT, async (req, res) => {
   return res.status(204).json(recipe);
 });
 
-route.put('/:id/image/', validateJWT, upload.single('image'), (async (req, res) => {
+route.put('/:id/image', validateJWT, upload.single('image'), async (req, res) => {
   const { id } = req.params;
   const recipe = await service.updateImg(id);
   res.status(200).json(recipe);
-}));
+});
 
 module.exports = route;
