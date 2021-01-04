@@ -1,6 +1,6 @@
 const model = require('../models/recipesModel');
 
-const create = async (recipe) => {
+const create = async (recipe, userId) => {
   const { name, ingredients, preparation } = recipe;
   if (!name || !ingredients || !preparation) {
     return {
@@ -9,7 +9,7 @@ const create = async (recipe) => {
       message: 'Invalid entries. Try again.',
     };
   }
-  return model.create(recipe);
+  return model.create(recipe, userId);
 };
 const getAll = async () => {
   const recipes = await model.getAll();
@@ -26,8 +26,17 @@ const getById = async (id) => {
   }
   return recipe;
 };
+const update = async (id, recipe, userID) => {
+  // const recipeC = await model.getById(id);
+  // if (recipeC) {
+  const updatedRec = await model.update(id, recipe, userID);
+  return updatedRec;
+  // }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
