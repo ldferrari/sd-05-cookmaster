@@ -31,10 +31,17 @@ const deleteRecipe = async (id) => {
   return deleteP;
 };
 
+const updateImg = async (id) => {
+  const img = `localhost:3000/images/${id}.jpeg`;
+  getCollection('recipes')
+    .then((aux) => aux.updateOne({ _id: ObjectId(id) }, { $set: { image: img } }));
+  return getCollection('recipes').then((recipe) => recipe.findOne(ObjectId(id)));
+};
 module.exports = {
   create,
   getAll,
   getById,
   update,
   deleteRecipe,
+  updateImg,
 };

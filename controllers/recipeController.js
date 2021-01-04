@@ -1,9 +1,20 @@
 const { Router } = require('express');
+const multer = require('multer');
 
 const service = require('../service/recipesService');
 const validateJWT = require('../auth/validateJWS');
 
 const route = Router();
+
+const storage = multer.diskStorage({
+  destination: 'uploads',
+  filename: (req, _file, callback) => {
+    const { id } = req.params;
+    callback(null, `${id}.jpeg`);
+  },
+});
+
+const upload = multer({ storage });
 
 route.get('/', async (_req, res) => {
   const recipes = await service.getAll();
@@ -55,5 +66,11 @@ route.delete('/:id', validateJWT, async (req, res) => {
   const recipe = await service.deleteRecipe(id);
   return res.status(204).json(recipe);
 });
+
+route.put('/:id/image/', validateJWT, upload.single('image'), (async (req, res) => {
+  const { id } = req.params;
+  const recipe = await service.updateImg(id);
+  res.status(200).json(recipe);
+}));
 
 module.exports = route;
