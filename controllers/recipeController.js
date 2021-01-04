@@ -50,4 +50,10 @@ route.put('/:id', validateJWT, async (req, res) => {
   return res.status(200).json(recipe);
 });
 
+route.delete('/:id', validateJWT, async (req, res) => {
+  const { id } = req.params;
+  const recipe = await service.deleteRecipe(id);
+  return res.status(204).json(recipe);
+});
+
 module.exports = route;

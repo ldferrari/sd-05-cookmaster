@@ -24,10 +24,17 @@ const update = async (id, recipe, userId) => {
       { name, ingredients, preparation, userId, _id: result.insertedId }));
   return recipes;
 };
+const deleteRecipe = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  const deleteP = await getCollection('recipes').then((recipe) =>
+    recipe.deleteOne({ _id: ObjectId(id) }));
+  return deleteP;
+};
 
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  deleteRecipe,
 };
