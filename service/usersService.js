@@ -1,6 +1,6 @@
 const usersModel = require('../model').users;
 
-const insertUserService = async (name, email, password) => {
+const insertUserService = async (name, email, password, role) => {
   const regEx = /^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
   if (!name || !password || !email || !regEx.test(email)) {
@@ -17,7 +17,7 @@ const insertUserService = async (name, email, password) => {
     };
   }
 
-  return usersModel.insertUser(name, password, email);
+  return usersModel.insertUser(name, password, email, role);
 };
 
 module.exports = {
