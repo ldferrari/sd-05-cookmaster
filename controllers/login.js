@@ -8,7 +8,7 @@ const loginController = express.Router();
 loginController.post('/', verifyLogin, rescue(async (req, res) => {
   const token = 'asd';
 
-  res.status(200).json(token);
+  return res.status(200).json(token);
 }));
 
 module.exports = loginController;
