@@ -25,6 +25,4 @@ const verifyNewUser = async (req, res, next) => {
   next();
 };
 
-module.exports = {
-  verifyNewUser,
-};
+module.exports = { verifyNewUser };
