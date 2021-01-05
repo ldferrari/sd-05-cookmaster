@@ -10,7 +10,7 @@ usersController.post('/', verifyNewUser, rescue(async (req, res) => {
   const { name, email, password } = req.body;
   const newUser = await createUser({ name, email, password });
 
-  return res.status(201).json(newUser);
+  return res.status(201).json({ user: newUser });
 }));
 
 module.exports = usersController;
