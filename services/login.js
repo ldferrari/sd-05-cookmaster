@@ -9,7 +9,9 @@ const verifyLogin = async (req, res, next) => {
     return res.status(401).json({ message: 'All fields must be filled' });
   }
   // [Será validado que não é possível fazer login com um email inválido]
-  if (!regex.test(email)) {
+  const validEmail = regex.test(email);
+
+  if (!validEmail) {
     return res.status(401).json({ message: 'Incorrect username or password' });
   }
   // [Será validado que não é possível fazer login com uma senha inválida]
