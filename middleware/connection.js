@@ -1,8 +1,6 @@
-require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
-const DB_NAME = 'Cookmaster' || process.env.DB_NAME;
-const MONGO_DB_URL = process.env.MONGO_DB_URL || `mongodb://mongodb:27017/${DB_NAME}`;
+const { DB_NAME, MONGO_DB_URL } = process.env;
 
 let connection;
 

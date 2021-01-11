@@ -1,7 +1,7 @@
-require('dotenv').config();
+require('dotenv').config({ path: '.luca' });
 const express = require('express');
 const bodyParser = require('body-parser');
-const routersUser = require('./controller/userController');
+const userController = require('./controller/userController');
 
 const app = express();
 
@@ -12,7 +12,9 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/users', routersUser);
+app.post('/users', (req, res) => {
+  userController.createUser(req, res); // ESSE É O CONTROLLER QUE A ROTA VAI CHAMAR
+}); // ESSE É O PONTO DE ENTRADA DA SUA APLICAÇÃO
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
