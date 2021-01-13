@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
       return res.status(401).json({ message: 'jwt malformed' });
     }
 
-    req.userId = decoded.userWithoutPassword.id;
+    req.user = decoded.userWithoutPassword;
 
     next();
   } catch (err) {
