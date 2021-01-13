@@ -16,6 +16,17 @@ const getById = async (id) => {
   return recipe;
 };
 
+const editById = async (id, payload, userId) => {
+  const recipe = await getById(id);
+
+  if (!recipe) {
+    throw new ThrowMyError('recipe not found', 'invalid_id');
+  }
+
+  return models.recipes.editById(id, payload, userId);
+};
+
 module.exports = {
   getById,
+  editById,
 };
