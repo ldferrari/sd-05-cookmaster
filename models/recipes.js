@@ -22,9 +22,12 @@ const editById = async (id, payload, userId) => {
   return { _id: id, name, ingredients, preparation, userId };
 };
 
+const removeById = async (id) => getCollection('recipes').then((recipes) => recipes.deleteOne({ _id: ObjectId(id) }));
+
 module.exports = {
   register,
   getAll,
   getById,
   editById,
+  removeById,
 };

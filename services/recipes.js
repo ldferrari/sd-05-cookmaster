@@ -26,7 +26,14 @@ const editById = async (id, payload, userId) => {
   return models.recipes.editById(id, payload, userId);
 };
 
+const removeById = async (id) => {
+  await getById(id);
+
+  await models.recipes.removeById(id);
+};
+
 module.exports = {
   getById,
   editById,
+  removeById,
 };
