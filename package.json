@@ -7,7 +7,8 @@
     "test": "jest --runInBand  --detectOpenHandles --forceExit",
     "start": "node index.js",
     "start:watch": "nodemon index.js",
-    "lint": "eslint --no-inline-config --ext .js,.jsx --no-error-on-unmatched-pattern -c .eslintrc.json ."
+    "lint" : "./node_modules/.bin/eslint .",
+    "lintfix": "./node_modules/.bin/eslint ./ --fix"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,7 @@
     "shelljs": "^0.8.4"
   },
   "devDependencies": {
-    "eslint": "^7.10.0",
+    "eslint": "^7.17.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0"
   }
