@@ -2,6 +2,7 @@ const { Router } = require('express');
 const rescue = require('express-rescue');
 const validateJWT = require('../auth/validateJWT');
 const models = require('../models');
+const services = require('../services');
 
 const recipes = Router();
 
@@ -23,6 +24,18 @@ recipes.get('/', rescue(async (_req, res) => {
 
   console.log('recipes', allRecipes);
   return res.status(200).json(allRecipes);
+}));
+
+recipes.get('/:id', rescue(async (req, res) => {
+  const { id } = req.params;
+
+  const recipe = await services.recipes.getById(id);
+
+  if (!recipe) {
+    return res.status(404).json({ message: 'recipe not found' });
+  }
+
+  return res.status(200).json(recipe);
 }));
 
 module.exports = recipes;

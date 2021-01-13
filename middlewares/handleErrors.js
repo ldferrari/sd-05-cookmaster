@@ -7,6 +7,10 @@ module.exports = (err, _req, res, _next) => {
     return res.status(409).json({ message: err.message });
   }
 
+  if (err.code === 'invalid_id') {
+    return res.status(404).json({ message: err.message });
+  }
+
   console.log(err);
   res.status(500).json({ err });
 };
