@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { users, login } = require('./controllers');
+const { users, login, recipes } = require('./controllers');
 
 const { handleErrors } = require('./middlewares');
 
@@ -18,6 +18,8 @@ app.get('/', (request, response) => {
 app.use('/users', users);
 
 app.use('/login', login);
+
+app.use('/recipes', recipes);
 
 const PORT = process.env.PORT || 3000;
 
