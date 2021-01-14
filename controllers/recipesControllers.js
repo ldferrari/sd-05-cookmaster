@@ -17,4 +17,9 @@ appRouter.post('/recipes', recipesValidation, rescue(async (req, res, _next) => 
   return res.status(201).json({ recipe });
 }));
 
+appRouter.get('/recipes', rescue(async (req, res, _next) => {
+  const allRecipes = await rm.getAllRecipes();
+  console.log(allRecipes);
+  res.status(200).send(allRecipes);
+}));
 module.exports = appRouter;

@@ -1,8 +1,8 @@
 const connection = require('./connection');
 
 const createRecipe = (name, ingredients, preparation, userId) =>
-  connection('recipes').then((users) =>
-    users.insertOne({ name, ingredients, preparation, userId }).then((result) => ({
+  connection('recipes').then((recipes) =>
+    recipes.insertOne({ name, ingredients, preparation, userId }).then((result) => ({
       id: result.insertedId,
       name,
       ingredients,
@@ -10,4 +10,7 @@ const createRecipe = (name, ingredients, preparation, userId) =>
       userId,
     })));
 
-module.exports = { createRecipe };
+const getAllRecipes = () =>
+  connection('recipes').then((recipes) => recipes.find({}).toArray());
+
+module.exports = { createRecipe, getAllRecipes };
