@@ -7,7 +7,7 @@
     "test": "jest --runInBand  --detectOpenHandles --forceExit",
     "start": "node index.js",
     "start:watch": "nodemon index.js",
-    "lint" : "./node_modules/.bin/eslint .",
+    "lint": "./node_modules/.bin/eslint .",
     "lintfix": "./node_modules/.bin/eslint ./ --fix"
   },
   "repository": {

@@ -12,7 +12,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/users', registerControler);
+app.use(registerControler);
 
 app.listen(port, () => {
   console.log('estamos online novamiente!');

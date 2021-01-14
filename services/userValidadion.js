@@ -19,4 +19,19 @@ const userValidate = async (req, res, next) => {
   next();
 };
 
-module.exports = { userValidate };
+const loginValidate = async (req, res, next) => {
+  const { email, password } = req.body;
+  if (email === undefined || password === undefined) {
+    return res.status(401).json({ message: 'All fields must be filled' });
+  }
+  const findEmail = await um.findByEmail(email);
+  if (!findEmail) {
+    return res.status(401).json({ message: 'Incorrect username or password' });
+  }
+  if (findEmail.password !== password) {
+    return res.status(401).json({ message: 'Incorrect username or password' });
+  }
+  next();
+};
+
+module.exports = { userValidate, loginValidate };
