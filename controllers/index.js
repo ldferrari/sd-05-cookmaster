@@ -1,3 +1,4 @@
-const registerControler = require('./usersControllers');
+const registerController = require('./usersControllers');
+const recipesController = require('./recipesControllers');
 
-module.exports = { registerControler };
+module.exports = { registerController, recipesController };
