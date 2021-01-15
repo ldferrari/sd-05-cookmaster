@@ -9,7 +9,7 @@ const recipesValidation = async (req, res, next) => {
   }
 
   if (authorization === undefined) {
-    res.status(401).json({ message: 'missing auth token' });
+    return res.status(401).json({ message: 'missing auth token' });
   }
   try {
     const decode = await jwt.verify(authorization, 'batata');
@@ -23,4 +23,21 @@ const recipesValidation = async (req, res, next) => {
   next();
 };
 
-module.exports = { recipesValidation };
+const deleteRecipeValidation = async (req, res, next) => {
+  const { authorization } = req.headers;
+  if (authorization === undefined) {
+    return res.status(401).json({ message: 'missing auth token' });
+  }
+  try {
+    const decode = await jwt.verify(authorization, 'batata');
+    const findUser = await um.findByEmail(decode.data.email);
+    if (findUser === null) {
+      return res.status(401).json({ message: 'jwt malformed' });
+    }
+  } catch (err) {
+    return res.status(401).json({ message: err.message });
+  }
+  next();
+};
+
+module.exports = { recipesValidation, deleteRecipeValidation };
