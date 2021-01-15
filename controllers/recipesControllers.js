@@ -87,4 +87,6 @@ appRouter.put('/recipes/:id/image', tokenOnly, upload.single('image'), rescue(as
   res.status(200).json(recipe);
 }));
 
+appRouter.use('/images', express.static('uploads'));
+
 module.exports = appRouter;
