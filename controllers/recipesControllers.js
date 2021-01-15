@@ -1,12 +1,25 @@
 const express = require('express');
 const rescue = require('express-rescue');
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
 const rm = require('../models/recipesModel');
 const um = require('../models/usersModel');
 
-const { recipesValidation, deleteRecipeValidation } = require('../services/recipeValidation');
+const { recipesValidation, tokenOnly } = require('../services/recipeValidation');
 
 const appRouter = express.Router();
+
+const storage =  multer.diskStorage ({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/')
+  },
+  filename: (req, file, cb) => {
+    const { id } = req.params;
+    cb(null, `${id}.jpeg`);
+  }
+})
+
+const upload = multer({ storage });
 
 appRouter.post('/recipes', recipesValidation, rescue(async (req, res, _next) => {
   try {
@@ -29,7 +42,6 @@ appRouter.get('/recipes', rescue(async (_req, res, _next) => {
     console.log(err.message);
   }
 }));
-module.exports = appRouter;
 
 appRouter.get('/recipes/:id', rescue(async (req, res, _next) => {
   try {
@@ -56,7 +68,7 @@ appRouter.put('/recipes/:id', recipesValidation, rescue(async (req, res, _next) 
   }
 }));
 
-appRouter.delete('/recipes/:id', deleteRecipeValidation, rescue(async (req, res, _next) => {
+appRouter.delete('/recipes/:id', tokenOnly, rescue(async (req, res, _next) => {
   try {
     const { id } = req.params;
     rm.removeRecipe(id);
@@ -65,3 +77,14 @@ appRouter.delete('/recipes/:id', deleteRecipeValidation, rescue(async (req, res,
     return res.send(500).json(err.message);
   }
 }));
+
+appRouter.use(express.static(__dirname + '/uploads'));
+
+appRouter.put('/recipes/:id/image', tokenOnly, upload.single('image'), rescue(async (req, res) => {
+  const { id } = req.params;
+  await rm.addURLImage(id, `localhost:3000/images/${id}.jpeg`);
+  const recipe = await rm.recipeByIdSearch(id);
+  res.status(200).json(recipe);
+}));
+
+module.exports = appRouter;

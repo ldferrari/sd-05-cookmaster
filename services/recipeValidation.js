@@ -23,7 +23,7 @@ const recipesValidation = async (req, res, next) => {
   next();
 };
 
-const deleteRecipeValidation = async (req, res, next) => {
+const tokenOnly = async (req, res, next) => {
   const { authorization } = req.headers;
   if (authorization === undefined) {
     return res.status(401).json({ message: 'missing auth token' });
@@ -40,4 +40,4 @@ const deleteRecipeValidation = async (req, res, next) => {
   next();
 };
 
-module.exports = { recipesValidation, deleteRecipeValidation };
+module.exports = { recipesValidation, tokenOnly };

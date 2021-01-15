@@ -25,4 +25,9 @@ const removeRecipe = async (id) => {
   connection('recipes').then((recipes) => (ObjectId.isValid(id) ? recipes.deleteOne({ _id: ObjectId(id) }) : null));
 };
 
-module.exports = { createRecipe, getAllRecipes, recipeByIdSearch, editRecipe, removeRecipe };
+const addURLImage = async (id, url) => {
+  connection('recipes').then((recipes) => (ObjectId.isValid(id) ? recipes.updateOne({_id: ObjectId(id)}, {$set: { image: url }}) 
+  : null))
+}
+
+module.exports = { createRecipe, getAllRecipes, recipeByIdSearch, editRecipe, removeRecipe, addURLImage };
