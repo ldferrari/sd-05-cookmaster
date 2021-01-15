@@ -1,14 +1,15 @@
-const { users } = require('./models');
-const getCollection = require('./models/connection');
+db.users.insertOne({ name: 'admin', email: 'root@email.com', password: 'admin', role: 'admin' });
 
-// colocar query do MongoDB
-const createAdmin = () => {
-  admin = await getCollection('users')
-    .then((users) => users.insertOne({ name: 'admin', email: 'root@email.com', password: 'admin', role: 'admin' }));
+// const getCollection = require('./models/connection');
 
-  return admin;
-}
+// // colocar query do MongoDB
+// const createAdmin = () => {
+//   admin = await getCollection('users')
+//     .then((users) => users.insertOne({ name: 'admin', email: 'root@email.com', password: 'admin', role: 'admin' }));
 
-createAdmin();
+//   return admin;
+// }
 
-module.exports = createAdmin;
+// createAdmin();
+
+// module.exports = createAdmin;
