@@ -1,10 +1,10 @@
-const connection = require('./connection');
 const { ObjectId } = require('mongodb');
+const connection = require('./connection');
 
 const createRecipe = (name, ingredients, preparation, userId) =>
   connection('recipes').then((recipes) =>
     recipes.insertOne({ name, ingredients, preparation, userId }).then((result) => ({
-      id: result.insertedId,
+      _id: result.insertedId,
       name,
       ingredients,
       preparation,

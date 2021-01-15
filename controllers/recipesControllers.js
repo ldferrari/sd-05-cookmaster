@@ -28,7 +28,7 @@ appRouter.get('/recipes/:id', rescue(async (req, res, _next) => {
   const recipeId = await rm.recipeByIdSearch(id);
   console.log(recipeId);
   if (recipeId === null) {
-    return res.status(404).json({ message: "recipe not found" });
+    return res.status(404).json({ message: 'recipe not found' });
   }
   res.status(200).json(recipeId);
 }));
