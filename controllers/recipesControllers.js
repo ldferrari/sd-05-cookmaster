@@ -19,7 +19,16 @@ appRouter.post('/recipes', recipesValidation, rescue(async (req, res, _next) => 
 
 appRouter.get('/recipes', rescue(async (req, res, _next) => {
   const allRecipes = await rm.getAllRecipes();
-  console.log(allRecipes);
   res.status(200).send(allRecipes);
 }));
 module.exports = appRouter;
+
+appRouter.get('/recipes/:id', rescue(async (req, res, _next) => {
+  const { id } = req.params;
+  const recipeId = await rm.recipeByIdSearch(id);
+  console.log(recipeId);
+  if (recipeId === null) {
+    return res.status(404).json({ message: "recipe not found" });
+  }
+  res.status(200).json(recipeId);
+}));
