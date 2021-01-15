@@ -32,3 +32,11 @@ appRouter.get('/recipes/:id', rescue(async (req, res, _next) => {
   }
   res.status(200).json(recipeId);
 }));
+
+appRouter.put('/recipes/:id', recipesValidation, rescue(async (req, res, _next) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  await rm.editRecipe(id, name, ingredients, preparation);
+  const upRecipe = await rm.recipeByIdSearch(id);
+  res.status(200).json(upRecipe);
+}));

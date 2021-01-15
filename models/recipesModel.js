@@ -14,7 +14,11 @@ const createRecipe = (name, ingredients, preparation, userId) =>
 const getAllRecipes = () =>
   connection('recipes').then((recipes) => recipes.find({}).toArray());
 
-const recipeByIdSearch = async (id) =>
+const recipeByIdSearch = (id) =>
   connection('recipes').then((recipes) => (ObjectId.isValid(id) ? recipes.findOne({ _id: ObjectId(id) }) : null));
 
-module.exports = { createRecipe, getAllRecipes, recipeByIdSearch };
+const editRecipe = (id, name, ingredients, preparation) =>
+  connection('recipes').then((recipes) => (ObjectId.isValid(id) ? recipes.updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } })
+    : null));
+
+module.exports = { createRecipe, getAllRecipes, recipeByIdSearch, editRecipe };

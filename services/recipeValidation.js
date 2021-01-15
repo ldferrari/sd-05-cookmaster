@@ -7,6 +7,10 @@ const recipesValidation = async (req, res, next) => {
   if (name === undefined || ingredients === undefined || preparation === undefined) {
     return res.status(400).json({ message: 'Invalid entries. Try again.' });
   }
+
+  if (authorization === undefined) {
+    res.status(401).json({ message: 'missing auth token' });
+  }
   try {
     const decode = await jwt.verify(authorization, 'batata');
     const findUser = await um.findByEmail(decode.data.email);
