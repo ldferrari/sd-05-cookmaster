@@ -9,15 +9,15 @@ const { recipesValidation, tokenOnly } = require('../services/recipeValidation')
 
 const appRouter = express.Router();
 
-const storage =  multer.diskStorage ({
+const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/')
+    cb(null, 'uploads/');
   },
   filename: (req, file, cb) => {
     const { id } = req.params;
     cb(null, `${id}.jpeg`);
-  }
-})
+  },
+});
 
 const upload = multer({ storage });
 
@@ -78,7 +78,7 @@ appRouter.delete('/recipes/:id', tokenOnly, rescue(async (req, res, _next) => {
   }
 }));
 
-appRouter.use(express.static(__dirname + '/uploads'));
+appRouter.use(express.static(`${__dirname}/uploads`));
 
 appRouter.put('/recipes/:id/image', tokenOnly, upload.single('image'), rescue(async (req, res) => {
   const { id } = req.params;
