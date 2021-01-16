@@ -73,7 +73,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-recipes.put('/:id/images', upload.single('image'), validateJWT, rescue(async (req, res) => {
+recipes.put('/:id/image', upload.single('image'), validateJWT, rescue(async (req, res) => {
   const { id } = req.params;
 
   const success = await services.recipes.saveImage(id);
