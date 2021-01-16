@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const { users, login, recipes } = require('./controllers');
 
 const { handleErrors } = require('./middlewares');
@@ -14,6 +15,8 @@ app.use(bodyParser.json());
 app.get('/', (request, response) => {
   response.send();
 });
+
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/users', users);
 
