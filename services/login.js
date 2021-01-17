@@ -21,7 +21,7 @@ const verifyLogin = async (req, res, next) => {
     return res.status(401).json({ message: 'Incorrect username or password' });
   }
 
-  next();
+  return next();
 };
 
 module.exports = { verifyLogin };

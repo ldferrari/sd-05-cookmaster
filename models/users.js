@@ -22,7 +22,4 @@ const findEmail = async (email) => {
   return result;
 };
 
-module.exports = {
-  createUser,
-  findEmail,
-};
+module.exports = { createUser, findEmail };

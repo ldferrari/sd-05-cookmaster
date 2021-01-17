@@ -1,7 +1,7 @@
 const express = require('express');
 const rescue = require('express-rescue');
-const { createUser } = require('../models/users');
 const { verifyNewUser } = require('../services/users');
+const { createUser } = require('../models/users');
 
 const usersController = express.Router();
 
