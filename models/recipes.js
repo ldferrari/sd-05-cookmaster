@@ -25,4 +25,25 @@ const getRecipeById = async (id) => {
   return null;
 };
 
-module.exports = { createRecipe, getAllRecipes, getRecipeById };
+const updateRecipe = async (id, payload) => {
+  // Verifica se a receita desejada existe
+  const recipe = await getRecipeById(id);
+  if (!recipe) return null;
+  // Se a receita existe, será atualizada
+  const { name, ingredients, preparation } = payload;
+  const db = await connection('recipes');
+  const updatedRecipe = await db.updateOne(
+    { _id: ObjectId(id) },
+    {
+      $set: {
+        name,
+        ingredients,
+        preparation,
+      },
+    },
+  );
+
+  return updatedRecipe;
+};
+
+module.exports = { createRecipe, getAllRecipes, getRecipeById, updateRecipe };
