@@ -9,7 +9,6 @@ const recipesController = express.Router();
 // 3 - Crie um endpoint para o cadastro de receitas
 recipesController.post('/', verifyNewRecipe, verifyToken, rescue(async (req, res) => {
   const { name, ingredients, preparation } = req.body;
-  console.log(req);
   const { _id: userId } = req.user;
 
   const recipe = await createRecipe({ name, ingredients, preparation, userId });
