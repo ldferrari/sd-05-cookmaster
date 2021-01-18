@@ -7,6 +7,7 @@ const {
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 } = require('../models/recipes');
 
 const recipesController = express.Router();
@@ -74,6 +75,19 @@ recipesController.put(
     }
 
     return res.status(404).json({ message: 'recipe not found' });
+  }),
+);
+
+// 8 - Crie um endpoint para a exclusão de uma receita
+recipesController.delete(
+  '/:id',
+  verifyToken,
+  rescue(async (req, res) => {
+    const { id } = req.params;
+
+    await deleteRecipe(id);
+
+    res.status(204).json(null);
   }),
 );
 

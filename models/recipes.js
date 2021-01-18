@@ -46,4 +46,14 @@ const updateRecipe = async (id, payload) => {
   return updatedRecipe;
 };
 
-module.exports = { createRecipe, getAllRecipes, getRecipeById, updateRecipe };
+const deleteRecipe = async (id) => {
+  const db = await connection('recipes');
+
+  if (!ObjectId.isValid(id)) return null;
+
+  await db.deleteOne({ _id: ObjectId(id) });
+
+  return true;
+};
+
+module.exports = { createRecipe, getAllRecipes, getRecipeById, updateRecipe, deleteRecipe };
