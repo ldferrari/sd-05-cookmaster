@@ -1,3 +1,4 @@
+const multer = require('multer');
 const express = require('express');
 const rescue = require('express-rescue');
 const { verifyNewRecipe } = require('../services/recipes');
@@ -8,6 +9,7 @@ const {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  uploadImage,
 } = require('../models/recipes');
 
 const recipesController = express.Router();
@@ -38,7 +40,7 @@ recipesController.get(
   rescue(async (_, res) => {
     const recipes = await getAllRecipes();
 
-    res.status(200).json(recipes);
+    return res.status(200).json(recipes);
   }),
 );
 
@@ -50,7 +52,7 @@ recipesController.get(
     const recipe = await getRecipeById(id);
 
     if (!recipe) {
-      res.status(404).json({ message: 'recipe not found' });
+      return res.status(404).json({ message: 'recipe not found' });
     }
 
     return res.status(200).json(recipe);
@@ -71,7 +73,7 @@ recipesController.put(
 
     if (recipe) {
       const updatedRecipe = await getRecipeById(id);
-      res.status(200).json(updatedRecipe);
+      return res.status(200).json(updatedRecipe);
     }
 
     return res.status(404).json({ message: 'recipe not found' });
@@ -87,8 +89,28 @@ recipesController.delete(
 
     await deleteRecipe(id);
 
-    res.status(204).json(null);
+    return res.status(204).json(null);
   }),
 );
+
+// 9 - Crie um endpoint para a adição de uma imagem a uma receita
+const storage = multer.diskStorage({
+  destination: 'uploads',
+  filename: (req, _file, callback) => {
+    callback(null, `${req.params.id}.jpeg`);
+  },
+});
+
+const upload = multer({ storage });
+
+recipesController.put('/:id/image/', verifyToken, upload.single('image'), rescue(async (req, res) => {
+  const { id } = req.params;
+
+  await uploadImage(id);
+
+  const recipe = await getRecipeById(id);
+
+  return res.status(200).json(recipe);
+}));
 
 module.exports = recipesController;

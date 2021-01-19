@@ -4,7 +4,7 @@ const connection = require('./connection');
 const createRecipe = async ({ name, ingredients, preparation, userId }) => {
   const db = await connection('recipes');
   const recipe = await db.insertOne({ name, ingredients, preparation, userId });
-  // console.log(recipe);
+  // aqui utilizei console.log(recipe) para observar o objeto retornado;
   return recipe.ops[0];
 };
 
@@ -47,13 +47,28 @@ const updateRecipe = async (id, payload) => {
 };
 
 const deleteRecipe = async (id) => {
-  const db = await connection('recipes');
-
   if (!ObjectId.isValid(id)) return null;
 
+  const db = await connection('recipes');
   await db.deleteOne({ _id: ObjectId(id) });
 
   return true;
 };
 
-module.exports = { createRecipe, getAllRecipes, getRecipeById, updateRecipe, deleteRecipe };
+const uploadImage = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await connection('recipes');
+  const path = `localhost:3000/images/${id}.jpeg`;
+
+  await db.updateOne({ _id: ObjectId(id) }, { $set: { image: path } });
+};
+
+module.exports = {
+  createRecipe,
+  getAllRecipes,
+  getRecipeById,
+  updateRecipe,
+  deleteRecipe,
+  uploadImage,
+};
