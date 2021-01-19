@@ -1,8 +1,8 @@
 const multer = require('multer');
 const express = require('express');
 const rescue = require('express-rescue');
+const { verifyToken } = require('../middlewares/verifyToken');
 const { verifyNewRecipe } = require('../services/recipes');
-const { verifyToken } = require('../services/token');
 const {
   createRecipe,
   getAllRecipes,
@@ -94,6 +94,7 @@ recipesController.delete(
 );
 
 // 9 - Crie um endpoint para a adição de uma imagem a uma receita
+// 10 - Crie um endpoint para acessar a imagem de uma receita
 const storage = multer.diskStorage({
   destination: 'uploads',
   filename: (req, _file, callback) => {

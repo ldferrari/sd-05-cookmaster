@@ -1,7 +1,8 @@
 const connection = require('./connection');
 
 // [Será validado que é possível ao cadastrar usuário, o valor do campo "role" tenha o valor "user"]
-const createUser = async ({ name, email, password, role = 'user' }) => {
+const createUser = async (infos, role) => {
+  const { name, email, password } = infos;
   const db = await connection('users');
   const result = await db
     .insertOne({ name, email, password, role })

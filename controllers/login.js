@@ -1,7 +1,7 @@
 const express = require('express');
 const rescue = require('express-rescue');
 const { verifyLogin } = require('../services/login');
-const { generateToken } = require('../services/token');
+const { generateToken } = require('../services/generateToken');
 
 const loginController = express.Router();
 

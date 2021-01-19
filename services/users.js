@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const { findEmail } = require('../models/users');
 
 const verifyNewUser = async (req, res, next) => {
@@ -25,4 +27,24 @@ const verifyNewUser = async (req, res, next) => {
   next();
 };
 
-module.exports = { verifyNewUser };
+const secret = 'segredosecreto';
+
+const verifyNewAdmin = async (req, res, next) => {
+  const { authorization } = req.headers;
+
+  const verifiedUser = jwt.verify(authorization, secret);
+  const user = await findEmail(verifiedUser.email);
+
+  if (user.role !== 'admin') {
+    return res
+      .status(403)
+      .json({ message: 'Only admins can register new admins' });
+  }
+
+  const { password, ...userWithoutPassword } = user;
+  req.user = userWithoutPassword;
+
+  return next();
+};
+
+module.exports = { verifyNewUser, verifyNewAdmin };
