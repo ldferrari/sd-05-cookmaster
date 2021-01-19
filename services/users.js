@@ -34,7 +34,8 @@ const verifyNewAdmin = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(authorization, secret);
-    const user = await findEmail(decoded.email);
+    // verificado o objeto retornado com console.log(decoded);
+    const user = await findEmail(decoded.userData.email);
 
     if (user.role === 'admin') {
       const { password, ...userWithoutPassword } = user;
