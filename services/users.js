@@ -32,19 +32,20 @@ const secret = 'segredosecreto';
 const verifyNewAdmin = async (req, res, next) => {
   const { authorization } = req.headers;
 
-  const verifiedUser = jwt.verify(authorization, secret);
-  const user = await findEmail(verifiedUser.email);
+  try {
+    const decoded = jwt.verify(authorization, secret);
+    const user = await findEmail(decoded.email);
 
-  if (user.role !== 'admin') {
-    return res
-      .status(403)
-      .json({ message: 'Only admins can register new admins' });
+    if (user.role === 'admin') {
+      const { password, ...userWithoutPassword } = user;
+      req.user = userWithoutPassword;
+
+      return next();
+    }
+    return res.status(403).json({ message: 'Only admins can register new admins' });
+  } catch {
+    return res.status(403).json({ message: 'Only admins can register new admins' });
   }
-
-  const { password, ...userWithoutPassword } = user;
-  req.user = userWithoutPassword;
-
-  return next();
 };
 
 module.exports = { verifyNewUser, verifyNewAdmin };
