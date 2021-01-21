@@ -1,9 +1,9 @@
 const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
-// const DB_NAME = 'Cookmaster';
-const MONGO_DB_URL = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`;
-// const MONGO_DB_URL = process.env.MONGO_DB_URL || `mongodb://mongodb:27017/${DB_NAME}`;
+const DB_NAME = 'Cookmaster';
+// const MONGO_DB_URL = `mongodb+srv://${process.env.DBUSER}:${process.env.DBPASS}@cluster0.jy0rn.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`;
+const MONGO_DB_URL = process.env.MONGO_DB_URL || `mongodb://mongodb:27017/${DB_NAME}`;
 
 let connection = null;
 

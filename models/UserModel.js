@@ -1,19 +1,24 @@
-const { ObjectId } = require('mongodb');
+// const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 /*  ********************************************************************************************* */
-const objectDB = {
-  "name" : "Erick Jacquin",
-  "email" : "erickjacquin@gmail.com",
-  "password" : "12345678",
-  "role" : "user"
-};
+const findByEmail = async (email) =>
+  connection('users')
+    .then((user) => user.findOne({ email }));
 
-const createUserModel = async (name, email, password, role) =>
+/*  ********************************************************************************************* */
+const create = async (name, email, password, role) =>
   connection('users')
     .then((user) => user.insertOne({ name, email, password, role }))
-    .then((result) => ({ _id: result.insertedId, name, quantity }));
+    .then((result) => ({ name, email, role: 'user', password, _id: result.insertedId }));
 
+const getAll = async () =>
+  connection('users')
+    .then((users) => users.find().toArray());
+
+module
 module.exports = {
-  createUserModel,
+  getAll,
+  create,
+  findByEmail,
 };
