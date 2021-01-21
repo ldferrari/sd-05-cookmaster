@@ -14,13 +14,8 @@ userRouter.post('/', async (req, res) => {
     if (!userCriado) return res.status(400).json({ message: 'Usuário Não Criado!' });
     return res.status(201).json(userCriado);
   } catch (err) {
-    if (err.code === 'invalid_data') {
-      return res.status(400).json({ err });
-    }
-    if (err.code === 'conflict') {
-      return res.status(409).json({ err });
-    }
-    console.error(err);
+    if (err.code === 'invalid_entries') return res.status(400).json(err);
+    if (err.code === 'email_used') return res.status(409).json(err);
     res.status(500).json({ message: 'Algo deu errado' });
   }
 });

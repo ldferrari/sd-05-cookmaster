@@ -1,21 +1,16 @@
 const UserModel = require('../models/UserModel');
+const erroSender = require('./errorService');
 
 /*  ********************************************************************************************* */
-const isValid = async (name, email, password, type = 'user') => {
+const isValid = async (name, email, password) => {
   const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
-  console.log(`Name: ${name}\nEmail: ${email}\nPassword: ${password}\nvalidEmailS: ${regex.test(email)}`)
+  console.log(name, email, password);
   if (!name || !email || !regex.test(email) || !password) {
-    throw {
-      code: 'invalid_data',
-      message: 'Invalid entries, Try Again.',
-    };
+    throw erroSender('invalid_entries', 'Invalid entries. Try again.');
   }
   const existingEmail = await UserModel.findByEmail(email);
   if (existingEmail) {
-    throw {
-      code: 'conflict',
-      message: 'Email already registered',
-    };
+    throw erroSender('email_used', 'Email already registered');
   }
   return true;
 };

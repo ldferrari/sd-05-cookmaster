@@ -16,7 +16,6 @@ const getAll = async () =>
   connection('users')
     .then((users) => users.find().toArray());
 
-module
 module.exports = {
   getAll,
   create,
